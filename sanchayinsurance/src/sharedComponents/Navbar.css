@@ -21,7 +21,7 @@ body {
   height: 60px;
   background-color: #180027;
   position: relative;
-  margin-top: 10px;
+  /* margin-top: 10px; */
 }
 
 .logo {
