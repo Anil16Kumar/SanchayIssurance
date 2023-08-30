@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import Navbar from './../../sharedComponents/Navbar';
 import Login from '../login/Login';
 import HomeDashboard from './HomeDashboard';
+import CustomerRegister from './../Customer/CustomerRegister';
+import Contact from './../../sharedComponents/Contact';
 
 
 const Home = () => {
@@ -13,8 +15,11 @@ const Home = () => {
         return <HomeDashboard/>;
       case 'login':
         return <Login />;
-      // case 'contact':
-      //   return <ContactComponent />;
+      case 'register':
+        return <CustomerRegister />;
+      case 'contactus':
+          return <Contact />;
+      
       default:
         return null;
     }

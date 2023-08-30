@@ -15,12 +15,38 @@ const Login = () => {
   let [data, setdata] = useState([]);
   let[cid,setcid]=useState();
 
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
+  const validateEmail = () => {
+    if (!email) {
+      setEmailError('Email is required');
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      setEmailError('Invalid email format');
+    } else {
+      setEmailError('');
+    }
+  };
+
+  const validatePassword = () => {
+    if (!password) {
+      setPasswordError('Password is required');
+    } else if (password.length < 6) {
+      setPasswordError('Password must be at least 6 characters');
+    } else {
+      setPasswordError('');
+    }
+  };
+
 
   let navigate=useNavigate()
 
 
   const hasclicked = async (e) => {
     e.preventDefault();
+    validateEmail();
+    validatePassword();
+
     let res=await axios.post("http://localhost:8080/userinfoapp/login",{
       username:email,
       password
@@ -53,7 +79,8 @@ const Login = () => {
   return (
     <>
       <div style={divstyle}>
-        <form>
+        <form className="form-main">
+        <h3 className="text-center">Sign In</h3>
           <div classNameName="mb-3">
             <label for="exampleInputEmail1" classNameName="form-label">
               Username
@@ -67,7 +94,9 @@ const Login = () => {
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
+              onBlur={validateEmail}
             />
+            {emailError && <span className="error">{emailError}</span>}
           </div>
           <div className="mb-3">
             <label for="exampleInputPassword1" className="form-label">
@@ -81,8 +110,11 @@ const Login = () => {
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
+              onBlur={validatePassword}
             />
-          </div>
+            {passwordError && <span className="error">{passwordError}</span>}
+          </div>   
+          <div className="text-center">
           <button
             type="submit"
             className="btn btn-primary"
@@ -90,7 +122,17 @@ const Login = () => {
           >
             Submit
           </button>
+          </div>
+          <div className="text-center mt-2">
+          <p className="forgot-password">
+           <a href="#" className="text-danger">Forgot password?</a>
+        </p>
+          </div>
+          
         </form>
+
+
+        
       </div>
       
     </>

@@ -81,7 +81,7 @@ const Navbar = ({ setActiveComponent }) => {
               <Button variant="light" onClick={() => handleNavClick('insuranceplans')}>Insurance Plans</Button>
             </li>
             <li>
-              <Button variant="light" onClick={() => handleNavClick('contact')}>Contact-us</Button>
+              <Button variant="light" onClick={() => handleNavClick('contactus')}>Contact-us</Button>
             </li>
           </ul>
         </div>
