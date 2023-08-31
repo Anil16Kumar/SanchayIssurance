@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import './CustomerRegister.css'
 import { Button } from 'react-bootstrap';
+import axios from 'axios';
+
 
 const CustomerRegister = () => {
   const [firstName, setFirstName] = useState('');
@@ -20,6 +22,7 @@ const CustomerRegister = () => {
   const [errors, setErrors] = useState({});
 
   const[formData, setFormData]=useState('');
+  const [show, setShow] = useState(true);
 
   const validateForm = () => {
     const newErrors = {};
@@ -47,12 +50,37 @@ const CustomerRegister = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (validateForm()) {
+      let res = await axios.post(
+        `http://localhost:8080/customerapp/register`,
+        {
+          firstname:firstName,
+          lastname:lastName,
+          email:email,
+          address:address,
+          state:state,
+          city:city,
+          pincode:pincode,
+          mobileno:mobileNo,
+          birthdate:birthdate,
+          nominee:nominee,
+          nomineerelation:nomineeRelation,
+          userInfo:{
+              username:userName,
+              password:password
+          }
+        }
+      );
+      alert(res.data)
       
+      
+
+      console.log(res)
     }
+    
   };
 
   return (

@@ -1,11 +1,46 @@
-import React from 'react'
-import './Navbar.css'
-import { NavLink } from 'react-router-dom';
-import { Button, Image } from 'react-bootstrap';
-import logo from '../assets/logo.png'
+import React, { useEffect, useState } from "react";
+import "./Navbar.css";
+import { NavLink } from "react-router-dom";
+import { Button, Dropdown, Image } from "react-bootstrap";
+import logo from "../assets/logo.png";
+import axios from "axios";
+
+const Navbar = ({ setActiveComponent, setSelectedPlan}) => {
+  const[planData,setPlanData]=useState('');
+  const[planName,setPlanName]=useState('');
+
+  let handplannameset=(e)=>{
+    setPlanName(e);
+  }
+
+  let handleSelectedPlan=(e)=>{
+    setSelectedPlan(e);
+  }
 
 
-const Navbar = ({ setActiveComponent }) => {
+  let plans = async () => {
+    let res = await axios.get(
+      `http://localhost:8080/planapp/getall`
+    );
+    setPlanData(res.data);
+    console.log(res.data);
+  };
+  
+  let planNames;
+  if (planData) {
+    planNames = planData.map((bt) => {
+      return (
+        <Dropdown.Item href="#"  onClick={()=>{handplannameset(bt.planname);handleSelectedPlan(planName);handleNavClick('plan')}} style={{whiteSpace: 'normal'}}>{bt.planname!==null?bt.planname:"select plan name"}</Dropdown.Item>
+      );
+    });
+  }
+
+  useEffect(()=>{
+  plans();  
+  },[]);
+
+
+
   const handleNavClick = (component) => {
     setActiveComponent(component);
   };
@@ -15,6 +50,9 @@ const Navbar = ({ setActiveComponent }) => {
   const handleShowNavbar = () => {
     setShowNavbar(!showNavbar);
   };
+
+
+
 
   const Hamburger = () => (
     <svg
@@ -55,10 +93,10 @@ const Navbar = ({ setActiveComponent }) => {
     </svg>
   );
   return (
-    <nav className="navbar fixed-top" >
+    <nav className="navbar fixed-top">
       <div className="container">
         <div className="logo">
-          <h2 className='text-light'>Sanchay Insurance</h2>
+          <h2 className="text-light">Sanchay Insurance</h2>
         </div>
         <div className="menu-icon" onClick={handleShowNavbar}>
           <Hamburger />
@@ -66,29 +104,57 @@ const Navbar = ({ setActiveComponent }) => {
         <div className={`nav-elements  ${showNavbar && "active"}`}>
           <ul>
             <li>
-              <Button variant="light" onClick={() => handleNavClick('homedashboard')}>Home</Button>
+              <Button
+                variant="light"
+                onClick={() => handleNavClick("homedashboard")}
+
+
+              >
+                Home
+              </Button>
             </li>
             <li>
-              <Button variant="light" onClick={() => handleNavClick('about')}>About</Button>
+              <Button variant="light" onClick={() => handleNavClick("about")}>
+                About
+              </Button>
             </li>
             <li>
-              <Button variant="light" onClick={() => handleNavClick('login')}>Login</Button>
+              <Button variant="light" onClick={() => handleNavClick("login")}>
+                Login
+              </Button>
             </li>
             <li>
-              <Button variant="light" onClick={() => handleNavClick('register')}>Register</Button>
+              <Button
+                variant="light"
+                onClick={() => handleNavClick("register")}
+              >
+                Register
+              </Button>
             </li>
             <li>
-              <Button variant="light" onClick={() => handleNavClick('insuranceplans')}>Insurance Plans</Button>
+              <Dropdown >
+                <Dropdown.Toggle variant="light" id="dropdown-basic">
+                  Insurance Plans
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  {planNames}
+                </Dropdown.Menu>
+              </Dropdown>
             </li>
             <li>
-              <Button variant="light" onClick={() => handleNavClick('contactus')}>Contact-us</Button>
+              <Button
+                variant="light"
+                onClick={() => handleNavClick("contactus")}
+              >
+                Contact-us
+              </Button>
             </li>
           </ul>
         </div>
       </div>
     </nav>
-    
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

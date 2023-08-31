@@ -4,10 +4,13 @@ import Login from '../login/Login';
 import HomeDashboard from './HomeDashboard';
 import CustomerRegister from './../Customer/CustomerRegister';
 import Contact from './../../sharedComponents/Contact';
+import PlanServices from '../../services/PlanServices';
+
 
 
 const Home = () => {
-  const [activeComponent, setActiveComponent] = useState('homedashboard'); 
+  const [activeComponent, setActiveComponent] = useState('homedashboard');
+  const[selectedPlan,setSelectedPlan]=useState(null); 
 
   const renderComponent = () => {
     switch (activeComponent) {
@@ -19,7 +22,8 @@ const Home = () => {
         return <CustomerRegister />;
       case 'contactus':
           return <Contact />;
-      
+      case 'plan':
+          return <PlanServices selectedPlan={selectedPlan}/>
       default:
         return null;
     }
@@ -27,7 +31,7 @@ const Home = () => {
 
   return (
     <div>
-      <Navbar setActiveComponent={setActiveComponent} />
+      <Navbar setActiveComponent={setActiveComponent} setSelectedPlan={setSelectedPlan} />
       {renderComponent()}
     </div>
   )

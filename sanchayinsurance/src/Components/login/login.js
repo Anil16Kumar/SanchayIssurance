@@ -21,21 +21,17 @@ const Login = () => {
   const validateEmail = () => {
     if (!email) {
       setEmailError('Email is required');
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      setEmailError('Invalid email format');
-    } else {
-      setEmailError('');
     }
   };
 
   const validatePassword = () => {
     if (!password) {
       setPasswordError('Password is required');
-    } else if (password.length < 6) {
-      setPasswordError('Password must be at least 6 characters');
-    } else {
-      setPasswordError('');
     }
+    if(password){
+      setPasswordError('')
+    }
+    
   };
 
 
