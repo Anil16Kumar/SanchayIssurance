@@ -1,11 +1,15 @@
 .customer-dashboard {
     width: 100%;
   }
-  
+  .logo{
+    margin-right: 0px;
+  }
+
   .navbar {
     background-color: #06032f;
     display: flex;
-    justify-content: space-evenly;
+    margin-top: 2px;
+    justify-content: space-around;
     padding: 10px 20px;
     color: rgb(238, 235, 242);
     height: 9vh;
@@ -58,3 +62,42 @@
   .nav-item:last-child:hover {
     background-color: #00a22b;
   }
+
+  /* Customer Profile Div */
+
+  .div-profile{
+    margin-top: 70px;
+    display: flex;
+    justify-content: center;
+    /* background-color: rgb(136, 136, 136); */
+    /* height: 700px; */
+  }
+  /* moving line css */
+  .moving-line {
+    width: 100%;
+    height: 2px;
+    background-color: #404040; /* Line color */
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .moving-line::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: inherit;
+    animation: moveLine 5s linear infinite; /* Adjust animation speed as needed */
+  }
+  
+  @keyframes moveLine {
+    0% {
+      left: -100%;
+    }
+    100% {
+      left: 100%;
+    }
+  }
+

@@ -15,10 +15,10 @@ function App() {
         <Routes>
         <Route exact path="/" element={<Home/>} ></Route>
         <Route path="/login" element={<Login/>} > </Route>
-        <Route path="/Admindashboard" element={<AdminDashboard/>}> </Route>
-        <Route path="/Employeedashbaord" element={<EmployeeDashboard/>}> </Route>
-        <Route path="/Customerdashboard" element={<CustomerDashboard/>}> </Route>
-        <Route path="/Agentdashboard" element={<AgentDashboard/>}> </Route>
+        <Route path="/Admindashboard/:accessid" element={<AdminDashboard/>}> </Route>
+        <Route path="/Employeedashbaord/:accessid" element={<EmployeeDashboard/>}> </Route>
+        <Route path="/Customerdashboard/:accessid" element={<CustomerDashboard/>}> </Route>
+        <Route path="/Agentdashboard/:accessid" element={<AgentDashboard/>}> </Route>
       </Routes>
     </>
     

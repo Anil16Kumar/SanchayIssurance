@@ -1,13 +1,21 @@
 import React, { useState } from "react";
 import "./Customer.css"
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button, Dropdown } from "react-bootstrap";
 import axios from "axios";
 import { getRole } from "../../services/authorization (1)";
+import { getCustomerData } from './../../services/CustomerService';
+import CustomerProfile from "./CustomerProfile";
 
 const CustomerDashboard = () => {
   const navigation = useNavigate();
+  let accessid=useParams().accessid;
+  const[planData,setPlanData]=useState('');
+  const[planName,setPlanName]=useState('');
+  const[customerData,setCustomerData]=useState('')
+  const[showProfile,setShowProfile]=useState(false);
+  
 
   const authenticateuser=async ()=>{
     let token=localStorage.getItem("auth");
@@ -25,18 +33,30 @@ const CustomerDashboard = () => {
     }
   }
 
-  useEffect(()=>{
-    authenticateuser();
-  },[])
+  const getCustomer=async ()=>{
+    if(accessid!==undefined){
+      try {
+        let response= await getCustomerData(accessid);
+        setCustomerData(response);
+      } 
+      catch (error) {
+        console.log(error);
+      }
+    }
+  }
+  useEffect(()=>{authenticateuser();},[]);
+  useEffect(()=>{getCustomer()},[]);
+  
 
 
-  const[planData,setPlanData]=useState('');
-  const[planName,setPlanName]=useState('');
+  
 
   let handplannameset=(e)=>{
     // setSelectedPlan(e);
   }
-
+  let handleProfile=()=>{
+    setShowProfile(!showProfile);
+  }
   let plans = async () => {
     let res = await axios.get(
       `http://localhost:8080/planapp/getall`
@@ -69,9 +89,6 @@ const CustomerDashboard = () => {
   const handleShowNavbar = () => {
     setShowNavbar(!showNavbar);
   };
-
-
-
 
   const Hamburger = () => (
     <svg
@@ -113,23 +130,27 @@ const CustomerDashboard = () => {
   );
 
 
-
-
   return (
     <>
+      <div className="moving-line">
+    </div>
       <nav className="navbar fixed-top">
       <div className="container">
-
         <div className="logo">
-          <h2 className="text-light fw-bold mb-4" style={{marginLeft:'150px'}}>Account</h2>
+        <h3 className="text-light fw-bold mb-4">Welcome {(customerData.firstname)}</h3>
         </div>
 
         <div className="menu-icon" onClick={handleShowNavbar}>
           <Hamburger />
         </div>
 
+        
+
         <div className={`nav-elements  ${showNavbar && "active"}`}>
           <ul>
+          <div>
+          <Button className="me-5 fw-bold" variant="info">DASHBOARD</Button>
+        </div>
 
             <li>
               <Dropdown >
@@ -137,7 +158,7 @@ const CustomerDashboard = () => {
                 Customer Profile
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>Profile</Dropdown.Item>
+                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={handleProfile}>Profile</Dropdown.Item>
                 <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>Document</Dropdown.Item>
                 <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>Change Password</Dropdown.Item>
                 </Dropdown.Menu>
@@ -177,7 +198,7 @@ const CustomerDashboard = () => {
             <li>
               <Button
                 variant="light"
-                onClick={() => handleNavClick("contactus")}
+                onClick={() => {localStorage.clear();navigation('/login');}}
               >
                 Logout
               </Button>
@@ -188,6 +209,9 @@ const CustomerDashboard = () => {
         </div>
       </div>
     </nav>
+    <div className="div-profile">
+    {showProfile && <CustomerProfile customerData={customerData}/>}
+    </div>
     </>
   );
 };

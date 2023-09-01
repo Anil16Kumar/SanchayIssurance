@@ -58,3 +58,8 @@
 .nav-item:last-child:hover {
   background-color: #00a22b;
 }
+
+.logo-text{
+  text-decoration: none;
+
+}

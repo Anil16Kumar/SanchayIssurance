@@ -13,74 +13,65 @@ const Login = () => {
   let [email, setEmail] = useState();
   let [password, setPassword] = useState();
   let [data, setdata] = useState([]);
-  let[cid,setcid]=useState();
+  let [accessid, setAccessid] = useState();
 
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const validateEmail = () => {
     if (!email) {
-      setEmailError('Email is required');
+      setEmailError("Email is required");
     }
   };
 
   const validatePassword = () => {
     if (!password) {
-      setPasswordError('Password is required');
+      setPasswordError("Password is required");
     }
-    if(password){
-      setPasswordError('')
+    if (password) {
+      setPasswordError("");
     }
-    
   };
 
-
-  let navigate=useNavigate()
-
+  let navigate = useNavigate();
 
   const hasclicked = async (e) => {
     e.preventDefault();
     validateEmail();
     validatePassword();
 
-    let res=await axios.post("http://localhost:8080/userinfoapp/login",{
-      username:email,
-      password
-    })
+    let res = await axios.post("http://localhost:8080/userinfoapp/login", {
+      username: email,
+      password,
+    });
 
-    let auth=res.data.accessToken;
-    console.log(auth);
-    localStorage.setItem("auth",auth);
-    console.log(res.data.customerid);
-    setcid(res.data.customerid);
-    let rolename=res.data.rolename;
-    if(rolename==="ROLE_CUSTOMER"){
-      navigate(`/CustomerDashboard`)
-      return
+    let auth = res.data.accessToken;
+    localStorage.setItem("auth", auth);
+    setAccessid(res.data.accessid);
+
+    let rolename = res.data.rolename;
+
+    if (rolename === "ROLE_CUSTOMER") {
+      navigate(`/CustomerDashboard/${res.data.accessid}`);
+      return;
+    } else if (rolename === "ROLE_EMPLOYEE") {
+      navigate(`/EmployeeDashboard/${res.data.accessid}`);
+      return;
+    } else if (rolename === "ROLE_AGENT") {
+      navigate(`/AgentDashboard/${res.data.accessid}`);
+      return;
     }
-    else if(rolename==="ROLE_EMPLOYEE"){
-      navigate(`/EmployeeDashboard`)
-      return
-    }
-    else if(rolename==="ROLE_AGENT"){
-      navigate(`/AgentDashboard`)
-      return
-    }
-    else
-    // navigate("/admindashboard")
-    navigate(`/AdminDashboard`)
-    // console.log(res);
-    // console.log(res);
-    localStorage.setItem("auth",res.data.accessToken)
-    
-    return 
+    else navigate(`/AdminDashboard/${res.data.accessid}`);
+
+    localStorage.setItem("auth", res.data.accessToken);
+    return;
   };
 
   return (
     <>
       <div style={divstyle}>
         <form className="form-main">
-        <h3 className="text-center">Sign In</h3>
+          <h3 className="text-center">Sign In</h3>
           <div classNameName="mb-3">
             <label for="exampleInputEmail1" classNameName="form-label">
               Username
@@ -113,28 +104,25 @@ const Login = () => {
               onBlur={validatePassword}
             />
             {passwordError && <span className="error">{passwordError}</span>}
-          </div>   
+          </div>
           <div className="text-center">
-          <button
-            type="submit"
-            className="btn btn-primary"
-            onClick={hasclicked}
-          >
-            Submit
-          </button>
+            <button
+              type="submit"
+              className="btn btn-primary"
+              onClick={hasclicked}
+            >
+              Submit
+            </button>
           </div>
           <div className="text-center mt-2">
-          <p className="forgot-password">
-           <a href="#" className="text-danger">Forgot password?</a>
-        </p>
+            <p className="forgot-password">
+              <a href="#" className="text-danger">
+                Forgot password?
+              </a>
+            </p>
           </div>
-          
         </form>
-
-
-        
       </div>
-      
     </>
   );
 };

@@ -201,7 +201,7 @@ const AgentDashboard = () => {
               <li>
                 <Button
                   variant="light"
-                  onClick={() => handleNavClick("contactus")}
+                  onClick={() => {localStorage.clear();navigation('/login');}}
                 >
                   Logout
                 </Button>

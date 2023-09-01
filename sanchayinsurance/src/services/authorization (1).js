@@ -2,7 +2,7 @@ import axios from "axios"
 
 export const getRole = async (token) => {
     const response = await axios.get(`http://localhost:8080/auth/getrole?token=${token}`);
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
 }
 

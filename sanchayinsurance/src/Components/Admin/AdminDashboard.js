@@ -120,7 +120,7 @@ const AdminDashboard = () => {
          <div className="container">
 
          <div className="logo">
-          <h2 className="text-light fw-bold mb-4" style={{marginLeft:'150px'}}>Dashboard</h2>
+          <a href='/login' className='logo-text'><h2 className="text-light fw-bold mb-4">Dashboard</h2></a> 
            </div>
 
            <div className="menu-icon" onClick={handleShowNavbar}>
@@ -222,7 +222,7 @@ const AdminDashboard = () => {
               <li>
               <Button
                 variant="light"
-                onClick={() => handleNavClick("contactus")}
+                onClick={() => {localStorage.clear();navigation('/login');}}
               >
                 Logout
               </Button>

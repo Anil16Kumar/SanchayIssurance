@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Employee.css'; // Import your CSS file
 
 import { useEffect } from 'react'
@@ -176,7 +176,7 @@ const EmployeeDashboard = () => {
             <li>
               <Button
                 variant="light"
-                onClick={() => handleNavClick("contactus")}
+                onClick={() => {localStorage.clear();navigation('/login');}}
               >
                 Logout
               </Button>
