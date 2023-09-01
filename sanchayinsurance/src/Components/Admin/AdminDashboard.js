@@ -1,31 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Admin.css'; // Import your CSS file
-
-const AdminDashboard = () => {
-import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { Authenticateadmin } from '../../services/Authenticateuser';
+
+
 
 const AdminDashboard = () => {
 
-  const navigation = useNavigate();
+  // const navigation = useNavigate();
 
-  const authenticateuser=async ()=>{
-    let isAdmin=await Authenticateadmin();
-    if(!isAdmin){
-      navigation("/")
-    }
-  }
+  // const authenticateuser=async ()=>{
+  //   let isAdmin=await Authenticateadmin();
+  //   if(!isAdmin){
+  //     navigation("/")
+  //   }
+  // }
 
-  useEffect(()=>{
-    authenticateuser();
-  },[])
+  // useEffect(()=>{
+  //   authenticateuser();
+  // },[])
 
   return (
     <div className="customer-dashboard">
       <nav className="navbar">
         <ul className="nav-list">
-        <li className="nav-item">Dashboard  </li>
+        <li className="nav-item fw-bold">Dashboard  </li>
           
           <li className="nav-item">
           Agent &#9662;

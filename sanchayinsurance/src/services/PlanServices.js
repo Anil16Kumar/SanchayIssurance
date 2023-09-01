@@ -5,8 +5,8 @@ import { getSchemesByPlanname } from './SchemesService';
 import SharedTable from '../sharedComponents/SharedTable';
 import { Table } from 'react-bootstrap';
 const PlanServices = ({selectedPlan}) => {
-const[planSchemes,setPlanScheme]=useState()
 
+const[planSchemes,setPlanScheme]=useState()
   const fetchdata=async ()=>{
     try {
       let response= await getSchemesByPlanname(selectedPlan);
