@@ -2,6 +2,25 @@ import React from 'react';
 import './Admin.css'; // Import your CSS file
 
 const AdminDashboard = () => {
+import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { Authenticateadmin } from '../../services/Authenticateuser';
+
+const AdminDashboard = () => {
+
+  const navigation = useNavigate();
+
+  const authenticateuser=async ()=>{
+    let isAdmin=await Authenticateadmin();
+    if(!isAdmin){
+      navigation("/")
+    }
+  }
+
+  useEffect(()=>{
+    authenticateuser();
+  },[])
+
   return (
     <div className="customer-dashboard">
       <nav className="navbar">
@@ -17,7 +36,6 @@ const AdminDashboard = () => {
               <li>View commission withdrawal  </li>
             </ul>
           </li>
-
 
           <li className="nav-item">
           Insurance &#9662;
