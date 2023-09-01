@@ -10,12 +10,12 @@ const Navbar = ({ setActiveComponent, setSelectedPlan}) => {
   const[planName,setPlanName]=useState('');
 
   let handplannameset=(e)=>{
-    setPlanName(e);
-  }
-
-  let handleSelectedPlan=(e)=>{
     setSelectedPlan(e);
   }
+
+  // let handleSelectedPlan=(e)=>{
+  //   setSelectedPlan(e);
+  // }
 
 
   let plans = async () => {
@@ -30,7 +30,7 @@ const Navbar = ({ setActiveComponent, setSelectedPlan}) => {
   if (planData) {
     planNames = planData.map((bt) => {
       return (
-        <Dropdown.Item href="#"  onClick={()=>{handplannameset(bt.planname);handleSelectedPlan(planName);handleNavClick('plan')}} style={{whiteSpace: 'normal'}}>{bt.planname!==null?bt.planname:"select plan name"}</Dropdown.Item>
+        <Dropdown.Item href="#" value={bt.planname} onClick={()=>{handleNavClick('plan'); handplannameset(bt.planname)}} style={{whiteSpace: 'normal'}}>{bt.planname!==null?bt.planname:"select plan name"}</Dropdown.Item>
       );
     });
   }

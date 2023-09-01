@@ -10,7 +10,7 @@ import PlanServices from '../../services/PlanServices';
 
 const Home = () => {
   const [activeComponent, setActiveComponent] = useState('homedashboard');
-  const[selectedPlan,setSelectedPlan]=useState(null); 
+  const[selectedPlan,setSelectedPlan]=useState(''); 
 
   const renderComponent = () => {
     switch (activeComponent) {
