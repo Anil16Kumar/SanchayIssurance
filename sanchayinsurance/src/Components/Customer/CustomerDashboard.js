@@ -1,24 +1,33 @@
 import React, { useState } from "react";
 import "./Customer.css"
 import { useEffect } from "react";
-import { AuthenticateCustomer } from "../../services/Authenticateuser";
 import { useNavigate } from "react-router-dom";
 import { Button, Dropdown } from "react-bootstrap";
 import axios from "axios";
+import { getRole } from "../../services/authorization (1)";
 
 const CustomerDashboard = () => {
-  // const navigation = useNavigate();
+  const navigation = useNavigate();
 
-  // const authenticateuser=async ()=>{
-  //   let isCustomer=await AuthenticateCustomer();
-  //   if(!isCustomer){
-  //     navigation("/")
-  //   }
-  // }
+  const authenticateuser=async ()=>{
+    let token=localStorage.getItem("auth");
+    if(token==null){
+      navigation("/");
+    }
+    else{
+      let nrole= await getRole(token);
+      console.log(nrole);
+      if(nrole!=='ROLE_CUSTOMER'){
+        localStorage.clear();
+        navigation("/");
+      }
+      
+    }
+  }
 
-  // useEffect(()=>{
-  //   authenticateuser();
-  // },[])
+  useEffect(()=>{
+    authenticateuser();
+  },[])
 
 
   const[planData,setPlanData]=useState('');

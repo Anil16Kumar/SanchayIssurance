@@ -3,20 +3,30 @@ import './Employee.css'; // Import your CSS file
 
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { AuthenticateEmployee } from '../../services/Authenticateuser';
+import { getRole } from '../../services/authorization (1)';
 
 const EmployeeDashboard = () => {
-  // const navigation = useNavigate();
+  const navigation = useNavigate();
 
-  // const authenticateuser=async ()=>{
-  //   let isEmployee=await AuthenticateEmployee();
-  //   if(!isEmployee){
-  //     navigation("/")
-  //   }
-  // }
-  // useEffect(()=>{
-  //   authenticateuser();
-  // },[])
+  const authenticateuser=async ()=>{
+    let token=localStorage.getItem("auth");
+    if(token==null){
+      navigation("/");
+    }
+    else{
+      let nrole= await getRole(token);
+      console.log(nrole);
+      if(nrole!=='ROLE_EMPLOYEE'){
+        localStorage.clear();
+        navigation("/");
+      }
+      
+    }
+  }
+
+  useEffect(()=>{
+    authenticateuser();
+  },[])
 
   return (
     <div className="customer-dashboard">

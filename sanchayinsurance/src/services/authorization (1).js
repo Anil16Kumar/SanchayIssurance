@@ -1,8 +1,9 @@
 import axios from "axios"
 
 export const getRole = async (token) => {
-    const response = await axios.post(`http://localhost:8080/api/auth/getrole`);
-    return response;
+    const response = await axios.get(`http://localhost:8080/auth/getrole?token=${token}`);
+    console.log(response.data);
+    return response.data;
 }
 
 export const getUsername = async (token) => {

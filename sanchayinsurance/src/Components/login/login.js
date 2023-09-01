@@ -47,6 +47,10 @@ const Login = () => {
       username:email,
       password
     })
+
+    let auth=res.data.accessToken;
+    console.log(auth);
+    localStorage.setItem("auth",auth);
     console.log(res.data.customerid);
     setcid(res.data.customerid);
     let rolename=res.data.rolename;

@@ -2,23 +2,32 @@
 import React, { useEffect } from 'react';
 import './Agent.css'; 
 import { useNavigate } from 'react-router-dom';
-import { AuthenticateAgent } from '../../services/Authenticateuser';
+import { getRole } from '../../services/authorization (1)';
 
 
 const AgentDashboard = () => {
 
-  // const navigation = useNavigate();
+  const navigation = useNavigate();
 
-  // const authenticateuser=async ()=>{
-  //   let isAgent=await AuthenticateAgent();
-  //   if(!isAgent){
-  //     navigation("/")
-  //   }
-  // }
+  const authenticateuser=async ()=>{
+    let token=localStorage.getItem("auth");
+    if(token==null){
+      navigation("/");
+    }
+    else{
+      let nrole= await getRole(token);
+      console.log(nrole);
+      if(nrole!=='ROLE_AGENT'){
+        localStorage.clear();
+        navigation("/");
+      }
+      
+    }
+  }
 
-  // useEffect(()=>{
-  //   authenticateuser();
-  // },[])
+  useEffect(()=>{
+    authenticateuser();
+  },[])
 
   return (
     <div className="customer-dashboard">

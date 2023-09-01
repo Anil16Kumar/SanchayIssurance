@@ -1,23 +1,33 @@
 import React, { useEffect } from 'react';
 import './Admin.css'; // Import your CSS file
 import { useNavigate } from 'react-router-dom';
+import { getRole } from '../../services/authorization (1)';
 
 
 
 const AdminDashboard = () => {
 
-  // const navigation = useNavigate();
+  const navigation = useNavigate();
 
-  // const authenticateuser=async ()=>{
-  //   let isAdmin=await Authenticateadmin();
-  //   if(!isAdmin){
-  //     navigation("/")
-  //   }
-  // }
+  const authenticateuser=async ()=>{
+    let token=localStorage.getItem("auth");
+    if(token==null){
+      navigation("/");
+    }
+    else{
+      let nrole= await getRole(token);
+      console.log(nrole);
+      if(nrole!=='ROLE_ADMIN'){
+        localStorage.clear();
+        navigation("/");
+      }
+      
+    }
+  }
 
-  // useEffect(()=>{
-  //   authenticateuser();
-  // },[])
+  useEffect(()=>{
+    authenticateuser();
+  },[])
 
   return (
     <div className="customer-dashboard">
