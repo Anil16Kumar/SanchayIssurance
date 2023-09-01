@@ -110,14 +110,18 @@ const CustomerDashboard = () => {
     <>
       <nav className="navbar fixed-top">
       <div className="container">
+
         <div className="logo">
           <h2 className="text-light fw-bold mb-4" style={{marginLeft:'150px'}}>Account</h2>
         </div>
+
         <div className="menu-icon" onClick={handleShowNavbar}>
           <Hamburger />
         </div>
+
         <div className={`nav-elements  ${showNavbar && "active"}`}>
           <ul>
+
             <li>
               <Dropdown >
                 <Dropdown.Toggle variant="light" id="dropdown-basic">
@@ -130,6 +134,7 @@ const CustomerDashboard = () => {
                 </Dropdown.Menu>
               </Dropdown>
             </li>
+
             <li>
               <Dropdown >
                 <Dropdown.Toggle variant="light" id="dropdown-basic">
@@ -159,6 +164,7 @@ const CustomerDashboard = () => {
                 </Dropdown.Menu>
               </Dropdown>
             </li>
+
             <li>
               <Button
                 variant="light"
@@ -167,7 +173,9 @@ const CustomerDashboard = () => {
                 Logout
               </Button>
             </li>
+
           </ul>
+          
         </div>
       </div>
     </nav>

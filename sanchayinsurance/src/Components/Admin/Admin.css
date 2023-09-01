@@ -1,60 +1,60 @@
-.admin-dashboard {
-    width: 100%;
-  }
-  
-  .navbar {
-    display: flex;
-    justify-content: space-around;
-    background-color: #007bff;
-    padding: 10px 20px;
-    color: rgb(0, 0, 0);
-  }
-  
-  .nav-list {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    justify-content: space-around;
-  }
-  
-  .nav-item {
-    position: relative;
-    cursor: pointer;
-    margin-left: 40px;
-  }
-  
-  .dropdown-menu {
-    position: absolute;
-    left: 0;
-    top: 100%;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 5px 0;
-    display: none;
-  }
-  
-  .nav-item:hover .dropdown-menu {
-    display: block;
-  }
-  
-  .dropdown-menu li {
-    padding: 5px 15px;
-    cursor: pointer;
-  }
-  
-  .dropdown-menu li:hover {
-    background-color: #007bff;
-    color: rgb(3, 3, 3);
-  }
-   
-  .nav-item:last-child {
-    background-color: #dc3545;
-    border-radius: 5px;
-    padding: 5px 15px;
-    font-weight: bold;
-  }
-  
-  .nav-item:last-child:hover {
-    background-color: #c82333;
-  }
+.customer-dashboard {
+  width: 100%;
+}
+
+.navbar {
+  background-color: #06032f;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 10px 20px;
+  color: rgb(238, 235, 242);
+  height: 9vh;
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.nav-item {
+  position: relative;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px 0;
+  display: none;
+}
+
+.nav-item:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu li {
+  padding: 5px 15px;
+  cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+  background-color: #007bff;
+  color: rgb(3, 3, 3);
+}
+ 
+.nav-item:last-child {
+  background-color: #dc3545;
+  border-radius: 5px;
+  padding: 5px 15px;
+  font-weight: bold;
+}
+
+.nav-item:last-child:hover {
+  background-color: #00a22b;
+}
