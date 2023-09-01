@@ -3,9 +3,12 @@
   }
   
   .navbar {
-    background-color: #007bff;
+    background-color: #06032f;
+    display: flex;
+    justify-content: space-evenly;
     padding: 10px 20px;
-    color: rgb(0, 0, 0);
+    color: rgb(238, 235, 242);
+    height: 9vh;
   }
   
   .nav-list {
@@ -53,5 +56,5 @@
   }
   
   .nav-item:last-child:hover {
-    background-color: #c82333;
+    background-color: #00a22b;
   }

@@ -1,22 +1,33 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './PlanServices.css'
-
+import { getSchemesByPlanname } from './SchemesService';
+import SharedTable from '../sharedComponents/SharedTable';
+import { Table } from 'react-bootstrap';
 const PlanServices = ({selectedPlan}) => {
-  // const[planData,setPlanData]=useState('');  
 
-  // let plans = async () => {
-  //   let res = await axios.get(
-  //     `http://localhost:8080/planapp/getall`
-  //   );
-    
-  //   setPlanData(res.data);
-  //   // console.log(bankdetail);
-  //   // console.log(bankdetail[0].bankid);
-  // };
-    return(
+const[planSchemes,setPlanScheme]=useState()
+  const fetchdata=async ()=>{
+    try {
+      let response= await getSchemesByPlanname(selectedPlan);
+      setPlanScheme(response);
+    } catch (error) {
+      console.log(error);
+    } 
+  }
+  
+  const columns = ['schemename', 'minage', 'maxage','minamount','maxamount','mininvesttime','maxinvesttime','registrationcommission'];
+  useEffect(()=>{
+    fetchdata();
+  },[selectedPlan])  
+  return(
       <>
-        <div className='planservices'>Schemes all here {selectedPlan}</div>
+        <div className='planservices'>
+          {
+            planSchemes &&
+            <SharedTable data={planSchemes} columns={columns}/>
+          }
+        </div>
       </>
     );  
   
