@@ -91,6 +91,14 @@
     background-color: inherit;
     animation: moveLine 5s linear infinite; /* Adjust animation speed as needed */
   }
+
+  /* change password div */
+
+  .div-changepassword{
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+  }
   
   @keyframes moveLine {
     0% {

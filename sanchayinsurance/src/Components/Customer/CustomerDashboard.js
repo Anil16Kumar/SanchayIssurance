@@ -7,6 +7,8 @@ import axios from "axios";
 import { getRole } from "../../services/authorization (1)";
 import { getCustomerData } from './../../services/CustomerService';
 import CustomerProfile from "./CustomerProfile";
+import ChangePassword from './../../sharedComponents/ChangePassword';
+import CustomerDocuments from "./CustomerDocuments";
 
 const CustomerDashboard = () => {
   const navigation = useNavigate();
@@ -15,6 +17,9 @@ const CustomerDashboard = () => {
   const[planName,setPlanName]=useState('');
   const[customerData,setCustomerData]=useState('')
   const[showProfile,setShowProfile]=useState(false);
+  const[showChangePassword,setShowChangePassword]=useState(false);
+  const[showCustomerDocument,setShowCustomerDocument]=useState(false);
+  const [selectedComponent, setSelectedComponent] = useState(null);
   
 
   const authenticateuser=async ()=>{
@@ -48,15 +53,14 @@ const CustomerDashboard = () => {
   useEffect(()=>{getCustomer()},[]);
   
 
-
+  const handleButtonClick = (componentName) => {
+    setSelectedComponent(componentName);
+  };
   
 
   let handplannameset=(e)=>{
     // setSelectedPlan(e);
-  }
-  let handleProfile=()=>{
-    setShowProfile(!showProfile);
-  }
+}
   let plans = async () => {
     let res = await axios.get(
       `http://localhost:8080/planapp/getall`
@@ -158,9 +162,9 @@ const CustomerDashboard = () => {
                 Customer Profile
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={handleProfile}>Profile</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>Document</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>Change Password</Dropdown.Item>
+                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={() => handleButtonClick('profilecomponent')}>Profile</Dropdown.Item>
+                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={() => handleButtonClick('documentcomponent')}>Document</Dropdown.Item>
+                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={() => handleButtonClick('changepasswordcomponent')}>Change Password</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </li>
@@ -210,8 +214,15 @@ const CustomerDashboard = () => {
       </div>
     </nav>
     <div className="div-profile">
-    {showProfile && <CustomerProfile customerData={customerData}/>}
+    {selectedComponent==='profilecomponent' && <CustomerProfile customerData={customerData}/>}
     </div>
+    <div className="div-changepassword">
+      {selectedComponent==='changepasswordcomponent' && <ChangePassword/>}
+    </div>
+    <div className="div-customerdocument">
+      {selectedComponent==='documentcomponent' && <CustomerDocuments/>}
+    </div>
+
     </>
   );
 };
