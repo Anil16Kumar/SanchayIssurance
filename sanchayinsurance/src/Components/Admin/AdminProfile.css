@@ -62,7 +62,7 @@ body, html, .App, #root, .auth-wrapper {
 .forgot-password a {
   color: #167bff;
 }
-.customerprofile{
+.adminprofile{
     margin-top: 50px;
     width: 700px;
     /* display: flex; */
