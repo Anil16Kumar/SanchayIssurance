@@ -9,6 +9,8 @@ import { getCustomerData } from './../../services/CustomerService';
 import CustomerProfile from "./CustomerProfile";
 import ChangePassword from './../../sharedComponents/ChangePassword';
 import CustomerDocuments from "./CustomerDocuments";
+import PlanServices from "../../services/PlanServices";
+import InsuranceAccount from './InsuranceAccount';
 
 const CustomerDashboard = () => {
   const navigation = useNavigate();
@@ -20,6 +22,9 @@ const CustomerDashboard = () => {
   const[showChangePassword,setShowChangePassword]=useState(false);
   const[showCustomerDocument,setShowCustomerDocument]=useState(false);
   const [selectedComponent, setSelectedComponent] = useState(null);
+  const[selectedPlan,setSelectedPlan]=useState('');
+  const[showInsuranceAccount,setShowInsuranceAccount]=useState(false) 
+  const[showPlans,setShowPlans]=useState(false)
   
 
   const authenticateuser=async ()=>{
@@ -56,10 +61,16 @@ const CustomerDashboard = () => {
   const handleButtonClick = (componentName) => {
     setSelectedComponent(componentName);
   };
-  
+
+  const handleInsuranceAccount = () => {
+    setShowInsuranceAccount(!showInsuranceAccount);
+  };
+   const handleshowplans = () => {
+    setShowPlans(!showPlans);
+  };
 
   let handplannameset=(e)=>{
-    // setSelectedPlan(e);
+    setSelectedPlan(e);
 }
   let plans = async () => {
     let res = await axios.get(
@@ -73,7 +84,7 @@ const CustomerDashboard = () => {
   if (planData) {
     planNames = planData.map((bt) => {
       return (
-        <Dropdown.Item href="#" value={bt.planname} onClick={()=>{handleNavClick('plan'); handplannameset(bt.planname)}} style={{whiteSpace: 'normal'}}>{bt.planname!==null?bt.planname:"select plan name"}</Dropdown.Item>
+        <Dropdown.Item href="#" value={bt.planname} onClick={()=>{handleNavClick('plan'); handplannameset(bt.planname);handleButtonClick('planscomponent')}} style={{whiteSpace: 'normal'}}>{bt.planname!==null?bt.planname:"select plan name"}</Dropdown.Item>
       );
     });
   }
@@ -171,7 +182,7 @@ const CustomerDashboard = () => {
 
             <li>
               <Dropdown >
-                <Dropdown.Toggle variant="light" id="dropdown-basic">
+                <Dropdown.Toggle variant="light" id="dropdown-basic" >
                   Insurance Plans
                 </Dropdown.Toggle>
 
@@ -182,7 +193,7 @@ const CustomerDashboard = () => {
             </li>
 
             <li>
-              <Button variant="light" onClick={() => handleNavClick("about")}>
+              <Button variant="light" onClick={() => handleButtonClick('insurancecomponent')}>
                 Insurance Account
               </Button>
             </li>
@@ -207,9 +218,7 @@ const CustomerDashboard = () => {
                 Logout
               </Button>
             </li>
-
           </ul>
-          
         </div>
       </div>
     </nav>
@@ -222,6 +231,13 @@ const CustomerDashboard = () => {
     <div className="div-customerdocument">
       {selectedComponent==='documentcomponent' && <CustomerDocuments/>}
     </div>
+    <div className="div-plans">
+      {selectedPlan && (<PlanServices selectedPlan={selectedPlan}/>) }
+    </div>
+    <div className="div-insuranceAccount">
+      {selectedComponent==='insurancecomponent' && <InsuranceAccount accessid={accessid}/>}
+    </div>
+
 
     </>
   );
