@@ -4,7 +4,7 @@ import "./Receipt.css";
 
 const Receipt = () => {
   const location = useLocation();
-  const formData = location.state.formData; // Access the data using the correct key
+  const formData = location.state.formData;  
 
   return (
     <div className="receipt">
