@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const divstyle = {
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "center",         
     alignItems: "center",
     height: "100vh",
   };
