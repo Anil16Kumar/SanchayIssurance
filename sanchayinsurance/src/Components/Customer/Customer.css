@@ -65,7 +65,7 @@
 
   /* Customer Profile Div */
 
-  .div-profile{
+  .div-profile .div-queries{
     margin-top: 70px;
     display: flex;
     justify-content: center;

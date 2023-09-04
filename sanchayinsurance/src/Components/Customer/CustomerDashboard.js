@@ -11,6 +11,7 @@ import ChangePassword from './../../sharedComponents/ChangePassword';
 import CustomerDocuments from "./CustomerDocuments";
 import PlanServices from "../../services/PlanServices";
 import InsuranceAccount from './InsuranceAccount';
+import Enquiry from './../../sharedComponents/query/Enquiry';
 
 const CustomerDashboard = () => {
   const navigation = useNavigate();
@@ -25,6 +26,7 @@ const CustomerDashboard = () => {
   const[selectedPlan,setSelectedPlan]=useState('');
   const[showInsuranceAccount,setShowInsuranceAccount]=useState(false) 
   const[showPlans,setShowPlans]=useState(false)
+  const [querydata, setQueryData] = useState(null);
  
   
   const handleUpdateProfile = async (updatedData) => {
@@ -38,7 +40,6 @@ const CustomerDashboard = () => {
     if(response){
       setCustomerData(response);
     }
-    
   };
 
   const authenticateuser=async ()=>{
@@ -68,9 +69,20 @@ const CustomerDashboard = () => {
       }
     }
   }
+
+  // const handleUpdateQuery = async (querydata) => {
+  //   let response=await updateQuery(accessid,querydata);
+  // };
+
   useEffect(()=>{authenticateuser();},[]);
   useEffect(()=>{getCustomer()},[]);
   
+  const handlequeryData = (data) => {
+    setQueryData(data);
+  };
+
+
+
 
   const handleNavLinkClick = (componentName) => {
     setSelectedComponent(componentName);
@@ -221,7 +233,7 @@ const CustomerDashboard = () => {
                 Queries
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>Query</Dropdown.Item>
+                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={() => handleNavLinkClick('querycomponent')}>Query</Dropdown.Item>
                 <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>Feed Back</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
@@ -254,8 +266,9 @@ const CustomerDashboard = () => {
     <div className="div-insuranceAccount">
       {selectedComponent==='insurancecomponent' && <InsuranceAccount accessid={accessid}/>}
     </div>
-
-
+    <div className="div-queries">
+      {selectedComponent==='querycomponent' && <Enquiry onSubmit={handlequeryData}/>}
+    </div>
     </>
   );
 };

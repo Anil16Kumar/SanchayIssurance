@@ -1,3 +1,4 @@
+import React, { Component }  from 'react';
 import "./App.css";
 import ReactDOM from "react-dom/client";
 import { Route, Routes } from "react-router-dom";
