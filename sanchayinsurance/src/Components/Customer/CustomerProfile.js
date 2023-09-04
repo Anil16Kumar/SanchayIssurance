@@ -1,37 +1,69 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./CustomerProfile.css";
 import { Button, Table } from "react-bootstrap";
+import { updateCustomer } from "../../services/CustomerService";
 
-const CustomerProfile = (props) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const {
-    firstname,
-    lastname,
-    email,
-    address,
-    state,
-    city,
-    pincode,
-    mobileno,
-    nominee,
-    nomineerelation,
-    birthdate,
-  } = props.customerData;
-
-  const handleEditClick = () => {
-    setIsEditing(!isEditing);
+const CustomerProfile = ({customerData,onUpdateProfile}) => {
+  // const [isEditing, setIsEditing] = useState(false);
+  const[formData,setFormData]=useState(customerData);
+  let accessid=customerData.customerid;
+  
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
-  const handleSubmit = (e) => {
+  const [firstname, setFirstname] = useState(formData.firstname);
+  const [lastname, setLastname] = useState(formData.lastname);
+  const [email, setEmail] = useState(formData.email);
+  const [address, setAddress] = useState(formData.address);
+  const [state, setState] = useState(formData.state);
+  const [city, setCity] = useState(formData.city);
+  const [pincode, setPincode] = useState(formData.pincode);
+  const [mobileno, setMobileno] = useState(formData.mobileno);
+  const [birthdate, setBirthdate] = useState(formData.mobileno);
+  const [nominee, setNominee] = useState(formData.nominee);
+  const [nomineerelation, setNomineerelation] = useState(formData.nomineerelation);
+ 
+
+  const profileData = {
+    firstname: firstname,
+    lastname:lastname,
+    email:email,
+    address:address,
+    state:state,
+    city: city,
+    pincode:pincode,
+    mobileno: mobileno,
+    birthdate: birthdate,
+    nominee: nominee,
+    nomineerelation: nomineerelation
+   };
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // Send data to the server or perform any necessary actions
-    setIsEditing(false); // Disable editing after submission
+    // if(profileData){
+    //   let response=await updateCustomer(accessid,profileData);
+    //   console.log(response);
+    // }
+    onUpdateProfile(formData);
   };
+ 
+  // const handleInputChange=(e)=>{
+  //     e.preventDefault()
+  //     setFirstname(e.target);
+  // }
+  
+ 
+
 
   return (
     <>
+      
       <div className="customerprofile">
-        <form onSubmit={handleSubmit}>
+        <form>
           <h3 className="text-center fw-bold text-light mb-4">
             Profile Details
           </h3>
@@ -40,178 +72,145 @@ const CustomerProfile = (props) => {
               <tr>
                 <td><li>
                 <label>First name</label>
-                {isEditing ? (
+                
                   <input
-                    value={firstname}
-                    type="text"
-                    className="form-control"
-                    placeholder={firstname.toUpperCase()}
+                  type="text"
+                  id="field1"
+                  name="firstname"
+                  // value={firstname}
+                  placeholder={firstname}
+                  onChange={handleInputChange}
                   />
-                ) : (
-                  <div>
-                    <span>{firstname.toUpperCase()}</span>
-                  </div>
-                )}
               </li></td>
                 <td><li>
                 <label>Last Name</label>
-                {isEditing ? (
                   <input
-                    value={lastname}
                     type="text"
+                    name="lastname"
                     className="form-control"
                     placeholder={lastname}
+                    onChange={handleInputChange}
                   />
-                ) : (
-                  <div>
-                    <span>{lastname.toUpperCase()}</span>
-                  </div>
-                )}
+               
               </li></td>
               </tr>
               <tr>
                 <td><li>
                 <label>Email</label>
-                {isEditing ? (
+              
                   <input
-                    value={lastname}
                     type="text"
+                    name="email"
                     className="form-control"
                     placeholder={email}
+                    onChange={handleInputChange}
                   />
-                ) : (
-                  <div>
-                    <span>{email}</span>
-                  </div>
-                )}
+              
               </li></td>
                 <td><li>
                 <label>Address</label>
-                {isEditing ? (
+                
                   <input
-                    value={address}
+                    
                     type="text"
+                    name="address"
                     className="form-control"
                     placeholder={address}
+                    onChange={handleInputChange}
                   />
-                ) : (
-                  <div>
-                    <span>{address}</span>
-                  </div>
-                )}
+               
               </li></td>
               </tr>
               <tr>
                 <td><li>
                 <label>City</label>
-                {isEditing ? (
+               
                   <input
-                    value={city}
                     type="text"
+                    name="city"
                     className="form-control"
                     placeholder={city}
+                    onChange={handleInputChange}
                   />
-                ) : (
-                  <div>
-                    <span>{city}</span>
-                  </div>
-                )}
+                
               </li></td>
                 <td><li>
                 <label>State</label>
-                {isEditing ? (
+              
                   <input
-                    value={state}
                     type="text"
+                    name="state"
                     className="form-control"
                     placeholder={state}
+                    onChange={handleInputChange}
                   />
-                ) : (
-                  <div>
-                    <span>{state}</span>
-                  </div>
-                )}
+              
               </li></td>
               </tr>
               <tr>
                 <td><li>
                 <label>Pincode</label>
-                {isEditing ? (
+                
                   <input
-                    value={pincode}
                     type="text"
+                    name="pincode"
                     className="form-control"
                     placeholder={pincode}
+                    onChange={handleInputChange}
                   />
-                ) : (
-                  <div>
-                    <span>{pincode}</span>
-                  </div>
-                )}
+                
               </li></td>
                 <td><li>
                 <label>Mobile No</label>
-                {isEditing ? (
+             
                   <input
-                    value={pincode}
                     type="text"
+                    name="mobileno"
                     className="form-control"
                     placeholder={mobileno}
+                    onChange={handleInputChange}
                   />
-                ) : (
-                  <div>
-                    <span>{mobileno}</span>
-                  </div>
-                )}
+               
               </li></td>
               </tr>
               <tr>
                 <td> <li>
                 <label>Nominee</label>
-                {isEditing ? (
+               
                   <input
-                    value={nominee}
                     type="text"
+                    name="nominee"
                     className="form-control"
                     placeholder={nominee}
+                    onChange={handleInputChange}
                   />
-                ) : (
-                  <div>
-                    <span>{nominee}</span>
-                  </div>
-                )}
+                
               </li></td>
                 <td><li>
                 <label>Nominee Relation</label>
-                {isEditing ? (
+                
                   <input
-                    value={nomineerelation}
                     type="text"
+                    name="nomineerelation"
                     className="form-control"
                     placeholder={nomineerelation}
+                    onChange={handleInputChange}
                   />
-                ) : (
-                  <div>
-                    <span>{nomineerelation}</span>
-                  </div>
-                )}
+               
               </li></td>
               </tr>
               <tr >
                 <td colspan="2"><li>
                 <label>Birthdate</label>
-                {isEditing ? (
+                
                   <input
-                    value={birthdate}
                     type="text"
+                    name="birthdate"
                     className="form-control"
                     placeholder={birthdate}
+                    onChange={handleInputChange}
                   />
-                ) : (
-                  <div>
-                    <span>{birthdate}</span>
-                  </div>
-                )}
+              
               </li></td>
               </tr>
             </tbody>
@@ -224,9 +223,8 @@ const CustomerProfile = (props) => {
               type="button"
               variant="warning"
               style={{ width: "150px", height: "50px", marginLeft: "30px" }}
-              onClick={handleEditClick}
-            >
-              {isEditing ? "Save" : "Edit"}
+              onClick={handleSubmit}>
+              Update
             </Button>
           </div>
         </form>
