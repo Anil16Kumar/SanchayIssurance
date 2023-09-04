@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import "./Customer.css"
 import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Button, Dropdown } from "react-bootstrap";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
+import {Button, Dropdown, Nav, Navbar } from "react-bootstrap";
 import axios from "axios";
 import { getRole } from "../../services/authorization (1)";
-import { getCustomerData } from './../../services/CustomerService';
+import { getCustomerData, updateCustomer } from './../../services/CustomerService';
 import CustomerProfile from "./CustomerProfile";
 import ChangePassword from './../../sharedComponents/ChangePassword';
 import CustomerDocuments from "./CustomerDocuments";
@@ -25,7 +25,21 @@ const CustomerDashboard = () => {
   const[selectedPlan,setSelectedPlan]=useState('');
   const[showInsuranceAccount,setShowInsuranceAccount]=useState(false) 
   const[showPlans,setShowPlans]=useState(false)
+ 
   
+  const handleUpdateProfile = async (updatedData) => {
+    // Simulate an API call to update the profile data
+    // Replace this with your actual API call
+    // console.log(updatedData);
+    let response=await updateCustomer(accessid,updatedData);
+    // await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate delay
+
+    // Assuming the API call was successful and updatedData is returned
+    if(response){
+      setCustomerData(response);
+    }
+    
+  };
 
   const authenticateuser=async ()=>{
     let token=localStorage.getItem("auth");
@@ -58,7 +72,7 @@ const CustomerDashboard = () => {
   useEffect(()=>{getCustomer()},[]);
   
 
-  const handleButtonClick = (componentName) => {
+  const handleNavLinkClick = (componentName) => {
     setSelectedComponent(componentName);
   };
 
@@ -71,7 +85,9 @@ const CustomerDashboard = () => {
 
   let handplannameset=(e)=>{
     setSelectedPlan(e);
-}
+  }
+
+  
   let plans = async () => {
     let res = await axios.get(
       `http://localhost:8080/planapp/getall`
@@ -84,7 +100,7 @@ const CustomerDashboard = () => {
   if (planData) {
     planNames = planData.map((bt) => {
       return (
-        <Dropdown.Item href="#" value={bt.planname} onClick={()=>{handleNavClick('plan'); handplannameset(bt.planname);handleButtonClick('planscomponent')}} style={{whiteSpace: 'normal'}}>{bt.planname!==null?bt.planname:"select plan name"}</Dropdown.Item>
+        <Dropdown.Item href="#" value={bt.planname} onClick={()=>{handleNavClick('plan'); handplannameset(bt.planname);handleNavLinkClick('plancomponent')}} style={{whiteSpace: 'normal'}}>{bt.planname!==null?bt.planname:"select plan name"}</Dropdown.Item>
       );
     });
   }
@@ -143,16 +159,18 @@ const CustomerDashboard = () => {
       </g>
     </svg>
   );
-
+  
+  
 
   return (
     <>
-      <div className="moving-line">
+    
+    <div className="moving-line">
     </div>
-      <nav className="navbar fixed-top">
+      <nav className="navbar fixed-top bg-light">
       <div className="container">
         <div className="logo">
-        <h3 className="text-light fw-bold mb-4">Welcome {(customerData.firstname)}</h3>
+        <h3 className="text-dark fw-bold mb-4">Welcome {(customerData.firstname)}</h3>
         </div>
 
         <div className="menu-icon" onClick={handleShowNavbar}>
@@ -164,28 +182,27 @@ const CustomerDashboard = () => {
         <div className={`nav-elements  ${showNavbar && "active"}`}>
           <ul>
           <div>
-          <Button className="me-5 fw-bold" variant="info">DASHBOARD</Button>
+          <li className="me-5 fw-bold text-dark" variant="info">DASHBOARD</li>
         </div>
 
             <li>
               <Dropdown >
-                <Dropdown.Toggle variant="light" id="dropdown-basic">
+                <Dropdown.Toggle variant="light" id="dropdown-basic" className="fw-bold">
                 Customer Profile
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={() => handleButtonClick('profilecomponent')}>Profile</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={() => handleButtonClick('documentcomponent')}>Document</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={() => handleButtonClick('changepasswordcomponent')}>Change Password</Dropdown.Item>
+                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={() => handleNavLinkClick('profilecomponent')}>Profile</Dropdown.Item>
+                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={() => handleNavLinkClick('documentcomponent')}>Document</Dropdown.Item>
+                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={() => handleNavLinkClick('changepasswordcomponent')}>Change Password</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </li>
-
+          
             <li>
               <Dropdown >
-                <Dropdown.Toggle variant="light" id="dropdown-basic" >
+                <Dropdown.Toggle variant="light" id="dropdown-plan" className="fw-bold" >
                   Insurance Plans
                 </Dropdown.Toggle>
-
                 <Dropdown.Menu>
                   {planNames}
                 </Dropdown.Menu>
@@ -193,14 +210,14 @@ const CustomerDashboard = () => {
             </li>
 
             <li>
-              <Button variant="light" onClick={() => handleButtonClick('insurancecomponent')}>
+              <button className="bg-light text-dark fw-bold  insurance-nav"  onClick={() => handleNavLinkClick('insurancecomponent')}>
                 Insurance Account
-              </Button>
+              </button>
             </li>
 
             <li className="nav-item">
             <Dropdown >
-                <Dropdown.Toggle variant="light" id="dropdown-basic">
+                <Dropdown.Toggle variant="light" id="dropdown-basic" className="fw-bold">
                 Queries
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
@@ -223,7 +240,7 @@ const CustomerDashboard = () => {
       </div>
     </nav>
     <div className="div-profile">
-    {selectedComponent==='profilecomponent' && <CustomerProfile customerData={customerData}/>}
+    {selectedComponent==='profilecomponent' && <CustomerProfile customerData={customerData} onUpdateProfile={handleUpdateProfile} />}
     </div>
     <div className="div-changepassword">
       {selectedComponent==='changepasswordcomponent' && <ChangePassword/>}
@@ -232,7 +249,7 @@ const CustomerDashboard = () => {
       {selectedComponent==='documentcomponent' && <CustomerDocuments/>}
     </div>
     <div className="div-plans">
-      {selectedPlan && (<PlanServices selectedPlan={selectedPlan}/>) }
+      {selectedComponent==='plancomponent'&&(selectedPlan && <PlanServices selectedPlan={selectedPlan}/>) }
     </div>
     <div className="div-insuranceAccount">
       {selectedComponent==='insurancecomponent' && <InsuranceAccount accessid={accessid}/>}
