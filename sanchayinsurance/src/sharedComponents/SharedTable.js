@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Table } from "react-bootstrap";
 
-const SharedTable = ({ data, columns,buttonstatus }) => {
+const SharedTable = ({ data, columns,buttonstatus,handleSelectedScheme }) => {
+
   //   let tabledata;
   //   let index=0;
 
@@ -35,7 +36,7 @@ const SharedTable = ({ data, columns,buttonstatus }) => {
               {columns.map((column, colIndex) => (
                 <td key={colIndex}>{item[column]}</td>
               ))}
-              {buttonstatus?(<td className="bg-secondary"><Button variant="light">Buy_Policy</Button></td>):
+              {buttonstatus?(<td className="bg-secondary"><Button variant="light" value={item['schemename']} onClick={handleSelectedScheme}>Buy_Policy</Button></td>):
           (<></>)}
             </tr>
           ))}

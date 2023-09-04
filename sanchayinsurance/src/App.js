@@ -6,8 +6,8 @@ import CustomerDashboard from './Components/Customer/CustomerDashboard';
 import AgentDashboard from './Components/Agent/AgentDashboard';
 import AdminDashboard from './Components/Admin/AdminDashboard';
 import Home from "./Components/home/Home";
-import Login from "./Components/login/Login"
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Login from "./Components/login/Login";
 
 function App() {
   return (
