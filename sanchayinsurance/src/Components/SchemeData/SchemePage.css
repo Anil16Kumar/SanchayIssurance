@@ -12,3 +12,9 @@
     justify-content: center;
     flex-direction: column;
 }
+
+.Calculator-div{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}

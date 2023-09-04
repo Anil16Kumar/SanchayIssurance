@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import './Calculator.css';
+import { Button } from 'react-bootstrap';
 
-const Calculator = () => {
+const Calculator = ({minamount,maxamount , minyear,maxyear, profitratio, showInsurancePolicyhandle}) => {
   const [noOfYear, setNoOfYear] = useState();
   const [investment, setInvestment] = useState();
   const [month, setMonth] = useState();
-  const [interestRate, setInterestRate] = useState();
+  const [interestRate, setInterestRate] = useState(profitratio);
 
   const [results, setResults] = useState({
     installmentAmount: '',
@@ -22,12 +23,12 @@ const Calculator = () => {
   const validateInput = () => {
     const errorsObj = {};
 
-    if (!noOfYear || noOfYear < 2 || noOfYear > 8) {
+    if (!noOfYear || noOfYear < minyear || noOfYear > maxyear) {
       errorsObj.noOfYearError = 'Number of years must be in the range ';
     }
 
     const investmentAmount = parseFloat(investment);
-    if (!investmentAmount || investmentAmount < 110000 || investmentAmount > 150000) {
+    if (!investmentAmount || investmentAmount < minamount || investmentAmount > maxamount) {
       errorsObj.investmentError = 'Total investment amount must be in the range ';
     }
 
@@ -94,7 +95,7 @@ const Calculator = () => {
           onChange={(e) => setInterestRate(e.target.value)}
         />
       </div>
-      <button onClick={calculateInterest}>Calculate</button>
+      <Button onClick={calculateInterest} variant='warning' className='fw-bold' style={{fontSize:'20px'}}>Calculate</Button>
       <table className="results-table">
         <thead>
           <tr>
@@ -117,6 +118,8 @@ const Calculator = () => {
           </tr>
         </tbody>
       </table>
+
+      <div className="text-center mt-3 fw-bold"><Button variant="danger" onClick={showInsurancePolicyhandle}>Submit</Button></div>
     </div>
   );
 };

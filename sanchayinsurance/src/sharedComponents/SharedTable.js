@@ -2,21 +2,6 @@ import React, { useState } from "react";
 import { Button, Table } from "react-bootstrap";
 
 const SharedTable = ({ data, columns,buttonstatus,handleSelectedScheme }) => {
-
-  //   let tabledata;
-  //   let index=0;
-
-  //   if(data.length>0){
-  //     tabledata = data.map((dt)=>{
-  //         return (
-  //             <tr>
-  //             <th scope="row">{++index}</th>
-  //             <td>{acc.accountno}</td>
-  //             <td>{acc.balance}</td>
-  //             </tr>
-  //         )
-  //     })
-  //   }
   return (
     <div>
       <Table striped bordered hover>
