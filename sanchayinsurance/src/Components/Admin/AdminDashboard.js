@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import './Admin.css'; // Import your CSS file
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { getRole } from "../../services/authorization (1)";
-
+import { Link } from 'react-router-dom';
 import { Button, Dropdown } from "react-bootstrap";
 import axios from "axios";
 import AdminHome from './AdminHome';
+import AgentRegister from '../Agent/AgentRegister';
 
 const AdminDashboard = () => {
+  const { accessid } = useParams();
 
-  const[componentname,setComponent]=useState('adminhomepage')
+  const [showHomepage, setShowHomePage] = useState(true);
+  const [showAddAgent, setShowAddAgent] = useState(false);
+  const [showViewAgent, setShowViewAgent] = useState(false);
+  const [viewAgentData,setViewAgentData]=useState([])
 
+  const handleAddAgent = () => {setShowAddAgent(true);setShowHomePage(false);setShowViewAgent(false)};
+  const handleViewAgent =() => {setShowViewAgent(true);setShowAddAgent(false);setShowHomePage(false);};
+  
 
-
-  const handlesetcomponent=(e)=>{
-    setComponent(e);
-  }
 
   const navigation = useNavigate();
 
@@ -129,7 +133,7 @@ const AdminDashboard = () => {
          <div className="container">
 
          <div className="logo">
-          <a href='/login' className='logo-text'><h2 className="text-light fw-bold mb-4">Dashboard</h2></a> 
+          <Link to={'/Admindashboard/${accessid}'}><h2 className="text-light fw-bold mb-4">Dashboard</h2></Link>
            </div>
 
            <div className="menu-icon" onClick={handleShowNavbar}>
@@ -146,9 +150,9 @@ const AdminDashboard = () => {
                 Agent
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>Add Agent</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>View Agent</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>View Commission</Dropdown.Item>
+                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={handleAddAgent}>Add Agent</Dropdown.Item>
+                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={handleViewAgent}>View Agent</Dropdown.Item>
+                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} >View Commission</Dropdown.Item>
                 <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>View Commission Withdrawal</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
@@ -197,7 +201,7 @@ const AdminDashboard = () => {
               </li>
 
 
-              {/* <li>
+              <li>
               <Dropdown >
                 <Dropdown.Toggle variant="light" id="dropdown-basic">
                 Settings
@@ -211,7 +215,7 @@ const AdminDashboard = () => {
                 <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>View State</Dropdown.Item> 
                 </Dropdown.Menu>
               </Dropdown>
-              </li> */}
+              </li>
 
 
               <li>
@@ -237,14 +241,13 @@ const AdminDashboard = () => {
               </Button>
             </li>
           </ul>
-
           </div>
           </div>
          </nev>
 
-         {componentname=='adminhomepage' && <AdminHome/>}     
-
-
+         {showHomepage && <AdminHome/>}
+         {showAddAgent && <AgentRegister/>}
+         {/* {showViewAgent && <AdminGeneralTable/>} */}
      </>
   );
 };

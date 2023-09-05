@@ -6,7 +6,7 @@ function AdminHome() {
       <div className="admin-container">
         {/* Navbar */}
         <nav className="navbar">
-          <h1>Admin Dashboard</h1>
+          <h1 >Admin Dashboard</h1>
           <ul className="nav-links">
             <li>Dashboard</li>
             <li>Users</li>
@@ -17,7 +17,7 @@ function AdminHome() {
   
         {/* Content */}
         <div className="content">
-          <h2 >Welcome to the Admin Dashboard</h2>
+          <h2 className='text-center mb-4' >Welcome to the Admin Dashboard</h2>
   
           {/* Cards */}
           <div className="cards-container">
