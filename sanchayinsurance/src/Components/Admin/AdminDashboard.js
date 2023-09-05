@@ -6,8 +6,17 @@ import { getRole } from "../../services/authorization (1)";
 
 import { Button, Dropdown } from "react-bootstrap";
 import axios from "axios";
+import AdminHome from './AdminHome';
 
 const AdminDashboard = () => {
+
+  const[componentname,setComponent]=useState('adminhomepage')
+
+
+
+  const handlesetcomponent=(e)=>{
+    setComponent(e);
+  }
 
   const navigation = useNavigate();
 
@@ -188,7 +197,7 @@ const AdminDashboard = () => {
               </li>
 
 
-              <li>
+              {/* <li>
               <Dropdown >
                 <Dropdown.Toggle variant="light" id="dropdown-basic">
                 Settings
@@ -202,7 +211,7 @@ const AdminDashboard = () => {
                 <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>View State</Dropdown.Item> 
                 </Dropdown.Menu>
               </Dropdown>
-              </li>
+              </li> */}
 
 
               <li>
@@ -232,6 +241,10 @@ const AdminDashboard = () => {
           </div>
           </div>
          </nev>
+
+         {componentname=='adminhomepage' && <AdminHome/>}     
+
+
      </>
   );
 };

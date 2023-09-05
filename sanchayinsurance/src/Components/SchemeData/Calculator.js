@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import './Calculator.css';
 import { Button } from 'react-bootstrap';
 
-const Calculator = ({minamount,maxamount , minyear,maxyear, profitratio, showInsurancePolicyhandle}) => {
+const Calculator = ({minamount,maxamount , minyear,maxyear, profitratio,
+   showInsurancePolicyhandle,handlecalculatedata,handleNumberOfYear,handleinvestmentamount,handlepremiumtype,accessid}) => {
   const [noOfYear, setNoOfYear] = useState();
   const [investment, setInvestment] = useState();
   const [month, setMonth] = useState();
@@ -51,6 +52,8 @@ const Calculator = ({minamount,maxamount , minyear,maxyear, profitratio, showIns
     const totalMonths = noOfYear * 12;
     const totalNoOfInstallments = totalMonths / month;
     const investmentAmount = parseFloat(investment);
+    handleinvestmentamount(investmentAmount);
+    handlepremiumtype(month);
 
     const installmentAmount = investmentAmount / totalNoOfInstallments;
     const interestAmount = (interestRate / 100) * investmentAmount;
@@ -61,6 +64,14 @@ const Calculator = ({minamount,maxamount , minyear,maxyear, profitratio, showIns
       interestAmount: interestAmount.toFixed(2),
       totalAmount: netAmount.toFixed(2),
     });
+
+    handlecalculatedata({
+      installmentAmount: installmentAmount.toFixed(2),
+      interestAmount: interestAmount.toFixed(2),
+      totalAmount: netAmount.toFixed(2),
+    });
+    handleNumberOfYear(noOfYear);
+
   };
 
   return (
@@ -80,10 +91,9 @@ const Calculator = ({minamount,maxamount , minyear,maxyear, profitratio, showIns
         <label>Months:</label>
         <select value={month} onChange={(e) => setMonth(e.target.value)}>
           <option value="">select</option>
-          <option value="1">1 Month</option>
           <option value="3">3 Months</option>
           <option value="6">6 Months</option>
-          <option value="12">1 Year</option>
+          <option value="12">12 Months</option>
         </select>
         <div className="error" style={{ color: 'red' }}>{errors.monthError}</div>
       </div>

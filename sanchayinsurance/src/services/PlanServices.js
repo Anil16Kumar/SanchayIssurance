@@ -6,7 +6,7 @@ import SharedTable from "../sharedComponents/SharedTable";
 import { Table } from "react-bootstrap";
 import Error from "../sharedComponents/Error";
 import SchemePage from "../Components/SchemeData/SchemePage";
-const PlanServices = ({ selectedPlan }) => {
+const PlanServices = ({ selectedPlan,accessid }) => {
   const [planSchemes, setPlanScheme] = useState([]);
   const [Iserror, setIserror] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -102,7 +102,7 @@ const PlanServices = ({ selectedPlan }) => {
         <div className="schemepage">
           {schemeError
             ? schemeError && <Error msg={schemeError} />
-            : SchemeData && <SchemePage data={SchemeData} />}
+            : SchemeData && <SchemePage data={SchemeData} selectedPlan={selectedPlan} accessid={accessid} />}
         </div>
       </div>
     </>

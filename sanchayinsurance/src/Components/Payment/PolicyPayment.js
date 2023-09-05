@@ -1,15 +1,20 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./PolicyPayment.css";
 
-const PolicyPayment = () => {
+const PolicyPayment = (paymentdata) => {
+  // console.log(paymentdata.paymentdata.installmentAmount);
+  let total =
+  +paymentdata.paymentdata.installmentAmount +
+  +paymentdata.paymentdata.installmentAmount * 0.12;
   const [formData, setFormData] = useState({
     date: null,
-    installmentAmount: "",
-    taxAmount: "",
-    totalAmount: "",
+    installmentAmount: paymentdata.paymentdata.installmentAmount,
+    taxAmount: paymentdata.paymentdata.installmentAmount*0.12,
+    totalAmount: total,
     paymentType: "",
     cardHolder: "",
     cardNumber: "",
@@ -28,7 +33,7 @@ const PolicyPayment = () => {
     expireDate: ""
   });
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -116,10 +121,11 @@ const PolicyPayment = () => {
     }
 
     if (valid) {
-       
-      history.push("/receipt", {
-        formData: formData
-      });
+      // navigate.push("/receipt", {
+      //   formData: formData
+      paymentdata.handleforpaymentReceipt(formData)
+      console.log(formData);
+      // });
     } else {
        
       setFormErrors(errors);
@@ -151,7 +157,7 @@ const PolicyPayment = () => {
           <span className="error">{formErrors.installmentAmount}</span>
         </div>
         <div className="input-container">
-          <label>Tax Amount:</label>
+          <label>Tax Amount(12%):</label>
           <input
             type="number"
             name="taxAmount"

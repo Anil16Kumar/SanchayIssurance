@@ -204,7 +204,7 @@ const CustomerDashboard = () => {
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                 <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={() => handleNavLinkClick('profilecomponent')}>Profile</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={() => handleNavLinkClick('documentcomponent')}>Document</Dropdown.Item>
+                {/* <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={() => handleNavLinkClick('documentcomponent')}>Document</Dropdown.Item> */}
                 <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={() => handleNavLinkClick('changepasswordcomponent')}>Change Password</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
@@ -257,11 +257,11 @@ const CustomerDashboard = () => {
     <div className="div-changepassword">
       {selectedComponent==='changepasswordcomponent' && <ChangePassword/>}
     </div>
-    <div className="div-customerdocument">
+    {/* <div className="div-customerdocument">
       {selectedComponent==='documentcomponent' && <CustomerDocuments/>}
-    </div>
+    </div> */}
     <div className="div-plans">
-      {selectedComponent==='plancomponent'&&(selectedPlan && <PlanServices selectedPlan={selectedPlan}/>) }
+      {selectedComponent==='plancomponent'&&(selectedPlan && <PlanServices selectedPlan={selectedPlan} accessid={accessid}/>) }
     </div>
     <div className="div-insuranceAccount">
       {selectedComponent==='insurancecomponent' && <InsuranceAccount accessid={accessid}/>}

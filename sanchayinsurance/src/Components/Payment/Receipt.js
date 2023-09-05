@@ -2,19 +2,21 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import "./Receipt.css";
 
-const Receipt = () => {
+const Receipt = ({data}) => {
+  console.log(data);
+  console.log(data.installmentAmount);
   const location = useLocation();
-  const formData = location.state.formData;  
+  const formData = location.state.data.data;  
 
   return (
     <div className="receipt">
       <h1>Receipt</h1>
       <table className="receipt-table">
         <tbody>
-          <tr>
+          {/* <tr>
             <th>Date:</th>
             <td>{formData.date ? formData.date.toDateString() : ""}</td>
-          </tr>
+          </tr> */}
           <tr>
             <th>Installment Amount:</th>
             <td>{formData.installmentAmount}</td>

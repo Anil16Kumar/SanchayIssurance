@@ -6,6 +6,14 @@ import './InsuranceAccount.css'
 
 const InsuranceAccount = ({accessid}) => {
     const[policydata,setPolicyData]=useState([])
+    const[showpremium,setPremiumButton]=useState(true)
+
+
+    useEffect(()=>{
+      if(policydata.status==="VERIFIED"){
+        setPremiumButton(true);
+      }
+    },[])
 
     const fetchdata=async ()=>{
       try {
@@ -16,7 +24,7 @@ const InsuranceAccount = ({accessid}) => {
       } 
     }
     
-    const columns = ['policynumber','issuedate','maturitydate','premiumtype','premiumamount'];
+    const columns = ['policynumber','issuedate','maturitydate','premiumtype','premiumamount','status',''];
     useEffect(()=>{
       fetchdata();
     },[accessid])  
@@ -25,7 +33,7 @@ const InsuranceAccount = ({accessid}) => {
           <div className='policy-div'>
             {
             policydata &&
-              <SharedTable data={policydata} columns={columns}/>
+              <SharedTable data={policydata} columns={columns} viewpremiumbutton={showpremium}/>
             }
           </div>
         </>
