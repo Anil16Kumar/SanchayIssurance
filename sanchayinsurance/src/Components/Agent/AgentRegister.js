@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import './AgentRegister.css'
 import { Button } from 'react-bootstrap';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const AgentRegister = () => {
     const [firstName, setFirstName] = useState('');
@@ -30,12 +32,28 @@ const AgentRegister = () => {
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0; 
     };    
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-    
-        if (validateForm()) {
+        let response;
+        try {
+          if (validateForm()) {
+            response=await axios.post('http://localhost:8080/agentapp/register',{
+              firstname:firstName,
+              lastname:lastName,
+              email:email,
+              referencenumber:referencenumber,
+              userInfo:{
+                  username:userName,
+                  password:password
+              }
+            })
+          }
           
         }
+        catch (error) {
+          console.log(error.message);
+        }
+        
     };
     
     return (

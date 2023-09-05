@@ -51,7 +51,7 @@ const Login = () => {
     setAccessid(res.data.accessid);
 
     let rolename = res.data.rolename;
-
+    localStorage.setItem('accessid',res.data.accessid);
     if (rolename === "ROLE_CUSTOMER") {
       navigate(`/CustomerDashboard/${res.data.accessid}`);
       return;
@@ -62,7 +62,7 @@ const Login = () => {
       navigate(`/AgentDashboard/${res.data.accessid}`);
       return;
     }
-    else navigate(`/AdminDashboard/${res.data.accessid}`);
+    else navigate(`/AdminDashboard`);
 
     localStorage.setItem("auth", res.data.accessToken);
     return;

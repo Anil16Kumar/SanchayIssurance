@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import './Admin.css'; // Import your CSS file
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { getRole } from "../../services/authorization (1)";
@@ -8,17 +7,31 @@ import { Button, Dropdown } from "react-bootstrap";
 import axios from "axios";
 import AdminHome from './AdminHome';
 import AgentRegister from '../Agent/AgentRegister';
+import ViewAgentTable from '../Agent/ViewAgentTable/ViewAgentTable';
+import { Helmet } from 'react-helmet';
 
 const AdminDashboard = () => {
-  const { accessid } = useParams();
+  const accessid=localStorage.getItem('accessid')
+  console.log(accessid);
 
   const [showHomepage, setShowHomePage] = useState(true);
   const [showAddAgent, setShowAddAgent] = useState(false);
   const [showViewAgent, setShowViewAgent] = useState(false);
   const [viewAgentData,setViewAgentData]=useState([])
+  const[agentData,setAgentData]=useState({})
 
   const handleAddAgent = () => {setShowAddAgent(true);setShowHomePage(false);setShowViewAgent(false)};
-  const handleViewAgent =() => {setShowViewAgent(true);setShowAddAgent(false);setShowHomePage(false);};
+  const handleViewAgent =async () => {
+    
+    
+    try {
+      let response=await axios.get(`http://localhost:8080/agentapp/agents`);
+      setAgentData(response.data);
+    } catch (error) {
+      alert(error.message)
+    }
+    
+    setShowViewAgent(true);setShowAddAgent(false);setShowHomePage(false);};
   
 
 
@@ -129,11 +142,14 @@ const AdminDashboard = () => {
 
   return (
      <>
+     <Helmet>
+  <link href="./Admin.css" rel="stylesheet" />
+  </Helmet>
          <nev className="navbar fixed-top">
          <div className="container">
 
          <div className="logo">
-          <Link to={'/Admindashboard/${accessid}'}><h2 className="text-light fw-bold mb-4">Dashboard</h2></Link>
+          <a href="/Admindashboard"><h2 className="text-light fw-bold mb-4">Admin Dashboard</h2></a>
            </div>
 
            <div className="menu-icon" onClick={handleShowNavbar}>
@@ -201,7 +217,7 @@ const AdminDashboard = () => {
               </li>
 
 
-              <li>
+              {/* <li>
               <Dropdown >
                 <Dropdown.Toggle variant="light" id="dropdown-basic">
                 Settings
@@ -215,7 +231,7 @@ const AdminDashboard = () => {
                 <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>View State</Dropdown.Item> 
                 </Dropdown.Menu>
               </Dropdown>
-              </li>
+              </li> */}
 
 
               <li>
@@ -247,7 +263,7 @@ const AdminDashboard = () => {
 
          {showHomepage && <AdminHome/>}
          {showAddAgent && <AgentRegister/>}
-         {/* {showViewAgent && <AdminGeneralTable/>} */}
+         {showViewAgent && <ViewAgentTable agentData={agentData} />}
      </>
   );
 };

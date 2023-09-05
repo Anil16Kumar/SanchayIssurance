@@ -2,17 +2,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 210vh;
-    background-color: #a8a8a8;
-    margin-top: 60px;
-    color: black;
+    height: 150vh;
+    background-color: #000000;
+    margin-top: 0px;
+    color: rgb(241, 237, 237);
   }
   
   .registration-form {
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    /* padding: 20px; */
     width: 700px;
   }
   
