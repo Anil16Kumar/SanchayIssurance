@@ -18,7 +18,7 @@ const SchemeForm = () => {
     planName: '', // Plan name dropdown
   });
 
-  const [planNames, setPlanNames] = useState([]);
+  const [planNames, setPlanNames] = useState({});
   
   // Fetch plan names from your API or data source
   useEffect(() => {
@@ -31,12 +31,13 @@ const SchemeForm = () => {
       });
   }, []);
 
-  const handleInputChange = (e) => {
+    const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = (e) => {
+    
     e.preventDefault();
     
     // Post the form data to your API
@@ -63,13 +64,13 @@ const SchemeForm = () => {
         setFormData({
           schemename: '',
           description: '',
-          minage: 18,
-          maxage: 60,
-          minamount: 300000,
-          maxamount: 500000,
-          mininvesttime: 1,
-          maxinvesttime: 9,
-          registrationcommission: 5,
+          minage: '',
+          maxage: '',
+          minamount: '',
+          maxamount: '',
+          mininvesttime: '',
+          maxinvesttime: '',
+          registrationcommission:'',
           planName: '',
         });
       }
@@ -78,9 +79,22 @@ const SchemeForm = () => {
       .catch((error) => {
         console.error('Error submitting form data:', error);
       });
+
+     
   };
 
+  let planDropDown
+  if(planNames.length>0){
+    planDropDown=planNames.map((plan)=>{
+        return (
+            <option value={plan.planname}>{plan.planname}</option>
+        )
+    })
+  }
+
   return (
+
+
     <div className="scheme-form-container">
       <h2 className='text-center mb-4 fw-bold'>Add Scheme</h2>
       <form onSubmit={handleSubmit}>
@@ -101,16 +115,17 @@ const SchemeForm = () => {
             <select
               id="planName"
               name="planName"
-              value={formData.planName}
+            //   value={formData.planName}
               onChange={handleInputChange}
               required
             >
-              <option value="">Select a Plan Name</option>
-              {planNames.map((planName) => (
+              <option value="" onChange={handleInputChange}>Select a Plan Name</option>
+              {planDropDown}
+              {/* {planNames.map((planName) => (
                 <option key={planName} value={planName}>
                   {planName}
                 </option>
-              ))}
+              ))} */}
             </select>
           </div>
         </div>

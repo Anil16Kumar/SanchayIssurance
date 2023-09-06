@@ -21,15 +21,15 @@ const AgentRegister = () => {
     const validateForm = () => {
         const newErrors = {};
         if (!firstName) newErrors.firstName = 'first Name is required';
-        if(((typeof firstName)!==String)) newErrors.firstName="firstName should be characters";
-        if(((typeof lastName)!==String)) newErrors.lastName="LastName should be characters";
+        // if(((typeof firstName)!==String)) newErrors.firstName="firstName should be characters";
+        // if(((typeof lastName)!==String)) newErrors.lastName="LastName should be characters";
         if (!lastName) newErrors.lastName = 'Last Name is required';
         if (!email) newErrors.email = 'Email is required';
         if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = 'Invalid email format';
         if (!referencenumber) newErrors.referencenumber = 'Reference Number is required';
 
         if (!userName) newErrors.userName = 'userName is required';
-        if(((typeof userName)!==String)) newErrors.userName="UserName should be characters";
+        // if(((typeof userName)!==String)) newErrors.userName="UserName should be characters";
         if (!password) newErrors.password = 'Password is required';
         if(!mobilenumber) newErrors.mobilenumber="Mobile number required";
         if(mobilenumber.length!==10 ) newErrors.mobilenumber="mobile number length should be 10"

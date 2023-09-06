@@ -1,0 +1,55 @@
+/* Add these styles to your CSS file */
+
+/* Style the table container */
+div {
+    margin: 20px;
+  }
+  
+  /* Style the table */
+  table {
+    width: 30%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Style table header */
+  th {
+    background-color: #343a40;
+    color: white;
+    padding: 10px;
+    text-align: left;
+    max-width: 50%;
+  }
+  
+  /* Style table rows */
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  /* Style table cells */
+  td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    max-width: 100px;
+  }
+  
+  /* Style table action buttons */
+  button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Center the action buttons */
+  td:last-child {
+    text-align: center;
+  }
+  

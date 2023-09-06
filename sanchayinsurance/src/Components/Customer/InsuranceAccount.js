@@ -18,6 +18,7 @@ const InsuranceAccount = ({ accessid }) => {
     try {
       let response = await getPolicyOfCustomer(accessid);
       setPolicyData(response);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -35,12 +36,13 @@ const InsuranceAccount = ({ accessid }) => {
 
   useEffect(() => {
     fetchdata();
-  }, [accessid]);
+  }, []);
 
-  const handleViewPolicy = (policyId) => {
+  const handleViewPolicy = () => {
     // Add your logic to handle the "View Policy" button click event.
     // You can navigate to a new page or show a modal to display the policy details.
-    console.log(`View Policy clicked for policyId: ${policyId}`);
+    // // console.log(`View Policy clicked for policyId: ${policyId}`);
+    // console.log("policy clicked");
   };
 
   // Pagination
@@ -105,12 +107,14 @@ const InsuranceAccount = ({ accessid }) => {
             <SharedTable
               data={currentData}
               columns={columns}
+
+              setPremiumButton={setPremiumButton}
               viewpremiumbutton={showpremium}
               // Render the "View Policy" button in each row
               customRender={(rowData) => (
                 <button
                   className="btn btn-primary"
-                  onClick={() => handleViewPolicy(rowData.policynumber)}
+                  // onClick={() => handleViewPolicy()}
                 >
                   View Policy
                 </button>

@@ -16,6 +16,7 @@ import AdminViewFeedBack from "./ViewQueryFeedBack/AdminViewFeedBack";
 import AddPlan from "./PlanAddOrView/AddPlan";
 import ViewPlans from "./PlanAddOrView/ViewPlans";
 import SchemeForm from "./AddSchemeorView/SchemeForm";
+import ViewSchemeTable from "./AddSchemeorView/ViewSchemeTable";
 
 
 const AdminDashboard = () => {
@@ -34,12 +35,14 @@ const AdminDashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [insurancetabledata, setinsurancetabledata] = useState({});
   const[Viewqueryfeedback,setQueryFeedBack]=useState(false)
+  const[viewschemetable,setViewSchemeTable]=useState(false)
   // const[viewPlanAddModal,setViewPlanAddModal]=useState(false);
   const [feedbackdata, setFeedBackData] = useState([]);
   const [IsPlanModalOpen, setIsPlanModalOpen] = useState(false);
   const[viewPlansForm,setViewPlans]=useState(false);
   const[plansData,setPlansData]=useState({})
   const[addSchemeForm,setAddSchemeForm]=useState(false)
+  const[viewSchemeData,setViewSchemeData]=useState({})
 
 
   const handleAddAgent = () => {
@@ -50,6 +53,39 @@ const AdminDashboard = () => {
     setViewInsurancetable(false);
     setQueryFeedBack(false);
     setAddSchemeForm(false);
+    setViewSchemeTable(false);
+  };
+  
+
+  const handleViewSchemeTable =async () => {
+
+
+  try {
+    let response = await axios.get(`http://localhost:8080/schemeapp/getall`);
+    setViewSchemeData(response.data);
+    console.log(response.data);
+  } catch (error) {
+    alert(error.message);
+  }  
+
+
+
+
+
+
+
+
+
+
+  setViewSchemeTable(true);
+  setAddSchemeForm(false);
+  setShowAddAgent(false);
+  setShowHomePage(false);
+  setShowViewAgent(false);
+  setShowCustomers(false);
+  setViewInsurancetable(false);
+  setQueryFeedBack(false);
+ 
   };
 
   const handleAddSchemeForm = () => {
@@ -60,6 +96,7 @@ const AdminDashboard = () => {
     setShowCustomers(false);
     setViewInsurancetable(false);
     setQueryFeedBack(false);
+    setViewSchemeTable(false);
   };
   // const handleViewPlanModal = () => {
   //   setViewPlanAddModal(true);
@@ -87,6 +124,7 @@ const AdminDashboard = () => {
     setQueryFeedBack(false);
     setIsPlanModalOpen(false);
     setAddSchemeForm(false);
+    setViewSchemeTable(false);
   };
 
 
@@ -108,6 +146,7 @@ const AdminDashboard = () => {
     setQueryFeedBack(false);
     setIsPlanModalOpen(false);
     setAddSchemeForm(false);
+    setViewSchemeTable(false);
   };
 
   const handleViewCustomer = async () => {
@@ -129,6 +168,7 @@ const AdminDashboard = () => {
     setIsPlanModalOpen(false);
     setViewPlans(false);
     setAddSchemeForm(false);
+    setViewSchemeTable(false);
 
   };
 
@@ -149,6 +189,7 @@ const AdminDashboard = () => {
     setIsPlanModalOpen(false)
     setViewPlans(false);
     setAddSchemeForm(false);
+    setViewSchemeTable(false);
 
   };
 
@@ -164,6 +205,7 @@ const AdminDashboard = () => {
     setIsPlanModalOpen(false);
     setViewPlans(false);
     setAddSchemeForm(false);
+    setViewSchemeTable(false);
 
   };
 
@@ -423,8 +465,8 @@ const AdminDashboard = () => {
                     <Dropdown.Item href="#" style={{ whiteSpace: "normal" }} onClick={handleAddSchemeForm}>
                       Add Insurance Scheme
                     </Dropdown.Item>
-                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}>
-                      View Insurance Scheme
+                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }} onClick={handleViewSchemeTable}>
+                      View Insurance Schemes
                     </Dropdown.Item>
                     
                   </Dropdown.Menu>
@@ -498,7 +540,7 @@ const AdminDashboard = () => {
       {viewPlansForm && <ViewPlans planData={plansData} />}
 
       {addSchemeForm && <SchemeForm/>}
-      
+      {viewschemetable && <ViewSchemeTable schemeData={viewSchemeData}/>}
     </>
   );
 };

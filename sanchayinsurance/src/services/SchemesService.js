@@ -17,9 +17,9 @@ export const getSchemeBySchemeName = async (selectScheme) => {
 
 
 export const getPolicyOfCustomer = async (accessid) => {
-    console.log(accessid);
+    // console.log(accessid);
     let customerid=accessid;
     const response = await axios.get(`http://localhost:8080/policyapp/getallpolicy?customerid=${customerid}`);
-    console.log(response.data);
+    // console.log(response.data);
     return response.data.content;
 }

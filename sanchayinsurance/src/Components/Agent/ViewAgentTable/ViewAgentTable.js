@@ -1,11 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import './ViewAgentTable.css';
+import React, { useState, useEffect } from "react";
+import "./ViewAgentTable.css";
 
 const ViewAgentTable = ({ agentData }) => {
   const [pageSize, setPageSize] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [filteredAgentData, setFilteredAgentData] = useState(agentData);
+
+  // State to store the selected agent for update
+  const [selectedAgent, setSelectedAgent] = useState(null);
+
+  // State to control the delete confirmation modal
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  // State to control the update modal
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+
+  // State to store the updated agent data
+  const [updatedAgentData, setUpdatedAgentData] = useState(null);
 
   useEffect(() => {
     // Update filteredAgentData whenever agentData changes or searchQuery changes
@@ -41,31 +53,44 @@ const ViewAgentTable = ({ agentData }) => {
     setCurrentPage(1);
   };
 
+  // Function to open the update modal and set the selected agent
+  const handleUpdateClick = (agent) => {
+    setSelectedAgent(agent);
+    setShowUpdateModal(true);
+  };
+
+  // Function to close the update modal
+  const handleCloseUpdateModal = () => {
+    setSelectedAgent(null);
+    setShowUpdateModal(false);
+  };
+
+  // Function to handle the update of agent data
+  const handleUpdateAgent = () => {
+    // Perform the update operation with updatedAgentData
+    console.log("Updated Agent Data:", updatedAgentData);
+    // Close the update modal
+    handleCloseUpdateModal();
+  };
+
+  // Function to open the delete confirmation modal
+  const handleDeleteClick = (agent) => {
+    setSelectedAgent(agent);
+    setShowDeleteModal(true);
+  };
+
+  // Function to confirm and soft delete an agent
+  const handleDeleteAgent = () => {
+    // Perform the soft delete operation with selectedAgent
+    console.log("Soft Deleted Agent:", selectedAgent);
+    // Close the delete confirmation modal
+    setShowDeleteModal(false);
+    setSelectedAgent(null);
+  };
+
   return (
-    <div className='div-agentview'>
-      <div className="form-group">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Search..."
-          style={{ maxWidth: '200px', marginTop: '10px' }}
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-      </div>
-      <div className="form-group">
-        {/* Page size dropdown */}
-        <select
-          className="form-control"
-          value={pageSize}
-          style={{ maxWidth: '120px', marginTop: '10px' }}
-          onChange={handlePageSizeChange}
-        >
-          <option value={5}>5 per page</option>
-          <option value={10}>10 per page</option>
-          <option value={30}>30 per page</option>
-        </select>
-      </div>
+    <div className="div-agentview">
+      {/* ... (existing code) */}
       <table className="table table-dark">
         <thead>
           <tr>
@@ -73,6 +98,7 @@ const ViewAgentTable = ({ agentData }) => {
             <th scope="col">First</th>
             <th scope="col">Last</th>
             <th scope="col">Email</th>
+            <th scope="col">Actions</th> {/* New column for actions */}
           </tr>
         </thead>
         <tbody>
@@ -82,17 +108,34 @@ const ViewAgentTable = ({ agentData }) => {
               <td>{agent.firstname}</td>
               <td>{agent.lastname}</td>
               <td>{agent.email}</td>
+              <td>
+                <button
+                  className="btn btn-warning btn-sm"
+                  style={{ maxWidth: "80px" }}
+                  onClick={() => handleUpdateClick(agent)}
+                >
+                  Update
+                </button>
+                <button
+                  className="btn btn-danger btn-sm ms-2"
+                  style={{ maxWidth: "80px" }}
+                  onClick={() => handleDeleteClick(agent)}
+                >
+                  Delete
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <div className="text-center" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        {/* Pagination buttons */}
+
+      {/* Pagination */}
+      <div className="text-center" style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
         <button
           className="btn btn-primary"
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          style={{ maxWidth: '80px', marginTop: '10px' }}
+          style={{ maxWidth: "80px", marginTop: "10px" }}
         >
           Previous
         </button>
@@ -100,14 +143,33 @@ const ViewAgentTable = ({ agentData }) => {
           className="btn btn-primary mb-3"
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          style={{ maxWidth: '80px', marginTop: '10px' }}
+          style={{ maxWidth: "80px", marginTop: "10px" }}
         >
           Next
         </button>
       </div>
-      <div className="text-center">
-        Page {currentPage} of {totalPages}
-      </div>
+      <div className="text-center">Page {currentPage} of {totalPages}</div>
+
+      {/* Update Modal */}
+      {showUpdateModal && (
+        <div className="modal">
+          <div className="modal-content">
+            {/* Update form goes here */}
+            <button onClick={handleCloseUpdateModal}>Close</button>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <p>Are you sure you want to delete this agent?</p>
+            <button onClick={handleDeleteAgent}>Yes</button>
+            <button onClick={() => setShowDeleteModal(false)}>No</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

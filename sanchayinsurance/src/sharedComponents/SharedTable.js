@@ -1,11 +1,24 @@
 import React, { useState } from "react";
 import { Button, Table } from "react-bootstrap";
+import ViewPolicyPayment from "../Components/Payment/ViewPolicyPayment";
 
-const SharedTable = ({ data, columns,buttonstatus,handleSelectedScheme ,viewpremiumbutton}) => {
-  console.log(data);
+const SharedTable = ({ data, columns,buttonstatus,handleSelectedScheme ,viewpremiumbutton,setPremiumButton}) => {
+const[selectedPolicyData,setSelectedPolicyData]=useState({})
+const[viewPolicyPayment,setViewPolicyPayment]=useState(false)
+const[viewpolicies,setViewPolicies]=useState(true)
+
+
+const handleViewPolicy=async (data)=>{
+    setViewPolicies(false);
+    setSelectedPolicyData(data);
+    setViewPolicyPayment(true);
+}
+  
+
   return (
+
     <div>
-      <Table striped bordered hover>
+    {viewpolicies && <Table striped bordered hover>
         <thead>
           <tr>
             {columns.map((column, index) => (
@@ -22,7 +35,7 @@ const SharedTable = ({ data, columns,buttonstatus,handleSelectedScheme ,viewprem
               {columns.map((column, colIndex) => (
                 <td key={colIndex}>{item[column]}</td>
               ))}
-              {viewpremiumbutton?(<td className="bg-secondary"><Button variant="light" value={item['schemename']} onClick={""}>View Policy</Button></td>):
+              {viewpremiumbutton?(<td className="bg-secondary"><Button variant="light" value={item['schemename']} onClick={()=>handleViewPolicy(data[rowIndex])}>View Policy</Button></td>):
           ("")}
               {buttonstatus?(<td className="bg-secondary"><Button variant="light" value={item['schemename']} onClick={handleSelectedScheme}>Buy_Policy</Button></td>):
           ("")}
@@ -30,7 +43,10 @@ const SharedTable = ({ data, columns,buttonstatus,handleSelectedScheme ,viewprem
             </tr>
           ))}
         </tbody>
-      </Table>
+      </Table>}
+
+      {viewPolicyPayment && <ViewPolicyPayment policyData={selectedPolicyData}/>}
+      
     </div>
   );
 };
