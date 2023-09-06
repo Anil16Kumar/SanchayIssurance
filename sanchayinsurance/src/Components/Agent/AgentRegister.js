@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './AgentRegister.css'
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { generateUniqueReferenceNumber } from './../../services/AgentService';
 
 const AgentRegister = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [referencenumber, setReferenceNumber] = useState('');
+    const[mobilenumber,setMobileNumber]=useState('')
 
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
@@ -19,19 +21,32 @@ const AgentRegister = () => {
     const validateForm = () => {
         const newErrors = {};
         if (!firstName) newErrors.firstName = 'first Name is required';
+        if(((typeof firstName)!==String)) newErrors.firstName="firstName should be characters";
+        if(((typeof lastName)!==String)) newErrors.lastName="LastName should be characters";
         if (!lastName) newErrors.lastName = 'Last Name is required';
         if (!email) newErrors.email = 'Email is required';
         if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = 'Invalid email format';
         if (!referencenumber) newErrors.referencenumber = 'Reference Number is required';
 
         if (!userName) newErrors.userName = 'userName is required';
+        if(((typeof userName)!==String)) newErrors.userName="UserName should be characters";
         if (!password) newErrors.password = 'Password is required';
+        if(!mobilenumber) newErrors.mobilenumber="Mobile number required";
+        if(mobilenumber.length!==10 ) newErrors.mobilenumber="mobile number length should be 10"
         if (password.length < 6) newErrors.password = 'Password must be at least 6 characters';
         if (!confirmPassword) newErrors.confirmPassword = 'Confirm Password is required';
         if (confirmPassword !== password) newErrors.confirmPassword = 'Passwords do not match';
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0; 
     };    
+
+    useEffect(() => {
+      const uniqueReferenceNumber = generateUniqueReferenceNumber();
+      setReferenceNumber(uniqueReferenceNumber);
+    }, []);
+
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         let response;
@@ -42,13 +57,18 @@ const AgentRegister = () => {
               lastname:lastName,
               email:email,
               referencenumber:referencenumber,
+              mobilenumber:mobilenumber,
               userInfo:{
                   username:userName,
                   password:password
               }
             })
           }
-          
+          Swal.fire(
+            'Done',
+            response.data,
+            'Success'
+          )
         }
         catch (error) {
           console.log(error.message);
@@ -82,6 +102,16 @@ const AgentRegister = () => {
           </div>
 
           <div className="form-group">
+            <label>Mobile Number:</label>
+            <input
+              type="text"
+              value={mobilenumber}
+              onChange={(e) => setMobileNumber(e.target.value)}
+            />
+            {errors.mobilenumber && <span className="error">{errors.mobilenumber}</span>}
+          </div>
+
+          <div className="form-group">
             <label>Email:</label>
             <input
               type="email"
@@ -96,6 +126,7 @@ const AgentRegister = () => {
             <input
               type="referencenumber"
               value={referencenumber}
+              disabled
               onChange={(e) => setReferenceNumber(e.target.value)}
             />
             {errors.referencenumber && <span className="error">{errors.referencenumber}</span>}

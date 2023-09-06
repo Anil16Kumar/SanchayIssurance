@@ -1,22 +1,40 @@
 import React, { useState } from 'react'
 
 import './Enquiry.css'
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
-const Enquiry = ({ onSubmit }) => {
+const Enquiry = () => {
   const [title, setTitle] = useState('');
-  const [query, setQuery] = useState('');
+  const [messagequery, setQuery] = useState('');
+  const[querydata,setQueryData]=useState({})
 
   
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const accessid=localStorage.getItem("accessid");
+    try {
+      let response=await axios.post(`http://localhost:8080/queryapp/addquery/${accessid}`,{
+        title,
+        messagequery,
+        replyquery:"",
+        status:"Pending"
+      });
+      setQueryData(response.data);
+      
 
-    const data={
-            
+      Swal.fire(
+        'Done',
+        "Your Query Submitted",
+        'Success'
+      )
+
+      setTitle("");
+      setQuery("")
+    } catch (error) {
+      alert(error.message);
     }
-    // Send the submitted data to the parent component via the onSubmit prop
-    onSubmit({ title, query });
-    // Clear the input fields after submission
     setTitle('');
     setQuery('');
   };
@@ -24,7 +42,7 @@ const Enquiry = ({ onSubmit }) => {
   return (
     <div className="query-form">
       <h2 className="text-dark">Customer Feedback</h2>
-      <form onSubmit={handleSubmit}>
+      <form>
         <div className="form-group">
           <label className="text-dark" htmlFor="title">Title:</label>
           <input
@@ -36,17 +54,17 @@ const Enquiry = ({ onSubmit }) => {
           />
         </div>
         <div className="form-group">
-          <label className="text-dark" htmlFor="query">Query:</label>
+          <label className="text-dark" htmlFor="messagequery">Query:</label>
           <textarea
-            id="query"
-            value={query}
+            id="messagequery"
+            value={messagequery}
             onChange={(e) => setQuery(e.target.value)}
             rows="4"
             required
           />
         </div>
         <div className="form-group">
-          <button type="submit">Submit</button>
+          <button type="submit" onClick={handleSubmit}>Submit</button>
         </div>
       </form>
     </div>

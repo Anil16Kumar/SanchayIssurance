@@ -29,8 +29,9 @@ const Navbar = ({ setActiveComponent, setSelectedPlan}) => {
   let planNames;
   if (planData) {
     planNames = planData.map((bt) => {
-      return (
-        <Dropdown.Item href="#" value={bt.planname} onClick={()=>{handleNavClick('plan'); handplannameset(bt.planname)}} style={{whiteSpace: 'normal'}}>{bt.planname!==null?bt.planname:"select plan name"}</Dropdown.Item>
+      return (        
+      <Dropdown.Item href="#" value={bt.planname} onClick={()=>{handleNavClick('plan'); handplannameset(bt.planname)}} 
+      style={{whiteSpace: 'normal'}}>{bt.planname!==null?bt.planname:"select plan name"}</Dropdown.Item>
       );
     });
   }
@@ -50,9 +51,6 @@ const Navbar = ({ setActiveComponent, setSelectedPlan}) => {
   const handleShowNavbar = () => {
     setShowNavbar(!showNavbar);
   };
-
-
-
 
   const Hamburger = () => (
     <svg
@@ -106,10 +104,7 @@ const Navbar = ({ setActiveComponent, setSelectedPlan}) => {
             <li>
               <Button
                 variant="light"
-                onClick={() => handleNavClick("homedashboard")}
-
-
-              >
+                onClick={() => handleNavClick("homedashboard")}>
                 Home
               </Button>
             </li>

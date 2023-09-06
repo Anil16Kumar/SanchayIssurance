@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-// import './ViewAgentTable.css'
+import React, { useState, useEffect } from 'react';
 
-const ViewAgentTable = ({ data }) => {
-  const [pageSize, setPageSize] = useState(5);
-  const [currentPage, setCurrentPage] = useState(1);
+import './ViewPlans.css'
+
+const ViewPlans = ({ planData }) => {
+    console.log(planData);
   const [searchQuery, setSearchQuery] = useState('');
+  const [pageSize, setPageSize] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  // Filter data based on the search query
-  const filteredData = data.filter((item) =>
-    Object.values(item).some((value) =>
-      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
-    )
+  // Filter planData based on the search query
+  const filteredData = planData.filter((plan) =>
+    plan.planname.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   // Calculate pagination variables
@@ -32,69 +32,73 @@ const ViewAgentTable = ({ data }) => {
   };
 
   return (
-    <div className="container mt-4 view-agent-div">
-      <h2 className='text-dark'>Agent Table</h2>
-      <div className="form-group">
+    <div className='div-view-plans'>
+      <h2 className='text-center fw-bold'>View Plans</h2>
+
+      {/* Search Filter */}
+      <div>
         <input
           type="text"
-          className="form-control"
-          placeholder="Search..."
+          placeholder="Search Plan Name"
           value={searchQuery}
+          style={{ maxWidth: '150px', marginTop: '10px' }}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
-      <div className="form-group">
-        {/* Page size dropdown */}
+
+      {/* Page Size Dropdown */}
+      <div>
+        <label htmlFor="pageSize">Page Size:  </label>
         <select
-          className="form-control"
+          id="pageSize"
+          style={{ maxWidth: '130px', marginTop: '10px' ,marginLeft:'20px'}}
           value={pageSize}
           onChange={handlePageSizeChange}
         >
           <option value={5}>5 per page</option>
           <option value={10}>10 per page</option>
-          <option value={30}>30 per page</option>
+          <option value={20}>20 per page</option>
         </select>
       </div>
-      <table className="table table-bordered">
+
+      {/* Table */}
+      <table>
         <thead>
           <tr>
-            {Object.keys(data[0]).map((header) => (
-              <th key={header}>{header}</th>
-            ))}
+            <th>Plan ID</th>
+            <th>Plan Name</th>
           </tr>
         </thead>
         <tbody>
-          {currentData.map((item, index) => (
+          {currentData.map((plan, index) => (
             <tr key={index}>
-              {Object.values(item).map((value, colIndex) => (
-                <td key={colIndex}>{value}</td>
-              ))}
+              <td>{plan.planid}</td>
+              <td>{plan.planname}</td>
             </tr>
           ))}
         </tbody>
       </table>
-      <div className="text-center" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        {/* Pagination buttons */}
+
+      {/* Pagination */}
+      <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
         <button
-          className="btn btn-primary"
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
+          style={{ maxWidth: '100px', marginTop: '10px' }}
         >
           Previous
         </button>
+        <span> Page {currentPage} of {totalPages} </span>
         <button
-          className="btn btn-primary"
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
+          style={{ maxWidth: '100px', marginTop: '10px' }}
         >
           Next
         </button>
-      </div>
-      <div className="text-center">
-        Page {currentPage} of {totalPages}
       </div>
     </div>
   );
 };
 
-export default ViewAgentTable;
+export default ViewPlans;

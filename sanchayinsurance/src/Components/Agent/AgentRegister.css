@@ -2,9 +2,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 150vh;
+    height: 20vh;
     background-color: #000000;
-    margin-top: 0px;
+    margin-top: -400px;
     color: rgb(241, 237, 237);
   }
   
@@ -31,6 +31,7 @@
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    background-color: white;
   }
   
   .error {

@@ -14,6 +14,9 @@ export const getCustomerData = async (accessid) => {
   return response.data;
 };
 
+
+
+
 export const updateCustomer = async (accessid,profileData) => {
   const response = await axios.post(
     `http://localhost:8080/customerapp/update/?accessid=${accessid}`,

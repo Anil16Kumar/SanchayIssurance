@@ -1,38 +1,210 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { getRole } from "../../services/authorization (1)";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { Button, Dropdown } from "react-bootstrap";
 import axios from "axios";
-import AdminHome from './AdminHome';
-import AgentRegister from '../Agent/AgentRegister';
-import ViewAgentTable from '../Agent/ViewAgentTable/ViewAgentTable';
-import { Helmet } from 'react-helmet';
+import AdminHome from "./AdminHome";
+import AgentRegister from "../Agent/AgentRegister";
+import ViewAgentTable from "../Agent/ViewAgentTable/ViewAgentTable";
+import { Helmet } from "react-helmet";
+import ViewCustomerTable from "../Customer/ViewCustomer/ViewCustomerTable";
+import ViewInsurancetable from "./ViewAdminInsurance/ViewInsurancetable";
+import { getQueryData } from "../../services/QueryService";
+import AdminViewFeedBack from "./ViewQueryFeedBack/AdminViewFeedBack";
+import AddPlan from "./PlanAddOrView/AddPlan";
+import ViewPlans from "./PlanAddOrView/ViewPlans";
+import SchemeForm from "./AddSchemeorView/SchemeForm";
+
 
 const AdminDashboard = () => {
-  const accessid=localStorage.getItem('accessid')
+  
+  const accessid = localStorage.getItem("accessid");
   console.log(accessid);
 
   const [showHomepage, setShowHomePage] = useState(true);
   const [showAddAgent, setShowAddAgent] = useState(false);
   const [showViewAgent, setShowViewAgent] = useState(false);
-  const [viewAgentData,setViewAgentData]=useState([])
-  const[agentData,setAgentData]=useState({})
+  const [showCustomers, setShowCustomers] = useState(false);
+  const [viewAgentData, setViewAgentData] = useState([]);
+  const [viewInsurancetable, setViewInsurancetable] = useState(false);
+  const [agentData, setAgentData] = useState({});
+  const [customerData, setCustomerData] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [insurancetabledata, setinsurancetabledata] = useState({});
+  const[Viewqueryfeedback,setQueryFeedBack]=useState(false)
+  // const[viewPlanAddModal,setViewPlanAddModal]=useState(false);
+  const [feedbackdata, setFeedBackData] = useState([]);
+  const [IsPlanModalOpen, setIsPlanModalOpen] = useState(false);
+  const[viewPlansForm,setViewPlans]=useState(false);
+  const[plansData,setPlansData]=useState({})
+  const[addSchemeForm,setAddSchemeForm]=useState(false)
 
-  const handleAddAgent = () => {setShowAddAgent(true);setShowHomePage(false);setShowViewAgent(false)};
-  const handleViewAgent =async () => {
-    
-    
+
+  const handleAddAgent = () => {
+    setShowAddAgent(true);
+    setShowHomePage(false);
+    setShowViewAgent(false);
+    setShowCustomers(false);
+    setViewInsurancetable(false);
+    setQueryFeedBack(false);
+    setAddSchemeForm(false);
+  };
+
+  const handleAddSchemeForm = () => {
+    setAddSchemeForm(true);
+    setShowAddAgent(false);
+    setShowHomePage(false);
+    setShowViewAgent(false);
+    setShowCustomers(false);
+    setViewInsurancetable(false);
+    setQueryFeedBack(false);
+  };
+  // const handleViewPlanModal = () => {
+  //   setViewPlanAddModal(true);
+  //   setShowAddAgent(false);
+  //   setShowHomePage(false);
+  //   setShowViewAgent(false);
+  //   setShowCustomers(false);
+  //   setViewInsurancetable(false);
+  //   setQueryFeedBack(false);
+  // };
+
+  const handleViewAgent = async () => {
     try {
-      let response=await axios.get(`http://localhost:8080/agentapp/agents`);
+      let response = await axios.get(`http://localhost:8080/agentapp/agents`);
       setAgentData(response.data);
+      console.log(response.data);
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     }
-    
-    setShowViewAgent(true);setShowAddAgent(false);setShowHomePage(false);};
+    setShowViewAgent(true);
+    setShowAddAgent(false);
+    setShowHomePage(false);
+    setShowCustomers(false);
+    setViewInsurancetable(false);
+    setQueryFeedBack(false);
+    setIsPlanModalOpen(false);
+    setAddSchemeForm(false);
+  };
+
+
+
+  const handleViewPlans = async () => {
+    try {
+      let response = await axios.get(`http://localhost:8080/planapp/getall`);
+      setPlansData(response.data);
+      console.log(response.data);
+    } catch (error) {
+      alert(error.message);
+    }
+    setViewPlans(true);
+    setShowViewAgent(false);
+    setShowAddAgent(false);
+    setShowHomePage(false);
+    setShowCustomers(false);
+    setViewInsurancetable(false);
+    setQueryFeedBack(false);
+    setIsPlanModalOpen(false);
+    setAddSchemeForm(false);
+  };
+
+  const handleViewCustomer = async () => {
+    try {
+      let response = await axios.get(
+        `http://localhost:8080/customerapp/customers`
+      );
+      setCustomerData(response.data);
+    } catch (error) {
+      alert(error.message);
+    }
+
+    setShowCustomers(true);
+    setShowViewAgent(false);
+    setShowAddAgent(false);
+    setShowHomePage(false);
+    setViewInsurancetable(false);
+    setQueryFeedBack(false);
+    setIsPlanModalOpen(false);
+    setViewPlans(false);
+    setAddSchemeForm(false);
+
+  };
+
+  const handleviewInsurancetable = async () => {
+    try {
+      let response = await axios.get(`http://localhost:8080/policyapp/getall`);
+      setinsurancetabledata(response.data);
+    } catch (error) {
+      alert(error.message);
+    }
+
+    setViewInsurancetable(true);
+    setShowCustomers(false);
+    setShowAddAgent(false);
+    setShowHomePage(false);
+    setShowViewAgent(false);
+    setQueryFeedBack(false);
+    setIsPlanModalOpen(false)
+    setViewPlans(false);
+    setAddSchemeForm(false);
+
+  };
+
+
+  const handlqueryfeedback = () => {
+
+    setQueryFeedBack(true);
+    setShowAddAgent(false);
+    setShowHomePage(false);
+    setShowViewAgent(false);
+    setShowCustomers(false);
+    setViewInsurancetable(false);
+    setIsPlanModalOpen(false);
+    setViewPlans(false);
+    setAddSchemeForm(false);
+
+  };
+
+  const fetchQueryData = async () => {
+    try {
+      const response = await getQueryData();
+      // console.log(response);
+      setFeedBackData(response);
+      // Set the fetched data in the state
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const openModal = () => {
+    fetchQueryData(); // Fetch data when the button is clicked
+    setIsModalOpen(true); // Open the modal
+    setViewPlans(false);
+    setAddSchemeForm(false);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false); // Close the modal
+  };
+
+  const openPlanModal = () => {
+    setIsPlanModalOpen(true);
+    setShowAddAgent(false);
+    setShowHomePage(false);
+    setShowViewAgent(false);
+    setShowCustomers(false);
+    setViewInsurancetable(false);
+    setQueryFeedBack(false);
+    setViewPlans(false);
+    setAddSchemeForm(false);
   
+  };
+
+  const closePlanModal = () => {
+    setIsPlanModalOpen(false);
+  };
 
 
   const navigation = useNavigate();
@@ -141,81 +313,123 @@ const AdminDashboard = () => {
   );
 
   return (
-     <>
-     <Helmet>
+    <>
+      {/* <Helmet>
   <link href="./Admin.css" rel="stylesheet" />
-  </Helmet>
-         <nev className="navbar fixed-top">
-         <div className="container">
+  </Helmet> */}
+      <nev className="navbar fixed-top">
+        <div className="container">
+          <div className="logo">
+            <a href="/Admindashboard">
+              <h2 className="text-light fw-bold mb-4">Admin Dashboard</h2>
+            </a>
+          </div>
 
-         <div className="logo">
-          <a href="/Admindashboard"><h2 className="text-light fw-bold mb-4">Admin Dashboard</h2></a>
-           </div>
-
-           <div className="menu-icon" onClick={handleShowNavbar}>
-          <Hamburger />
+          <div className="menu-icon" onClick={handleShowNavbar}>
+            <Hamburger />
           </div>
 
           <div className={`nav-elements  ${showNavbar && "active"}`}>
-
-          <ul>
-
-            <li>
-              <Dropdown >
-                <Dropdown.Toggle variant="light" id="dropdown-basic">
-                Agent
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={handleAddAgent}>Add Agent</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={handleViewAgent}>View Agent</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} >View Commission</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>View Commission Withdrawal</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+            <ul>
+              <li>
+                <Dropdown>
+                  <Dropdown.Toggle variant="light" id="dropdown-basic">
+                    Agent
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item
+                      href="#"
+                      style={{ whiteSpace: "normal" }}
+                      onClick={handleAddAgent}
+                    >
+                      Add Agent
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      href="#"
+                      style={{ whiteSpace: "normal" }}
+                      onClick={handleViewAgent}
+                    >
+                      View Agent
+                    </Dropdown.Item>
+                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}>
+                      View Commission
+                    </Dropdown.Item>
+                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}>
+                      View Commission Withdrawal
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </li>
 
               <li>
-              <Dropdown >
-                <Dropdown.Toggle variant="light" id="dropdown-basic">
-                Insurance
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>View Customer</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>Insurance Account</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>View Policy Payment</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>View Policy Claim</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+                <Dropdown>
+                  <Dropdown.Toggle variant="light" id="dropdown-basic">
+                    Insurance
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item
+                      href="#"
+                      style={{ whiteSpace: "normal" }}
+                      onClick={handleViewCustomer}
+                    >
+                      View Customer
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      href="#"
+                      style={{ whiteSpace: "normal" }}
+                      onClick={handleviewInsurancetable}
+                    >
+                      Insurance Account
+                    </Dropdown.Item>
+                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}>
+                      View Policy Payment
+                    </Dropdown.Item>
+                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}>
+                      View Policy Claim
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </li>
 
               <li>
-              <Dropdown >
-                <Dropdown.Toggle variant="light" id="dropdown-basic">
-                Queries
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>View Feedback</Dropdown.Item> 
-                </Dropdown.Menu>
-              </Dropdown>
+                <Dropdown>
+                  <Dropdown.Toggle variant="light" id="dropdown-basic">
+                    Queries
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }} onClick={()=>{
+                      handlqueryfeedback();
+                      openModal();
+                    }}>
+                      View Feedback
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </li>
-
 
               <li>
-              <Dropdown >
-                <Dropdown.Toggle variant="light" id="dropdown-basic">
-                Insurance Type
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}> Add Insurance Type</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>View Insurance Type</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>Add Insurance Scheme</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>View Insurance Scheme</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>Add Insurance Plan</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>View Insurance Plan</Dropdown.Item> 
-                </Dropdown.Menu>
-              </Dropdown>
+                <Dropdown>
+                  <Dropdown.Toggle variant="light" id="dropdown-basic">
+                    Insurance Type
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }} onClick={openPlanModal}>
+                      {" "}
+                      Add Insurance Plan
+                    </Dropdown.Item>
+                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }} onClick={handleViewPlans}>
+                      View Insurance Plans
+                    </Dropdown.Item>
+                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }} onClick={handleAddSchemeForm}>
+                      Add Insurance Scheme
+                    </Dropdown.Item>
+                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}>
+                      View Insurance Scheme
+                    </Dropdown.Item>
+                    
+                  </Dropdown.Menu>
+                </Dropdown>
               </li>
-
 
               {/* <li>
               <Dropdown >
@@ -233,38 +447,59 @@ const AdminDashboard = () => {
               </Dropdown>
               </li> */}
 
-
               <li>
-              <Dropdown >
-                <Dropdown.Toggle variant="light" id="dropdown-basic">
-                Account
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>Profile</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>Change Password</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>Add Employee</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>View Employee</Dropdown.Item>  
-                </Dropdown.Menu>
-              </Dropdown>
+                <Dropdown>
+                  <Dropdown.Toggle variant="light" id="dropdown-basic">
+                    Account
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}>
+                      Profile
+                    </Dropdown.Item>
+                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}>
+                      Change Password
+                    </Dropdown.Item>
+                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}>
+                      Add Employee
+                    </Dropdown.Item>
+                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}>
+                      View Employee
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </li>
 
               <li>
-              <Button
-                variant="light"
-                onClick={() => {localStorage.clear();navigation('/login');}}
-              >
-                Logout
-              </Button>
-            </li>
-          </ul>
+                <Button
+                  variant="light"
+                  onClick={() => {
+                    localStorage.clear();
+                    navigation("/login");
+                  }}
+                >
+                  Logout
+                </Button>
+              </li>
+            </ul>
           </div>
-          </div>
-         </nev>
+        </div>
+      </nev>
 
-         {showHomepage && <AdminHome/>}
-         {showAddAgent && <AgentRegister/>}
-         {showViewAgent && <ViewAgentTable agentData={agentData} />}
-     </>
+      {showHomepage && <AdminHome />}
+      {showAddAgent && <AgentRegister />}
+      {showViewAgent && <ViewAgentTable agentData={agentData} />}
+      {showCustomers && <ViewCustomerTable customerData={customerData} />}
+      {viewInsurancetable && (<ViewInsurancetable insurancetabledata={insurancetabledata} />)}
+      {Viewqueryfeedback && (<AdminViewFeedBack data={feedbackdata} 
+      closeModal={closeModal} setQueryFeedBack={setQueryFeedBack}/>)}
+
+      {IsPlanModalOpen &&  <AddPlan onClose={closePlanModal}/>}
+
+      {viewPlansForm && <ViewPlans planData={plansData} />}
+
+      {addSchemeForm && <SchemeForm/>}
+      
+    </>
   );
 };
 

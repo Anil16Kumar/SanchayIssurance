@@ -1,0 +1,94 @@
+/* Apply the 'Roboto' font to the table */
+table {
+  font-family: 'Roboto', sans-serif;
+  width: 50%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  border: 3px solid #ccc; /* Add a border to the table */
+}
+
+/* Style table headers */
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #c60000;
+  font-weight: bold;
+}
+
+/* Style the container for the table and pagination */
+.div-agentview {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally */
+}
+
+/* Style the search input and page size dropdown */
+div > input[type="text"] {
+  margin-bottom: 10px;
+  padding: 5px;
+  font-size: 12px;
+  width: 150px;
+}
+
+div > select {
+  padding: 5px;
+  font-size: 12px;
+  width: 100px;
+}
+
+/* Style the table body and set a max height with scrolling */
+tbody {
+  max-height: 300px; /* Adjust the max height as needed */
+  overflow-y: auto;
+}
+
+/* Style the pagination container */
+div > div {
+  display: flex;
+  justify-content: center; /* Center content horizontally */
+  margin-top: 10px;
+}
+
+/* Style the pagination buttons */
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  margin: 5px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 60px;
+}
+
+/* Center and make buttons smaller */
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px; /* Adjust the font size as needed */
+  padding: 3px 8px; /* Adjust the padding as needed */
+}
+
+/* Disable the Previous button when on the first page */
+button:first-child:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Disable the Next button when on the last page */
+button:last-child:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Style the close button */
+.close {
+  float: right;
+  font-size: 20px;
+  cursor: pointer;
+}

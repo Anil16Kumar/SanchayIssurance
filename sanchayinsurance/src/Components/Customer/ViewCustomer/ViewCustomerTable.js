@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-// import './ViewAgentTable.css'
+import './ViewCustomerTable.css';
 
-const ViewAgentTable = ({ data }) => {
+const ViewCustomerTable = ({ customerData }) => {
   const [pageSize, setPageSize] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
 
   // Filter data based on the search query
-  const filteredData = data.filter((item) =>
-    Object.values(item).some((value) =>
+  const filteredData = customerData.filter((customer) =>
+    Object.values(customer).some((value) =>
       value.toString().toLowerCase().includes(searchQuery.toLowerCase())
     )
   );
@@ -32,13 +32,14 @@ const ViewAgentTable = ({ data }) => {
   };
 
   return (
-    <div className="container mt-4 view-agent-div">
-      <h2 className='text-dark'>Agent Table</h2>
+    <div className='div-cutomerview'>
+      <h2 className='text-center fw-bold'>Customer's Table</h2>
       <div className="form-group">
         <input
           type="text"
           className="form-control"
           placeholder="Search..."
+          style={{ maxWidth: '80px', marginTop: '10px' }}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
@@ -48,6 +49,7 @@ const ViewAgentTable = ({ data }) => {
         <select
           className="form-control"
           value={pageSize}
+          style={{ maxWidth: '120px', marginTop: '10px' }}
           onChange={handlePageSizeChange}
         >
           <option value={5}>5 per page</option>
@@ -55,20 +57,34 @@ const ViewAgentTable = ({ data }) => {
           <option value={30}>30 per page</option>
         </select>
       </div>
-      <table className="table table-bordered">
-        <thead>
+      <table className="table table-bordered table-dark">
+        <thead className='bg-dark'>
           <tr>
-            {Object.keys(data[0]).map((header) => (
-              <th key={header}>{header}</th>
-            ))}
+            <th scope="col">customemorid</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Address</th>
+            <th scope="col">state</th>
+            <th scope="col">city</th>
+            <th scope="col">pincode</th>
+            <th scope="col">mobileno</th>
+            <th scope="col">birthdate</th>
           </tr>
         </thead>
         <tbody>
-          {currentData.map((item, index) => (
+          {currentData.map((customer, index) => (
             <tr key={index}>
-              {Object.values(item).map((value, colIndex) => (
-                <td key={colIndex}>{value}</td>
-              ))}
+              <th scope="row">{customer.customerid}</th>
+              <td>{customer.firstname}</td>
+              <td>{customer.lastname}</td>
+              <td>{customer.email}</td>
+              <td>{customer.address}</td>
+              <td>{customer.state}</td>
+              <td>{customer.city}</td>
+              <td>{customer.pincode}</td>
+              <td>{customer.mobileno}</td>
+              <td>{customer.birthdate}</td>
             </tr>
           ))}
         </tbody>
@@ -79,13 +95,15 @@ const ViewAgentTable = ({ data }) => {
           className="btn btn-primary"
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
+          style={{ maxWidth: '80px', marginTop: '10px' }}
         >
           Previous
         </button>
         <button
-          className="btn btn-primary"
+          className="btn btn-primary mb-3"
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
+          style={{ maxWidth: '80px', marginTop: '10px' }}
         >
           Next
         </button>
@@ -97,4 +115,4 @@ const ViewAgentTable = ({ data }) => {
   );
 };
 
-export default ViewAgentTable;
+export default ViewCustomerTable;
