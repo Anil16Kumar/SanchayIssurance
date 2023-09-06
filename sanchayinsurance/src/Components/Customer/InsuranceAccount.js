@@ -2,17 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { getPolicyOfCustomer } from '../../services/SchemesService';
 import SharedTable from '../../sharedComponents/SharedTable';
 
-// import './InsuranceAccount.css';
-
 const InsuranceAccount = ({ accessid }) => {
   const [policydata, setPolicyData] = useState([]);
   const [showpremium, setPremiumButton] = useState(true);
+  const [policyfetch, setPolicyFetch] = useState(1);
 
   useEffect(() => {
     if (policydata.status === 'VERIFIED') {
       setPremiumButton(true);
     }
-  }, []);
+  }, [policydata]);
 
   const fetchdata = async () => {
     try {
@@ -36,12 +35,12 @@ const InsuranceAccount = ({ accessid }) => {
 
   useEffect(() => {
     fetchdata();
-  }, []);
+  }, [policyfetch]);
 
   const handleViewPolicy = () => {
     // Add your logic to handle the "View Policy" button click event.
     // You can navigate to a new page or show a modal to display the policy details.
-    // // console.log(`View Policy clicked for policyId: ${policyId}`);
+    // console.log(`View Policy clicked for policyId: ${policyId}`);
     // console.log("policy clicked");
   };
 
@@ -53,7 +52,7 @@ const InsuranceAccount = ({ accessid }) => {
   // Filter data based on the search query
   const filteredData = policydata.filter((policy) =>
     Object.values(policy).some((value) =>
-      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      value !== null && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
     )
   );
 
@@ -105,16 +104,16 @@ const InsuranceAccount = ({ accessid }) => {
               </select>
             </div>
             <SharedTable
+              setPolicyFetch={setPolicyFetch}
               data={currentData}
               columns={columns}
-
               setPremiumButton={setPremiumButton}
               viewpremiumbutton={showpremium}
               // Render the "View Policy" button in each row
               customRender={(rowData) => (
                 <button
                   className="btn btn-primary"
-                  // onClick={() => handleViewPolicy()}
+                  onClick={() => handleViewPolicy()}
                 >
                   View Policy
                 </button>
