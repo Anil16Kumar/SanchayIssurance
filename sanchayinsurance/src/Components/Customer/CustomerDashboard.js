@@ -16,7 +16,7 @@ import { Helmet } from "react-helmet";
 
 const CustomerDashboard = () => {
   const navigation = useNavigate();
-  let accessid = useParams().accessid;
+  let accessid = localStorage.getItem("accessid");
   const [planData, setPlanData] = useState("");
   const [customerData, setCustomerData] = useState("");
   const [selectedComponent, setSelectedComponent] = useState(null);
@@ -193,9 +193,13 @@ const CustomerDashboard = () => {
           <div className={`nav-elements  ${showNavbar && "active"}`}>
             <ul>
               <div>
-                <li className="me-5 fw-bold text-dark" variant="info">
+              <a href="/Customerdashboard">
+              <li className="me-5 fw-bold text-dark" variant="info">
                   DASHBOARD
                 </li>
+              </a>
+                
+              
               </div>
 
               <li>

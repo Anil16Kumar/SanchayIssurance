@@ -3,33 +3,67 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './InsuranceForm.css';
 import { addPolicytoCustomer } from '../../../services/PolicyService';
+import { Button } from 'react-bootstrap';
+import Swal from 'sweetalert2';
 
-function InsuranceForm({data,noOfYear,selectedPlan,maturityDate,
-  currDate,calulatedata,investAmount,premiumtype,showPaymentOfPolicyhandle,onSubmit,accessid}) {
-    console.log(accessid);
-    const [selectedFile, setSelectedFile] = useState(null);
-    
-    const handleFileChange = (e) => {
-      const file = e.target.files[0];
-      setSelectedFile(file);
-    };
+function InsuranceForm({ data, noOfYear, selectedPlan, maturityDate, currDate, calulatedata, investAmount, premiumtype, showPaymentOfPolicyhandle, onSubmit, accessid }) {
+  console.log(accessid);
 
-    const handleUpload = () => {
-      if (selectedFile) {
-        const formData = new FormData();
-        formData.append('file', selectedFile);
-        
-        // Perform the API request to send the file data
-        // You can use axios, fetch, or any other library for this step
-        // Example: axios.post('/upload', formData)
+  // State to keep track of selected files
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const maxFiles = 3; // Maximum number of allowed files
+
+  // Function to handle file selection
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files);
+    const validFiles = [];
+
+    // Filter and validate the selected files
+    for (const file of files) {
+      const fileType = file.type.toLowerCase();
+      const fileName = file.name.toLowerCase();
+
+      // Define allowed file types (image or PDF)
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+
+      if (allowedTypes.includes(fileType) && validFiles.length < maxFiles) {
+        validFiles.push(file);
       } else {
-        alert('Please select a file to upload.');
+        alert(`Invalid file: ${fileName}. Only images (jpeg, jpg, png) and PDF (pdf, doc, docx) files are allowed, and you can upload a maximum of ${maxFiles} files.`);
       }
-    };
-  
+    }
 
-  console.log(premiumtype);
-  const [formData, setFormData] = useState({
+    // Update the selected files state
+    setSelectedFiles([...selectedFiles, ...validFiles]);
+  };
+ 
+  // Function to render the selected files list
+  const renderSelectedFiles = () => {
+    if (selectedFiles.length === 0) {
+      return <p>No files selected.</p>;
+    }
+
+    return (
+      <ul>
+        {selectedFiles.map((file, index) => (
+          <li key={index}>
+            {file.name}{' '}
+            <Button variant='danger' onClick={() => handleFileRemove(index)} style={{ maxWidth: '100px', marginTop: '2px' }}>Remove</Button>
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
+  // Function to remove a file from the selected files list
+  const handleFileRemove = (index) => {
+    const updatedFiles = [...selectedFiles];
+    updatedFiles.splice(index, 1);
+    setSelectedFiles(updatedFiles);
+  };
+
+  // Create initial formData state
+  const initialFormData = {
     insuranceType: selectedPlan,
     insuranceScheme: data.schemename,
     numOfYears: noOfYear,
@@ -40,9 +74,13 @@ function InsuranceForm({data,noOfYear,selectedPlan,maturityDate,
     totalAmount: calulatedata.totalAmount,
     dateCreated: currDate,
     maturityDate: maturityDate,
-    interestAmount:calulatedata.interestAmount
-  });
+    interestAmount: calulatedata.interestAmount
+  };
 
+  // State to manage form data
+  const [formData, setFormData] = useState(initialFormData);
+
+  // State to manage form errors
   const [formErrors, setFormErrors] = useState({
     insuranceType: '',
     insuranceScheme: '',
@@ -56,6 +94,7 @@ function InsuranceForm({data,noOfYear,selectedPlan,maturityDate,
     maturityDate: '',
   });
 
+  // Function to handle input field changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -64,6 +103,7 @@ function InsuranceForm({data,noOfYear,selectedPlan,maturityDate,
     });
   };
 
+  // Function to handle date changes
   const handleDateChange = (date, fieldName) => {
     setFormData({
       ...formData,
@@ -71,6 +111,7 @@ function InsuranceForm({data,noOfYear,selectedPlan,maturityDate,
     });
   };
 
+  // Function to validate the form
   const validateForm = () => {
     const errors = {};
     let isValid = true;
@@ -84,26 +125,50 @@ function InsuranceForm({data,noOfYear,selectedPlan,maturityDate,
     return isValid;
   };
 
-  const handleSubmit =async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
 
-    if (validateForm()) {
-      onSubmit(formData);
-      console.log('Form data submitted:', formData);
+    if (selectedFiles.length > 0) {
+      const formDataWithFiles = new FormData();
+      selectedFiles.forEach((file, index) => {
+        formDataWithFiles.append(`file${index + 1}`, file);
+      });
+      if (validateForm()) {
+        onSubmit(formData);
+        try {
+          const premiumt = formData.premiumType;
+          const response = await addPolicytoCustomer(accessid, data.schemename, formData,formDataWithFiles, noOfYear, premiumt);
+                  
+          setSelectedFiles([]);
+
+          Swal.fire(
+            'Send For Verification',
+            'Wait Untill policy get verified',
+            'right'
+          )
+        }
+        catch (error) {
+          console.error('Error uploading files:', error);
+          alert('Error uploading files. Please try again.');
+        }
+      }
+      else{
+        alert("Enter Incorrect Credentials")
+      }
+    } else {
+      alert('Please select at least one valid file to upload.');
     }
-    const premiumt=formData.premiumType;
-    const response= await addPolicytoCustomer(accessid,data.schemename,formData,noOfYear,premiumt);
-
-    alert(response)
-    // showPaymentOfPolicyhandle();
   };
+
+
+
+
 
   return (
     <>
       <h1>Insurance Account Details</h1>
       <div className="form-container">
-        <form onSubmit={(handleUpload,handleSubmit)}>
+        <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="insuranceType">Plan Name:</label>
             <input
@@ -170,7 +235,7 @@ function InsuranceForm({data,noOfYear,selectedPlan,maturityDate,
               type="text"
               id="premiumType"
               name="premiumType"
-              value={formData.premiumType+" Months"}
+              value={formData.premiumType + " Months"}
               onChange={handleChange}
               disabled
             />
@@ -190,7 +255,7 @@ function InsuranceForm({data,noOfYear,selectedPlan,maturityDate,
           </div>
 
           <div className="form-group">
-            <label htmlFor="installmentAmount">Interest Amount:</label>
+            <label htmlFor="interestAmount">Interest Amount:</label>
             <input
               type="number"
               id="interestAmount"
@@ -198,7 +263,6 @@ function InsuranceForm({data,noOfYear,selectedPlan,maturityDate,
               value={formData.interestAmount}
               onChange={handleChange}
               disabled
-               
             />
             <div className="error">{formErrors.installmentAmount}</div>
           </div>
@@ -237,10 +301,19 @@ function InsuranceForm({data,noOfYear,selectedPlan,maturityDate,
             />
             <div className="error">{formErrors.maturityDate}</div>
           </div>
-          <div className="form-group">
-          <label htmlFor="documentfile">Upload Document</label>
-          <input type="file" accept=".pdf,.doc,.docx,.png,.jpeg,jpg" name="documentfile" onChange={handleFileChange} /> 
-          </div>  
+          <div>
+            <div className="form-group">
+              <label htmlFor="documentfile">Upload Document</label>
+              <input
+                type="file"
+                accept=".pdf,.doc,.docx,.png,.jpeg,.jpg"
+                name="documentfile"
+                onChange={handleFileChange}
+                multiple // Allow multiple file selection
+              />
+            </div>
+            {renderSelectedFiles()}
+          </div>
 
           <div className="form-group">
             <button type="submit" className="submit-button">

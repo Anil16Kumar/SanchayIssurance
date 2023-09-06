@@ -53,7 +53,7 @@ const Login = () => {
     let rolename = res.data.rolename;
     localStorage.setItem('accessid',res.data.accessid);
     if (rolename === "ROLE_CUSTOMER") {
-      navigate(`/CustomerDashboard/${res.data.accessid}`);
+      navigate(`/CustomerDashboard`);
       return;
     } else if (rolename === "ROLE_EMPLOYEE") {
       navigate(`/EmployeeDashboard/${res.data.accessid}`);

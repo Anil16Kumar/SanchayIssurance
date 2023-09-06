@@ -146,9 +146,13 @@ const AdminDashboard = () => {
     setQueryFeedBack(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
+ 
     setHandleProfile(false);
     setChangePassword(false);
     setViewAdminData(false); 
+ 
+    setIsPlanModalOpen(false);
+ 
   };
   
 
@@ -165,7 +169,7 @@ const AdminDashboard = () => {
 
  
 
-  setViewSchemeTable(true);
+  setViewSchemeTable(false);
   setAddSchemeForm(false);
   setShowAddAgent(false);
   setShowHomePage(false);
@@ -173,9 +177,13 @@ const AdminDashboard = () => {
   setShowCustomers(false);
   setViewInsurancetable(false);
   setQueryFeedBack(false);
+ 
   setHandleProfile(false);
   setChangePassword(false);
   setViewAdminData(false); 
+ 
+  setIsPlanModalOpen(false);
+ 
  
   };
 
@@ -188,9 +196,13 @@ const AdminDashboard = () => {
     setViewInsurancetable(false);
     setQueryFeedBack(false);
     setViewSchemeTable(false);
+ 
     setChangePassword(false);
     setHandleProfile(false);
     setViewAdminData(false); 
+ 
+    setIsPlanModalOpen(false);
+ 
   };
   // const handleViewPlanModal = () => {
   //   setViewPlanAddModal(true);
@@ -219,8 +231,12 @@ const AdminDashboard = () => {
     setIsPlanModalOpen(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
+ 
     setHandleProfile(false);
     setChangePassword(false);
+ 
+    setIsPlanModalOpen(false);
+ 
   };
 
 
@@ -243,6 +259,7 @@ const AdminDashboard = () => {
     setIsPlanModalOpen(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
+ 
     setHandleProfile(false);
     setChangePassword(false);
   };
@@ -270,6 +287,9 @@ const AdminDashboard = () => {
     setViewSchemeTable(false);
     setHandleProfile(false);
     setChangePassword(false);
+ 
+    setIsPlanModalOpen(false);
+ 
   };
 
   const handleViewAdmin = async () => {
@@ -317,8 +337,12 @@ const AdminDashboard = () => {
     setViewPlans(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
+ 
     setHandleProfile(false);
     setChangePassword(false);
+ 
+    setIsPlanModalOpen(false);
+ 
 
   };
 
@@ -340,8 +364,12 @@ const AdminDashboard = () => {
     setViewPlans(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
+ 
     setHandleProfile(false);
     setChangePassword(false);
+ 
+    setIsPlanModalOpen(false);
+ 
 
   };
 
@@ -358,8 +386,12 @@ const AdminDashboard = () => {
     setViewPlans(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
+ 
     setHandleProfile(false);
     setChangePassword(false);
+ 
+    setIsPlanModalOpen(false);
+ 
 
   };
 
@@ -379,6 +411,7 @@ const AdminDashboard = () => {
     setIsModalOpen(true); // Open the modal
     setViewPlans(false);
     setAddSchemeForm(false);
+    setIsPlanModalOpen(false);
   };
 
   const closeModal = () => {
@@ -395,9 +428,13 @@ const AdminDashboard = () => {
     setQueryFeedBack(false);
     setViewPlans(false);
     setAddSchemeForm(false);
+ 
     setHandleProfile(false);
     setChangePassword(false);
   
+ 
+    
+ 
   };
 
   const closePlanModal = () => {
