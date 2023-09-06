@@ -35,7 +35,7 @@ const ViewPolicyPayment = ({ policyData, setPolicyFetch }) => {
         }
       );
 
-      Swal.fire("Done", response.data, "success");
+      
       setPolicyFetch((st) => st + 1);
       const updatedInstallmentsPaid = [...installmentsPaid];
       updatedInstallmentsPaid[index] = true;
