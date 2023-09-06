@@ -91,7 +91,7 @@ const Navbar = ({ setActiveComponent, setSelectedPlan}) => {
     </svg>
   );
   return (
-    <nav className="navbar fixed-top">
+    <nav className="navbar fixed-top align-items-center">
       <div className="container">
         <div className="logo">
           <h2 className="text-light">Sanchay Insurance</h2>
@@ -127,7 +127,7 @@ const Navbar = ({ setActiveComponent, setSelectedPlan}) => {
               </Button>
             </li>
             <li>
-              <Dropdown >
+              <Dropdown>
                 <Dropdown.Toggle variant="light" id="dropdown-basic">
                   Insurance Plans
                 </Dropdown.Toggle>

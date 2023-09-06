@@ -84,7 +84,7 @@ const CustomerRegister = () => {
   };
 
   return (
-    <div className="registration-form-container">
+    <div className="registration-form-container align-center mx-2 my-2" >
     <form onSubmit={handleSubmit} className="registration-form">
       <h2 className='text-center fw-bold'>Customer Registration</h2>
       <div className="form-group">

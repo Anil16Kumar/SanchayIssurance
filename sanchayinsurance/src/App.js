@@ -8,7 +8,7 @@ import AgentDashboard from './Components/Agent/AgentDashboard';
 import AdminDashboard from './Components/Admin/AdminDashboard';
 import Home from "./Components/home/Home";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Login from "./Components/login/Login";
+import Login from "./Components/login/login";
 
 function App() {
   return (
