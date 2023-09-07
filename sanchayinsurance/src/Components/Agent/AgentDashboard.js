@@ -8,6 +8,7 @@ import { Button, Dropdown } from "react-bootstrap";
 import axios from "axios";
 import AgentProfile from "./AgentProfile";
 import MarketingAgent from "./MarketingAgent";
+import MarketingEmail from "./MarketingEmail";
 
 
 
@@ -19,6 +20,7 @@ const[viewCustomerData,setViewCustomerData]=useState({})
 const[viewComissionData,setViewComissionData]=useState({})
 const[viewMarketing,setViewMarketing]=useState(false)
 
+const[viewMarketingEmail,setMarketingEmail]=useState(false)
 
 
 const handleMarketing = () => {
@@ -27,6 +29,18 @@ const handleMarketing = () => {
   setChangePassword(false);
   setViewCustomer(false);
   setViewCommission(false);
+  setMarketingEmail(false);
+
+}
+
+const handleMarketingEmail=()=>{
+  setMarketingEmail(true);
+  setViewMarketing(false);
+  setHandleProfile(false);
+  setChangePassword(false);
+  setViewCustomer(false);
+  setViewCommission(false);
+  setMarketingEmail(false);
 
 }
 
@@ -46,6 +60,7 @@ const handleProfile = async () => {
   setViewCustomer(false);
   setViewCommission(false);
   setViewMarketing(false);
+  setMarketingEmail(false);
   
 };
 
@@ -56,6 +71,7 @@ const handleChangePassword=()=>{
   setViewCustomer(false);
   setViewCommission(false);
   setViewMarketing(false);
+  setMarketingEmail(false);
 
 };
 
@@ -72,6 +88,7 @@ const handleViewCustomers=async() =>{
   setChangePassword(false);
   setViewCommission(false);
   setViewMarketing(false);
+  setMarketingEmail(false);
 
 }
 
@@ -88,6 +105,7 @@ const handleViewCommission=async() =>{
   setHandleProfile(false);
   setChangePassword(false);
   setViewMarketing(false);
+  setMarketingEmail(false);
 
 }
 
@@ -233,7 +251,7 @@ const AgentDashboard = () => {
               </li>
 
               <li>
-                <Button variant="light" onClick={() => handleNavClick("about")}>
+                <Button variant="light" onClick={handleMarketingEmail}>
                   Marketing
                 </Button>
               </li>
@@ -301,6 +319,9 @@ const AgentDashboard = () => {
       {showViewCustomer && <AgentProfile handleViewCustomers={showViewCustomer }/> }
       {showViewCommission && <ViewAgentCommission handleViewCustomers={showViewCommission }/> }
       {viewMarketing && <MarketingAgent/>}
+      
+      {viewMarketingEmail && <MarketingEmail/>}
+
     </>
   );
 };

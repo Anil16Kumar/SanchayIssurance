@@ -78,6 +78,11 @@ const AdminDashboard = () => {
     setAddSchemeForm(false);
     setViewSchemeTable(false);
     setViewAdminData(false); 
+    setIsModalOpen(false);
+    setIsPlanModalOpen(false);
+    setViewPlans(false);
+    setViewEmployeeTable(false);
+    setAddAdmin(false);
 
   };
 
@@ -92,6 +97,7 @@ const AdminDashboard = () => {
     }  
     
     setAdminProfile(true);
+    setChangePassword(false); 
     setAddEmployee(false);
     setShowAddAgent(false);
     setShowHomePage(false);
@@ -101,12 +107,18 @@ const AdminDashboard = () => {
     setQueryFeedBack(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
-    setChangePassword(false);
     setViewAdminData(false); 
+    setIsModalOpen(false);
+    setIsPlanModalOpen(false);
+    setViewPlans(false);
+    setViewEmployeeTable(false);
+    setAddAdmin(false);
   };
 
   const handleAddEmployee = () => {
     setAddEmployee(true);
+    setChangePassword(false);
+    setAdminProfile(false); 
     setShowAddAgent(false);
     setShowHomePage(false);
     setShowViewAgent(false);
@@ -115,12 +127,18 @@ const AdminDashboard = () => {
     setQueryFeedBack(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
-    setAdminProfile(false);
-    setChangePassword(false);
     setViewAdminData(false); 
+    setIsModalOpen(false);
+    setIsPlanModalOpen(false);
+    setViewPlans(false);
+    setViewEmployeeTable(false);
+    setAddAdmin(false);
   };
   const handleAddAdmin = () => {
     setAddAdmin(true);
+    setChangePassword(true);
+    setAdminProfile(false);
+    setAddEmployee(false);
     setShowAddAgent(false);
     setShowHomePage(false);
     setShowViewAgent(false);
@@ -129,13 +147,18 @@ const AdminDashboard = () => {
     setQueryFeedBack(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
-    setAdminProfile(false);
-    setChangePassword(false);
     setViewAdminData(false); 
+    setIsModalOpen(false);
+    setIsPlanModalOpen(false);
+    setViewPlans(false);
+    setViewEmployeeTable(false); 
   };
 
   const handleAddAgent = () => {
     setShowAddAgent(true);
+    setChangePassword(false);
+    setAdminProfile(false);
+    setAddEmployee(false); 
     setShowHomePage(false);
     setShowViewAgent(false);
     setShowCustomers(false);
@@ -143,16 +166,13 @@ const AdminDashboard = () => {
     setQueryFeedBack(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
-<<<<<<< HEAD
-=======
- 
-    setAdminProfile(false);
-    setChangePassword(false);
     setViewAdminData(false); 
- 
+    setIsModalOpen(false);
     setIsPlanModalOpen(false);
+    setViewPlans(false);
+    setViewEmployeeTable(false);
+    setAddAdmin(false);
  
->>>>>>> upstream/main
   };
   
 
@@ -169,45 +189,46 @@ const AdminDashboard = () => {
 
  
 
-  setViewSchemeTable(false);
-  setAddSchemeForm(false);
-  setShowAddAgent(false);
-  setShowHomePage(false);
-  setShowViewAgent(false);
-  setShowCustomers(false);
-  setViewInsurancetable(false);
-  setQueryFeedBack(false);
-<<<<<<< HEAD
-=======
- 
-  setAdminProfile(false);
   setChangePassword(false);
-  setViewAdminData(false); 
- 
-  setIsPlanModalOpen(false);
- 
->>>>>>> upstream/main
- 
-  };
-
-  const handleAddSchemeForm = () => {
-    setAddSchemeForm(true);
+    setAdminProfile(false);
+    setAddEmployee(false);
     setShowAddAgent(false);
     setShowHomePage(false);
     setShowViewAgent(false);
     setShowCustomers(false);
     setViewInsurancetable(false);
     setQueryFeedBack(false);
+    setAddSchemeForm(false);
     setViewSchemeTable(false);
-<<<<<<< HEAD
-=======
+    setViewAdminData(false); 
+    setIsModalOpen(false);
+    setIsPlanModalOpen(false);
+    setViewPlans(false);
+    setViewEmployeeTable(false);
+    setAddAdmin(false);
  
+ 
+  };
+
+  const handleAddSchemeForm = () => {
+    setAddSchemeForm(true);
     setChangePassword(false);
     setAdminProfile(false);
+    setAddEmployee(false);
+    setShowAddAgent(false);
+    setShowHomePage(false);
+    setShowViewAgent(false);
+    setShowCustomers(false);
+    setViewInsurancetable(false);
+    setQueryFeedBack(false); 
+    setViewSchemeTable(false);
     setViewAdminData(false); 
+    setIsModalOpen(false);
     setIsPlanModalOpen(false);
+    setViewPlans(false);
+    setViewEmployeeTable(false);
+    setAddAdmin(false);
  
->>>>>>> upstream/main
   };
   // const handleViewPlanModal = () => {
   //   setViewPlanAddModal(true);
@@ -228,23 +249,23 @@ const AdminDashboard = () => {
       alert(error.message);
     }
     setShowViewAgent(true);
+    setChangePassword(false);
+    setAdminProfile(false);
+    setAddEmployee(false);
     setShowAddAgent(false);
-    setShowHomePage(false);
+    setShowHomePage(false); 
     setShowCustomers(false);
     setViewInsurancetable(false);
     setQueryFeedBack(false);
-    setIsPlanModalOpen(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
-<<<<<<< HEAD
-=======
- 
-    setAdminProfile(false);
-    setChangePassword(false);
- 
+    setViewAdminData(false); 
+    setIsModalOpen(false);
     setIsPlanModalOpen(false);
+    setViewPlans(false);
+    setViewEmployeeTable(false);
+    setAddAdmin(false);
  
->>>>>>> upstream/main
   };
 
 
@@ -258,20 +279,22 @@ const AdminDashboard = () => {
       alert(error.message);
     }
     setViewPlans(true);
-    setShowViewAgent(false);
+    setChangePassword(false);
+    setAdminProfile(false);
+    setAddEmployee(false);
     setShowAddAgent(false);
     setShowHomePage(false);
+    setShowViewAgent(false);
     setShowCustomers(false);
     setViewInsurancetable(false);
     setQueryFeedBack(false);
-    setIsPlanModalOpen(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
-<<<<<<< HEAD
-=======
- 
-    setAdminProfile(false);
-    setChangePassword(false);
+    setViewAdminData(false); 
+    setIsModalOpen(false);
+    setIsPlanModalOpen(false); 
+    setViewEmployeeTable(false);
+    setAddAdmin(false);
   };
 
   //to view employeee
@@ -285,20 +308,23 @@ const AdminDashboard = () => {
     }
 
     setViewEmployeeData(true);
-    setViewPlans(false);
-    setShowViewAgent(false);
+    setChangePassword(false);
+    setAdminProfile(false);
+    setAddEmployee(false);
     setShowAddAgent(false);
     setShowHomePage(false);
+    setShowViewAgent(false);
     setShowCustomers(false);
     setViewInsurancetable(false);
     setQueryFeedBack(false);
-    setIsPlanModalOpen(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
-    setAdminProfile(false);
-    setChangePassword(false);
- 
+    setViewAdminData(false); 
+    setIsModalOpen(false);
     setIsPlanModalOpen(false);
+    setViewPlans(false);
+    setViewEmployeeTable(false);
+    setAddAdmin(false);
  
   };
 
@@ -312,19 +338,22 @@ const AdminDashboard = () => {
     }
     
     setViewAdminData(true);
-    setViewPlans(false);
-    setShowViewAgent(false);
+    setChangePassword(false);
+    setAdminProfile(false);
+    setAddEmployee(false);
     setShowAddAgent(false);
     setShowHomePage(false);
+    setShowViewAgent(false);
     setShowCustomers(false);
     setViewInsurancetable(false);
     setQueryFeedBack(false);
-    setIsPlanModalOpen(false);
     setAddSchemeForm(false);
-    setViewSchemeTable(false);
-    setAdminProfile(false);
-    setChangePassword(false);
->>>>>>> upstream/main
+    setViewSchemeTable(false);  
+    setIsModalOpen(false);
+    setIsPlanModalOpen(false);
+    setViewPlans(false);
+    setViewEmployeeTable(false);
+    setAddAdmin(false);
   };
 
 
@@ -339,24 +368,23 @@ const AdminDashboard = () => {
     }
 
     setShowCustomers(true);
-    setShowViewAgent(false);
+    setChangePassword(false);
+    setAdminProfile(false);
+    setAddEmployee(false);
     setShowAddAgent(false);
     setShowHomePage(false);
+    setShwowVieAgent(false); 
     setViewInsurancetable(false);
     setQueryFeedBack(false);
-    setIsPlanModalOpen(false);
-    setViewPlans(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
-<<<<<<< HEAD
-=======
- 
-    setAdminProfile(false);
-    setChangePassword(false);
- 
+    setViewAdminData(false); 
+    setIsModalOpen(false);
     setIsPlanModalOpen(false);
+    setViewPlans(false);
+    setViewEmployeeTable(false);
+    setAddAdmin(false);
  
->>>>>>> upstream/main
 
   };
 
@@ -369,24 +397,23 @@ const AdminDashboard = () => {
     }
 
     setViewInsurancetable(true);
-    setShowCustomers(false);
+    setChangePassword(false);
+    setAdminProfile(false);
+    setAddEmployee(false);
     setShowAddAgent(false);
     setShowHomePage(false);
     setShowViewAgent(false);
+    setShowCustomers(false); 
     setQueryFeedBack(false);
-    setIsPlanModalOpen(false)
-    setViewPlans(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
-<<<<<<< HEAD
-=======
- 
-    setAdminProfile(false);
-    setChangePassword(false);
- 
+    setViewAdminData(false); 
+    setIsModalOpen(false);
     setIsPlanModalOpen(false);
+    setViewPlans(false);
+    setViewEmployeeTable(false);
+    setAddAdmin(false);
  
->>>>>>> upstream/main
 
   };
 
@@ -394,24 +421,23 @@ const AdminDashboard = () => {
   const handlqueryfeedback = () => {
 
     setQueryFeedBack(true);
+    setChangePassword(false);
+    setAdminProfile(false);
+    setAddEmployee(false);
     setShowAddAgent(false);
     setShowHomePage(false);
     setShowViewAgent(false);
     setShowCustomers(false);
-    setViewInsurancetable(false);
-    setIsPlanModalOpen(false);
-    setViewPlans(false);
+    setViewInsurancetable(false); 
     setAddSchemeForm(false);
     setViewSchemeTable(false);
-<<<<<<< HEAD
-=======
- 
-    setAdminProfile(false);
-    setChangePassword(false);
- 
+    setViewAdminData(false); 
+    setIsModalOpen(false);
     setIsPlanModalOpen(false);
+    setViewPlans(false);
+    setViewEmployeeTable(false);
+    setAddAdmin(false);
  
->>>>>>> upstream/main
 
   };
 
@@ -440,25 +466,26 @@ const AdminDashboard = () => {
 
   const openPlanModal = () => {
     setIsPlanModalOpen(true);
+    setChangePassword(false);
+    setAdminProfile(false);
+    setAddEmployee(false);
     setShowAddAgent(false);
     setShowHomePage(false);
     setShowViewAgent(false);
     setShowCustomers(false);
     setViewInsurancetable(false);
     setQueryFeedBack(false);
-    setViewPlans(false);
     setAddSchemeForm(false);
-<<<<<<< HEAD
-  
-=======
- 
-    setAdminProfile(false);
-    setChangePassword(false);
+    setViewSchemeTable(false);
+    setViewAdminData(false); 
+    setIsModalOpen(false); 
+    setViewPlans(false);
+    setViewEmployeeTable(false);
+    setAddAdmin(false);
   
  
     
  
->>>>>>> upstream/main
   };
 
   const closePlanModal = () => {

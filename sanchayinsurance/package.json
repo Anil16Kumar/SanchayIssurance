@@ -25,6 +25,7 @@
         "react-helmet": "^6.1.0",
         "react-hook-form": "^7.46.0",
         "react-icons": "^4.10.1",
+        "react-quill": "^2.0.0",
         "reactstrap": "^9.2.0",
         "sweetalert2": "^11.7.27",
         "web-vitals": "^2.1.4"
