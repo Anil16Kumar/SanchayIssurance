@@ -21,9 +21,11 @@ import AddEmployee from "./AddSchemeorView/AddEmployee";
 import AddAdmin from "./AddSchemeorView/AddAdmin";
 import ViewEmployee from "./AddSchemeorView/ViewEmployee";
 import HandleProfile from "./AddSchemeorView/HandleProfile";
-import ChangePassword from "./AddSchemeorView/ChangeAdminPassword";
 import EmployeeRegister from "../Employee/EmployeeRegister";
 import AdminRegister from "./AdminRegister";
+import ViewAdmin from './AddSchemeorView/ViewAdmin';
+import AdminProfile from './AdminProfile';
+import ChangeAdminPassword from "./ChangeAdminPassword";
 
 
 const AdminDashboard = () => {
@@ -52,20 +54,20 @@ const AdminDashboard = () => {
   const[viewSchemeData,setViewSchemeData]=useState({})
 
 
-
   const[viewEmployeeData,setViewEmployeeData]=useState({}) 
   const[viewEmployeeTable,setViewEmployeeTable]=useState(false) 
   const[showAddAdmin,setAddAdmin]=useState(false)
   const[showAddEmployee,setAddEmployee]=useState(false)
-  const[adminProfileData,setHandleProfile]=useState({})
+  const[showAdminProfile,setAdminProfile]=useState(false)
+  const[adminProfileData,setAdminProfileData]=useState({})
   const[showChangePassword,setChangePassword]=useState(false)
-  const[viewAdminData,setViewAdminData]=useState({})
+  const[viewAdminData,setViewAdminData]=useState({})                                                                                                                  
 
 
 
   const handleChangePassword=()=>{
     setChangePassword(true);
-    setHandleProfile(false);
+    setAdminProfile(false);
     setAddEmployee(false);
     setShowAddAgent(false);
     setShowHomePage(false);
@@ -80,16 +82,16 @@ const AdminDashboard = () => {
   };
 
   const handleProfile = async () => {
-    
+    let adminid=localStorage.getItem("accessid");
     try {
-      let response = await axios.get(`api`);
-      setHandleProfileData(response.data);
+      let response = await axios.get(`http://localhost:8080/adminapp/getadmin/${adminid}`);
+      setAdminProfileData(response.data);
       console.log(response.data);
     } catch (error) {
       alert(error.message);
     }  
     
-    setHandleProfile(true);
+    setAdminProfile(true);
     setAddEmployee(false);
     setShowAddAgent(false);
     setShowHomePage(false);
@@ -113,7 +115,7 @@ const AdminDashboard = () => {
     setQueryFeedBack(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
-    setHandleProfile(false);
+    setAdminProfile(false);
     setChangePassword(false);
     setViewAdminData(false); 
   };
@@ -127,15 +129,10 @@ const AdminDashboard = () => {
     setQueryFeedBack(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
-    setHandleProfile(false);
+    setAdminProfile(false);
     setChangePassword(false);
     setViewAdminData(false); 
   };
-
-  
-
-
-
 
   const handleAddAgent = () => {
     setShowAddAgent(true);
@@ -147,7 +144,7 @@ const AdminDashboard = () => {
     setAddSchemeForm(false);
     setViewSchemeTable(false);
  
-    setHandleProfile(false);
+    setAdminProfile(false);
     setChangePassword(false);
     setViewAdminData(false); 
  
@@ -178,7 +175,7 @@ const AdminDashboard = () => {
   setViewInsurancetable(false);
   setQueryFeedBack(false);
  
-  setHandleProfile(false);
+  setAdminProfile(false);
   setChangePassword(false);
   setViewAdminData(false); 
  
@@ -198,9 +195,8 @@ const AdminDashboard = () => {
     setViewSchemeTable(false);
  
     setChangePassword(false);
-    setHandleProfile(false);
+    setAdminProfile(false);
     setViewAdminData(false); 
- 
     setIsPlanModalOpen(false);
  
   };
@@ -232,7 +228,7 @@ const AdminDashboard = () => {
     setAddSchemeForm(false);
     setViewSchemeTable(false);
  
-    setHandleProfile(false);
+    setAdminProfile(false);
     setChangePassword(false);
  
     setIsPlanModalOpen(false);
@@ -260,7 +256,7 @@ const AdminDashboard = () => {
     setAddSchemeForm(false);
     setViewSchemeTable(false);
  
-    setHandleProfile(false);
+    setAdminProfile(false);
     setChangePassword(false);
   };
 
@@ -285,7 +281,7 @@ const AdminDashboard = () => {
     setIsPlanModalOpen(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
-    setHandleProfile(false);
+    setAdminProfile(false);
     setChangePassword(false);
  
     setIsPlanModalOpen(false);
@@ -312,7 +308,7 @@ const AdminDashboard = () => {
     setIsPlanModalOpen(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
-    setHandleProfile(false);
+    setAdminProfile(false);
     setChangePassword(false);
   };
 
@@ -338,7 +334,7 @@ const AdminDashboard = () => {
     setAddSchemeForm(false);
     setViewSchemeTable(false);
  
-    setHandleProfile(false);
+    setAdminProfile(false);
     setChangePassword(false);
  
     setIsPlanModalOpen(false);
@@ -365,7 +361,7 @@ const AdminDashboard = () => {
     setAddSchemeForm(false);
     setViewSchemeTable(false);
  
-    setHandleProfile(false);
+    setAdminProfile(false);
     setChangePassword(false);
  
     setIsPlanModalOpen(false);
@@ -387,7 +383,7 @@ const AdminDashboard = () => {
     setAddSchemeForm(false);
     setViewSchemeTable(false);
  
-    setHandleProfile(false);
+    setAdminProfile(false);
     setChangePassword(false);
  
     setIsPlanModalOpen(false);
@@ -429,7 +425,7 @@ const AdminDashboard = () => {
     setViewPlans(false);
     setAddSchemeForm(false);
  
-    setHandleProfile(false);
+    setAdminProfile(false);
     setChangePassword(false);
   
  
@@ -586,12 +582,6 @@ const AdminDashboard = () => {
                     >
                       View Agent
                     </Dropdown.Item>
-                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}>
-                      View Commission
-                    </Dropdown.Item>
-                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}>
-                      View Commission Withdrawal
-                    </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </li>
@@ -734,22 +724,18 @@ const AdminDashboard = () => {
       {Viewqueryfeedback && (<AdminViewFeedBack data={feedbackdata} 
       closeModal={closeModal} setQueryFeedBack={setQueryFeedBack}/>)}
 
+
       {IsPlanModalOpen &&  <AddPlan onClose={closePlanModal}/>}
 
       {viewPlansForm && <ViewPlans planData={plansData} />}
-
       {addSchemeForm && <SchemeForm/>}
       {viewschemetable && <ViewSchemeTable schemeData={viewSchemeData}/>}
-
-
-
       {showAddEmployee &&  <EmployeeRegister/> }
       {showAddAdmin && <AdminRegister/> }
-      {viewEmployeeTable && <ViewEmployee employees={viewEmployeeData}/> }
-      {showHandleProfile && <HandleProfile handleProfile={adminProfileData }/> }
+      {viewEmployeeTable && <ViewEmployee employees={viewEmployeeData}/>}
+      {showAdminProfile && <AdminProfile data={adminProfileData }/>}
       {showChangePassword && <ChangeAdminPassword/>}
-      {viewAdminTable && <ViewAdmin admin={viewAdminData}/> }
-
+      {showAddAdmin && <ViewAdmin/>}
     </>
   );
 };

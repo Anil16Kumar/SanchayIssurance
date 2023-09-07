@@ -8,7 +8,8 @@ import AgentDashboard from './Components/Agent/AgentDashboard';
 import AdminDashboard from './Components/Admin/AdminDashboard';
 import Home from "./Components/home/Home";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Login from "./Components/login/login";
+import Login from './Components/login/Login';
+
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
         <Route path="/Admindashboard/" element={<AdminDashboard/>}> </Route>
         <Route path="/Employeedashbaord/:accessid" element={<EmployeeDashboard/>}> </Route>
         <Route path="/Customerdashboard/" element={<CustomerDashboard/>}> </Route>
-        <Route path="/Agentdashboard/:accessid" element={<AgentDashboard/>}> </Route>
+        <Route path="/Agentdashboard/" element={<AgentDashboard/>}> </Route>
       </Routes>
     </>
     

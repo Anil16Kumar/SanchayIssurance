@@ -23,7 +23,7 @@ function InsuranceForm({
   console.log(accessid);
   //state to keep agent name and data
   const [agentNames, setAgentNames] = useState([]);
-  const [selectedAgent, setSelectedAgent] = useState("");
+  const [selectedAgent, setSelectedAgent] = useState(null);
 
   // State to keep track of selected files
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -180,6 +180,8 @@ function InsuranceForm({
       });
       if (validateForm()) {
         onSubmit(formData);
+        console.log(formData.registrationcommission);
+
         try {
           const premiumt = formData.premiumType;
           const response = await addPolicytoCustomer(
@@ -359,7 +361,7 @@ function InsuranceForm({
             >
               <option value="">Select an Agent</option>
               {agentNames.map((agent, index) => (
-                <option key={index} value={agent.referencenumber}>
+                <option key={index} value={agent.id}>
                   {agent.firstname}
                 </option>
               ))}

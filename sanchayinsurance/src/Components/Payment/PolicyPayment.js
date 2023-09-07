@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./PolicyPayment.css";
 
-const PolicyPayment = (paymentdata) => {
+const PolicyPayment = ({paymentdata,handleforpaymentReceipt}) => {
   // console.log(paymentdata.paymentdata.installmentAmount);
   let total =
   +paymentdata.paymentdata.installmentAmount +

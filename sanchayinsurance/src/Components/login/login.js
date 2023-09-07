@@ -59,7 +59,7 @@ const Login = () => {
       navigate(`/EmployeeDashboard/${res.data.accessid}`);
       return;
     } else if (rolename === "ROLE_AGENT") {
-      navigate(`/AgentDashboard/${res.data.accessid}`);
+      navigate(`/AgentDashboard`);
       return;
     }
     else navigate(`/AdminDashboard`);
