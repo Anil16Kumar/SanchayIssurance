@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ViewAgentCustomers = () => {
+const ViewCustomerTable = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const ViewAgentCustomers = () => {
   )
 }
 
-export default ViewAgentCustomers
+export default ViewCustomerTable

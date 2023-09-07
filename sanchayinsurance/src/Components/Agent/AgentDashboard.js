@@ -9,6 +9,9 @@ import axios from "axios";
 import AgentProfile from "./AgentProfile";
 import MarketingAgent from "./MarketingAgent";
 import MarketingEmail from "./MarketingEmail";
+import ViewCustomerTable from "./ViewCustomerTable/ViewCustomerTable";
+import ViewAgentCommision from "./ViewAgentCommision";
+import ChangeAgentPassword from "./ChangeAgentPassword";
 
 
 
@@ -316,10 +319,11 @@ const AgentDashboard = () => {
 
       {agentProfileData && <AgentProfile handleProfile={agentProfileData }/> }
       {showChangePassword && <ChangeAgentPassword/>}
-      {showViewCustomer && <AgentProfile handleViewCustomers={showViewCustomer }/> }
-      {showViewCommission && <ViewAgentCommission handleViewCustomers={showViewCommission }/> }
+      {showViewCustomer && <ViewCustomerTable handleViewCustomers={showViewCustomer }/> }
+      {showViewCommission && <ViewAgentCommision handleViewCommission={showViewCommission }/> }
+
       {viewMarketing && <MarketingAgent/>}
-      
+
       {viewMarketingEmail && <MarketingEmail/>}
 
     </>
