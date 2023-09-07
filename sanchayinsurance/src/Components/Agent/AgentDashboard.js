@@ -245,7 +245,7 @@ const AgentDashboard = () => {
                   <Dropdown.Menu>
                     <Dropdown.Item href="#" style={{ whiteSpace: "normal" }} onClick={handleProfile}>
                       Profile
-                    </Dropdown.Item>
+                    </Dropdown.Item> 
                     <Dropdown.Item href="#" style={{ whiteSpace: "normal" }} onClick={handleChangePassword}>
                       Change Password
                     </Dropdown.Item>

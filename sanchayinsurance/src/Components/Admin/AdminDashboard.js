@@ -189,6 +189,7 @@ const AdminDashboard = () => {
 
  
 
+  setViewSchemeTable(true);
   setChangePassword(false);
     setAdminProfile(false);
     setAddEmployee(false);
@@ -199,7 +200,6 @@ const AdminDashboard = () => {
     setViewInsurancetable(false);
     setQueryFeedBack(false);
     setAddSchemeForm(false);
-    setViewSchemeTable(false);
     setViewAdminData(false); 
     setIsModalOpen(false);
     setIsPlanModalOpen(false);
