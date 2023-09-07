@@ -94,7 +94,7 @@ const handleViewCommission=async() =>{
 
 const AgentDashboard = () => {
   const navigation = useNavigate();
-
+  let accessid=localStorage.getItem("accessid");
   const authenticateuser = async () => {
     let token = localStorage.getItem("auth");
     if (token == null) {

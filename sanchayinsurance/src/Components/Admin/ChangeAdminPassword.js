@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import './ChangePassword.css'
 import axios from 'axios';
+import React, { useState } from 'react'
 import Swal from 'sweetalert2';
-
-const ChangePassword = ({ }) => {
+import './ChangeAdminPassword.css'
+import { useNavigate } from 'react-router-dom';
+const ChangeAdminPassword = () => {
+  const navigation=useNavigate();
 
   let accessid=localStorage.getItem("accessid");
   const [formData, setFormData] = useState({
@@ -40,7 +41,7 @@ const ChangePassword = ({ }) => {
 
     // Call an API to change the password (you can replace this with your actual API call)
     try {
-      let response=await axios.post(`http://localhost:8080/customerapp/changepassword/${accessid}/${formData.oldPassword}/${formData.newPassword}`)
+      let response=await axios.post(`http://localhost:8080/adminapp/changepassword/${accessid}/${formData.oldPassword}/${formData.newPassword}`)
       setFormData({
         oldPassword: '',
         newPassword: '',
@@ -51,6 +52,9 @@ const ChangePassword = ({ }) => {
         response.data,
         'Success'
       )
+      localStorage.clear();
+      navigation(`/login`)
+      return;
     }
     catch (error) {
       console.error('Error changing password:', error);
@@ -75,7 +79,7 @@ const ChangePassword = ({ }) => {
   };
 
   return (
-    <div>
+    <div className='div-admin-change'>
       <h2>Change Password</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -120,4 +124,4 @@ const ChangePassword = ({ }) => {
   );
 };
 
-export default ChangePassword;
+export default ChangeAdminPassword

@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import './EmployeeRegister.css'
 import { Button } from 'react-bootstrap';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const EmployeeRegister = () => {
     const [firstName, setFirstName] = useState('');
@@ -27,11 +29,35 @@ const EmployeeRegister = () => {
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0; 
     };    
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
     
         if (validateForm()) {
-          
+          try {
+            let response=await axios.post(`http://localhost:8080/employeeapp/register`,
+            
+            {
+              firstname:firstName,
+              lastname:lastName,
+              email:email,
+              userInfo:{
+                  username:userName,
+                  password:password
+              }
+
+             
+          }
+
+            )
+
+            Swal.fire(
+              '',
+              'Registered SUccessfully!',
+              ''
+            )
+          } catch (error) {
+            alert(error.message);
+          }
         }
     };
     

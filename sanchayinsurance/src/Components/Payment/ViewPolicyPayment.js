@@ -7,10 +7,12 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const ViewPolicyPayment = ({ policyData, setPolicyFetch }) => {
+  console.log(policyData);
   const [installmentsPaid, setInstallmentsPaid] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5); // Initialize with a default page size
   let paymentlist = policyData.payments.length;
+  const[agentcomissionpercentage,setAgentCommissionPercentage]=useState(5)
 
   const getFormattedDate = () => {
     const today = new Date();
@@ -22,10 +24,22 @@ const ViewPolicyPayment = ({ policyData, setPolicyFetch }) => {
   };
 
   const handlePayClick = async (premiumData, index) => {
+    console.log(premiumData);
     const currentDate = getFormattedDate();
+    
+  
+
+
 
     try {
       let policynumber = policyData.policynumber;
+      let agentid=policyData.agent.agentid;
+      // console.log(agentid);
+      let agentcommission=  (agentcomissionpercentage*premiumData.amount)/100;
+      console.log(typeof agentcommission);
+      
+
+      let agentrepose=await axios.post(`http://localhost:8080/agentapp/addcommion/${agentid}/${agentcommission}`)
 
       let response = await axios.post(
         `http://localhost:8080/paymentapp/addpayment/${policynumber}`,
@@ -36,10 +50,15 @@ const ViewPolicyPayment = ({ policyData, setPolicyFetch }) => {
       );
 
       
-      setPolicyFetch((st) => st + 1);
+      // setPolicyFetch((st) => st + 1);
       const updatedInstallmentsPaid = [...installmentsPaid];
       updatedInstallmentsPaid[index] = true;
       setInstallmentsPaid(updatedInstallmentsPaid);
+      Swal.fire(
+        '',
+        'Payment Done SUccessfully!',
+        'success'
+      )
     } catch (error) {
       alert(error.message);
     }

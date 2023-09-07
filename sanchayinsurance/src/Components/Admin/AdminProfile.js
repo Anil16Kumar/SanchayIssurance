@@ -1,93 +1,102 @@
-import React, { useState } from "react";
-import "./AdminProfile.css";
-import { Button, Table } from "react-bootstrap";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Swal from 'sweetalert2';
 
+const AdminProfile = ({ data }) => {
+  console.log(data);
 
-const AdminProfile = (props) => {
-    const [isEditing, setIsEditing] = useState(false);
-    const {
-        adminName,
-        userName,
-      
-    } = props.adminData;
-  
-    const handleEditClick = () => {
-      setIsEditing(!isEditing);
-    };
-  
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      // Send data to the server or perform any necessary actions
-      setIsEditing(false); // Disable editing after submission
-    };
-    return (
-        <>
-            <div className="adminprofile">
-            <form onSubmit={handleSubmit}>
+  const adminId = localStorage.getItem('adminId');
 
-            <h3 className="text-center fw-bold text-light mb-4">
-            Profile Details
-          </h3>
-          <Table striped bordered hover>
-            <tbody>
-            <tr>
-                <td><li>
-                <label>Admin name</label>
-                {isEditing ? (
-                  <input
-                    value={adminName}
-                    type="text"
-                    className="form-control"
-                    placeholder={adminName.toUpperCase()}
-                  />
-                ) : (
-                  <div>
-                    <span>{adminName.toUpperCase()}</span>
-                  </div>
-                )}
-              </li></td>
-                <td><li>
-                <label>User Name</label>
-                {isEditing ? (
-                  <input
-                    value={userName}
-                    type="text"
-                    className="form-control"
-                    placeholder={userName}
-                  />
-                ) : (
-                  <div>
-                    <span>{username.toUpperCase()}</span>
-                  </div>
-                )}
-              </li></td>
-              </tr>
-            </tbody>
-            
-            </Table>
-            
-            <div
-            className="d-grid"
-            style={{ display: "flex", justifyContent: "center" }}
-          >
-            <Button
-              type="button"
-              variant="warning"
-              style={{ width: "150px", height: "50px", marginLeft: "30px" }}
-              onClick={handleEditClick}
-            >
-              {isEditing ? "Save" : "Edit"}
-            </Button>
-          </div>
+  const [formData, setFormData] = useState(data);
+  const [formChanges, setFormChanges] = useState(false);
 
-
-                </form>
-
-            </div>
-        </>
+  useEffect(() => {
+    const isFormChanged = !Object.keys(formData).every(
+      (key) => data[key] === formData[key]
     );
+    setFormChanges(isFormChanged);
+  }, [formData, data]);
 
-     
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleUpdate = async () => {
+    let adminid=localStorage.getItem("accessid");
+    console.log(formData);
+    try {
+      const response = await axios.post(`http://localhost:8080/adminapp/update/${adminid}`, {
+        adminname:formData.adminname
+      });
+
+      if (response.ok) {
+        console.log('Profile updated successfully');
+        setFormChanges(false);
+      } 
+      else {
+        console.error('Profile update failed');
+      }
+      Swal.fire(
+        'Done',
+        response.data,
+        'Success'
+      )
+    } catch (error) {
+      console.error('Error updating profile:', error);
+    }
+  };
+
+  return (
+    <Container style={{ maxWidth: '100%', marginTop: '100px' }}>
+      <h2 className="text-center">Admin Profile</h2>
+      <Form className="border border-primary rounded p-4 ">
+        <Row>
+          <Col md={6}>
+            <Form.Group controlId="adminname">
+              <Form.Label>Admin Name:</Form.Label>
+              <Form.Control
+                type="text"
+                name="adminname"
+                value={formData.adminname}
+                onChange={handleChange}
+              />
+            </Form.Group>
+          </Col>
+          <Col md={6}>
+            <Form.Group controlId="username">
+              <Form.Label>Username:</Form.Label>
+              <Form.Control
+                type="text"
+                name="username"
+                value={formData.userInfo.username         }
+                onChange={handleChange}
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+        <div className="text-center">
+          <Button                                           
+            variant="primary"                                                     
+            type="button"
+            onClick={handleUpdate}
+            disabled={!formChanges}
+            className='mt-4'
+          >
+            Update
+          </Button>
+        </div>
+      </Form>
+    </Container>
+  );
 };
 
 export default AdminProfile;
