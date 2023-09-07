@@ -17,6 +17,13 @@ import AddPlan from "./PlanAddOrView/AddPlan";
 import ViewPlans from "./PlanAddOrView/ViewPlans";
 import SchemeForm from "./AddSchemeorView/SchemeForm";
 import ViewSchemeTable from "./AddSchemeorView/ViewSchemeTable";
+import AddEmployee from "./AddSchemeorView/AddEmployee";
+import AddAdmin from "./AddSchemeorView/AddAdmin";
+import ViewEmployee from "./AddSchemeorView/ViewEmployee";
+import HandleProfile from "./AddSchemeorView/HandleProfile";
+import ChangePassword from "./AddSchemeorView/ChangeAdminPassword";
+import EmployeeRegister from "../Employee/EmployeeRegister";
+import AdminRegister from "./AdminRegister";
 
 
 const AdminDashboard = () => {
@@ -45,6 +52,91 @@ const AdminDashboard = () => {
   const[viewSchemeData,setViewSchemeData]=useState({})
 
 
+
+  const[viewEmployeeData,setViewEmployeeData]=useState({}) 
+  const[viewEmployeeTable,setViewEmployeeTable]=useState(false) 
+  const[showAddAdmin,setAddAdmin]=useState(false)
+  const[showAddEmployee,setAddEmployee]=useState(false)
+  const[adminProfileData,setHandleProfile]=useState({})
+  const[showChangePassword,setChangePassword]=useState(false)
+  const[viewAdminData,setViewAdminData]=useState({})
+
+
+
+  const handleChangePassword=()=>{
+    setChangePassword(true);
+    setHandleProfile(false);
+    setAddEmployee(false);
+    setShowAddAgent(false);
+    setShowHomePage(false);
+    setShowViewAgent(false);
+    setShowCustomers(false);
+    setViewInsurancetable(false);
+    setQueryFeedBack(false);
+    setAddSchemeForm(false);
+    setViewSchemeTable(false);
+    setViewAdminData(false); 
+
+  };
+
+  const handleProfile = async () => {
+    
+    try {
+      let response = await axios.get(`api`);
+      setHandleProfileData(response.data);
+      console.log(response.data);
+    } catch (error) {
+      alert(error.message);
+    }  
+    
+    setHandleProfile(true);
+    setAddEmployee(false);
+    setShowAddAgent(false);
+    setShowHomePage(false);
+    setShowViewAgent(false);
+    setShowCustomers(false);
+    setViewInsurancetable(false);
+    setQueryFeedBack(false);
+    setAddSchemeForm(false);
+    setViewSchemeTable(false);
+    setChangePassword(false);
+    setViewAdminData(false); 
+  };
+
+  const handleAddEmployee = () => {
+    setAddEmployee(true);
+    setShowAddAgent(false);
+    setShowHomePage(false);
+    setShowViewAgent(false);
+    setShowCustomers(false);
+    setViewInsurancetable(false);
+    setQueryFeedBack(false);
+    setAddSchemeForm(false);
+    setViewSchemeTable(false);
+    setHandleProfile(false);
+    setChangePassword(false);
+    setViewAdminData(false); 
+  };
+  const handleAddAdmin = () => {
+    setAddAdmin(true);
+    setShowAddAgent(false);
+    setShowHomePage(false);
+    setShowViewAgent(false);
+    setShowCustomers(false);
+    setViewInsurancetable(false);
+    setQueryFeedBack(false);
+    setAddSchemeForm(false);
+    setViewSchemeTable(false);
+    setHandleProfile(false);
+    setChangePassword(false);
+    setViewAdminData(false); 
+  };
+
+  
+
+
+
+
   const handleAddAgent = () => {
     setShowAddAgent(true);
     setShowHomePage(false);
@@ -54,7 +146,13 @@ const AdminDashboard = () => {
     setQueryFeedBack(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
+ 
+    setHandleProfile(false);
+    setChangePassword(false);
+    setViewAdminData(false); 
+ 
     setIsPlanModalOpen(false);
+ 
   };
   
 
@@ -69,14 +167,7 @@ const AdminDashboard = () => {
     alert(error.message);
   }  
 
-
-
-
-
-
-
-
-
+ 
 
   setViewSchemeTable(false);
   setAddSchemeForm(false);
@@ -86,7 +177,13 @@ const AdminDashboard = () => {
   setShowCustomers(false);
   setViewInsurancetable(false);
   setQueryFeedBack(false);
+ 
+  setHandleProfile(false);
+  setChangePassword(false);
+  setViewAdminData(false); 
+ 
   setIsPlanModalOpen(false);
+ 
  
   };
 
@@ -99,7 +196,13 @@ const AdminDashboard = () => {
     setViewInsurancetable(false);
     setQueryFeedBack(false);
     setViewSchemeTable(false);
+ 
+    setChangePassword(false);
+    setHandleProfile(false);
+    setViewAdminData(false); 
+ 
     setIsPlanModalOpen(false);
+ 
   };
   // const handleViewPlanModal = () => {
   //   setViewPlanAddModal(true);
@@ -128,7 +231,12 @@ const AdminDashboard = () => {
     setIsPlanModalOpen(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
+ 
+    setHandleProfile(false);
+    setChangePassword(false);
+ 
     setIsPlanModalOpen(false);
+ 
   };
 
 
@@ -151,8 +259,63 @@ const AdminDashboard = () => {
     setIsPlanModalOpen(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
-    setIsPlanModalOpen(false);
+ 
+    setHandleProfile(false);
+    setChangePassword(false);
   };
+
+  //to view employeee
+  const handleViewEmployee = async () => {
+    try {
+      let response = await axios.get(`employee view api`);
+      setPlansData(response.data);
+      console.log(response.data);
+    } catch (error) {
+      alert(error.message);
+    }
+
+    setViewEmployeeData(true);
+    setViewPlans(false);
+    setShowViewAgent(false);
+    setShowAddAgent(false);
+    setShowHomePage(false);
+    setShowCustomers(false);
+    setViewInsurancetable(false);
+    setQueryFeedBack(false);
+    setIsPlanModalOpen(false);
+    setAddSchemeForm(false);
+    setViewSchemeTable(false);
+    setHandleProfile(false);
+    setChangePassword(false);
+ 
+    setIsPlanModalOpen(false);
+ 
+  };
+
+  const handleViewAdmin = async () => {
+    try {
+      let response = await axios.get(`employee view api`);
+      setPlansData(response.data);
+      console.log(response.data);
+    } catch (error) {
+      alert(error.message);
+    }
+    
+    setViewAdminData(true);
+    setViewPlans(false);
+    setShowViewAgent(false);
+    setShowAddAgent(false);
+    setShowHomePage(false);
+    setShowCustomers(false);
+    setViewInsurancetable(false);
+    setQueryFeedBack(false);
+    setIsPlanModalOpen(false);
+    setAddSchemeForm(false);
+    setViewSchemeTable(false);
+    setHandleProfile(false);
+    setChangePassword(false);
+  };
+
 
   const handleViewCustomer = async () => {
     try {
@@ -174,7 +337,12 @@ const AdminDashboard = () => {
     setViewPlans(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
+ 
+    setHandleProfile(false);
+    setChangePassword(false);
+ 
     setIsPlanModalOpen(false);
+ 
 
   };
 
@@ -196,7 +364,12 @@ const AdminDashboard = () => {
     setViewPlans(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
+ 
+    setHandleProfile(false);
+    setChangePassword(false);
+ 
     setIsPlanModalOpen(false);
+ 
 
   };
 
@@ -213,7 +386,12 @@ const AdminDashboard = () => {
     setViewPlans(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
+ 
+    setHandleProfile(false);
+    setChangePassword(false);
+ 
     setIsPlanModalOpen(false);
+ 
 
   };
 
@@ -250,7 +428,13 @@ const AdminDashboard = () => {
     setQueryFeedBack(false);
     setViewPlans(false);
     setAddSchemeForm(false);
+ 
+    setHandleProfile(false);
+    setChangePassword(false);
+  
+ 
     
+ 
   };
 
   const closePlanModal = () => {
@@ -504,17 +688,23 @@ const AdminDashboard = () => {
                     Account
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}>
+                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}  onClick={handleProfile}>
                       Profile
                     </Dropdown.Item>
-                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}>
+                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}  onClick={handleChangePassword}>
                       Change Password
                     </Dropdown.Item>
-                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}>
+                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}  onClick={handleAddEmployee}>
                       Add Employee
                     </Dropdown.Item>
-                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}>
+                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}  onClick={handleViewEmployee}>
                       View Employee
+                    </Dropdown.Item>
+                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}  onClick={handleAddAdmin}>
+                      Add Admin
+                    </Dropdown.Item>
+                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}  onClick={handleViewAdmin}>
+                      view Admin
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
@@ -550,6 +740,16 @@ const AdminDashboard = () => {
 
       {addSchemeForm && <SchemeForm/>}
       {viewschemetable && <ViewSchemeTable schemeData={viewSchemeData}/>}
+
+
+
+      {showAddEmployee &&  <EmployeeRegister/> }
+      {showAddAdmin && <AdminRegister/> }
+      {viewEmployeeTable && <ViewEmployee employees={viewEmployeeData}/> }
+      {showHandleProfile && <HandleProfile handleProfile={adminProfileData }/> }
+      {showChangePassword && <ChangeAdminPassword/>}
+      {viewAdminTable && <ViewAdmin admin={viewAdminData}/> }
+
     </>
   );
 };

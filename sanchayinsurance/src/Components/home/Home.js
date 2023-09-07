@@ -4,8 +4,8 @@ import HomeDashboard from './HomeDashboard';
 import CustomerRegister from './../Customer/CustomerRegister';
 import Contact from './../../sharedComponents/Contact';
 import PlanServices from '../../services/PlanServices';
-import Login from '../login/Login';
-
+// import Login from '../login/Login';
+import Login from '../login/login';
 
 
 const Home = () => {
