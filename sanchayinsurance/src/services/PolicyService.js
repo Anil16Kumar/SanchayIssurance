@@ -20,7 +20,7 @@ export const addPolicytoCustomer = async (accessid,schemename,formData,formDataW
   }
 
   const response = await axios.post(
-    `http://localhost:8080/policyapp/addpolicyScheme/${accessid}/${schemename}`,
+    `http://localhost:8080/policyapp/addpolicyScheme/${accessid}/${schemename}?documentFiles=${formDataWithFiles}`,
     {
         "issuedate": formData.dateCreated,
         "maturitydate": formData.maturityDate,
@@ -29,6 +29,11 @@ export const addPolicytoCustomer = async (accessid,schemename,formData,formDataW
         "numberofinstallment":totalinstall,
         "status":"PENDING" 
     },
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data', // Set the content type to multipart/form-data
+      },
+    }
     // {
     //   headers: {
     //     Authorization: `Bearer ${token}`,

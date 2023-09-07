@@ -1,18 +1,48 @@
-import React, { useState } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import './InsuranceForm.css';
-import { addPolicytoCustomer } from '../../../services/PolicyService';
-import { Button } from 'react-bootstrap';
-import Swal from 'sweetalert2';
+import React, { useEffect, useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "./InsuranceForm.css";
+import { addPolicytoCustomer } from "../../../services/PolicyService";
+import { Button } from "react-bootstrap";
+import Swal from "sweetalert2";
+import axios from "axios";
 
-function InsuranceForm({ data, noOfYear, selectedPlan, maturityDate, currDate, calulatedata, investAmount, premiumtype, showPaymentOfPolicyhandle, onSubmit, accessid }) {
+function InsuranceForm({
+  data,
+  noOfYear,
+  selectedPlan,
+  maturityDate,
+  currDate,
+  calulatedata,
+  investAmount,
+  premiumtype,
+  showPaymentOfPolicyhandle,
+  onSubmit,
+  accessid,
+}) {
   console.log(accessid);
+  //state to keep agent name and data
+  const [agentNames, setAgentNames] = useState([]);
+  const [selectedAgent, setSelectedAgent] = useState("");
 
   // State to keep track of selected files
   const [selectedFiles, setSelectedFiles] = useState([]);
   const maxFiles = 3; // Maximum number of allowed files
 
+  const fetchAgents = () => {
+    axios
+      .get(`http://localhost:8080/agentapp/agents`)
+      .then((response) => {
+        setAgentNames(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching agent names:", error.message);
+      });
+  };
+
+  useEffect(() => {
+    fetchAgents();
+  }, []);
   // Function to handle file selection
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
@@ -24,19 +54,28 @@ function InsuranceForm({ data, noOfYear, selectedPlan, maturityDate, currDate, c
       const fileName = file.name.toLowerCase();
 
       // Define allowed file types (image or PDF)
-      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      const allowedTypes = [
+        "image/jpeg",
+        "image/jpg",
+        "image/png",
+        "application/pdf",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      ];
 
       if (allowedTypes.includes(fileType) && validFiles.length < maxFiles) {
         validFiles.push(file);
       } else {
-        alert(`Invalid file: ${fileName}. Only images (jpeg, jpg, png) and PDF (pdf, doc, docx) files are allowed, and you can upload a maximum of ${maxFiles} files.`);
+        alert(
+          `Invalid file: ${fileName}. Only images (jpeg, jpg, png) and PDF (pdf, doc, docx) files are allowed, and you can upload a maximum of ${maxFiles} files.`
+        );
       }
     }
 
     // Update the selected files state
     setSelectedFiles([...selectedFiles, ...validFiles]);
   };
- 
+
   // Function to render the selected files list
   const renderSelectedFiles = () => {
     if (selectedFiles.length === 0) {
@@ -47,8 +86,14 @@ function InsuranceForm({ data, noOfYear, selectedPlan, maturityDate, currDate, c
       <ul>
         {selectedFiles.map((file, index) => (
           <li key={index}>
-            {file.name}{' '}
-            <Button variant='danger' onClick={() => handleFileRemove(index)} style={{ maxWidth: '100px', marginTop: '2px' }}>Remove</Button>
+            {file.name}{" "}
+            <Button
+              variant="danger"
+              onClick={() => handleFileRemove(index)}
+              style={{ maxWidth: "100px", marginTop: "2px" }}
+            >
+              Remove
+            </Button>
           </li>
         ))}
       </ul>
@@ -74,7 +119,7 @@ function InsuranceForm({ data, noOfYear, selectedPlan, maturityDate, currDate, c
     totalAmount: calulatedata.totalAmount,
     dateCreated: currDate,
     maturityDate: maturityDate,
-    interestAmount: calulatedata.interestAmount
+    interestAmount: calulatedata.interestAmount,
   };
 
   // State to manage form data
@@ -82,16 +127,16 @@ function InsuranceForm({ data, noOfYear, selectedPlan, maturityDate, currDate, c
 
   // State to manage form errors
   const [formErrors, setFormErrors] = useState({
-    insuranceType: '',
-    insuranceScheme: '',
-    numOfYears: '',
-    profitRatio: '',
-    totalInvestmentAmount: '',
-    premiumType: '',
-    installmentAmount: '',
-    totalAmount: '',
-    dateCreated: '',
-    maturityDate: '',
+    insuranceType: "",
+    insuranceScheme: "",
+    numOfYears: "",
+    profitRatio: "",
+    totalInvestmentAmount: "",
+    premiumType: "",
+    installmentAmount: "",
+    totalAmount: "",
+    dateCreated: "",
+    maturityDate: "",
   });
 
   // Function to handle input field changes
@@ -116,8 +161,8 @@ function InsuranceForm({ data, noOfYear, selectedPlan, maturityDate, currDate, c
     const errors = {};
     let isValid = true;
     for (const key in formData) {
-      if (formData[key] === '') {
-        errors[key] = 'Required';
+      if (formData[key] === "") {
+        errors[key] = "Required";
         isValid = false;
       }
     }
@@ -137,32 +182,33 @@ function InsuranceForm({ data, noOfYear, selectedPlan, maturityDate, currDate, c
         onSubmit(formData);
         try {
           const premiumt = formData.premiumType;
-          const response = await addPolicytoCustomer(accessid, data.schemename, formData,formDataWithFiles, noOfYear, premiumt);
-                  
+          const response = await addPolicytoCustomer(
+            accessid,
+            data.schemename,
+            formData,
+            formDataWithFiles.data,
+            noOfYear,
+            premiumt
+          );
+
           setSelectedFiles([]);
 
           Swal.fire(
-            'Send For Verification',
-            'Wait Untill policy get verified',
-            'right'
-          )
+            "Send For Verification",
+            "Wait Untill policy get verified",
+            "right"
+          );
+        } catch (error) {
+          console.error("Error uploading files:", error);
+          alert("Error uploading files. Please try again.");
         }
-        catch (error) {
-          console.error('Error uploading files:', error);
-          alert('Error uploading files. Please try again.');
-        }
-      }
-      else{
-        alert("Enter Incorrect Credentials")
+      } else {
+        alert("Enter Incorrect Credentials");
       }
     } else {
-      alert('Please select at least one valid file to upload.');
+      alert("Please select at least one valid file to upload.");
     }
   };
-
-
-
-
 
   return (
     <>
@@ -218,7 +264,9 @@ function InsuranceForm({ data, noOfYear, selectedPlan, maturityDate, currDate, c
             <div className="error">{formErrors.profitRatio}</div>
           </div>
           <div className="form-group">
-            <label htmlFor="totalInvestmentAmount">Total Investment Amount:</label>
+            <label htmlFor="totalInvestmentAmount">
+              Total Investment Amount:
+            </label>
             <input
               type="number"
               id="totalInvestmentAmount"
@@ -301,6 +349,23 @@ function InsuranceForm({ data, noOfYear, selectedPlan, maturityDate, currDate, c
             />
             <div className="error">{formErrors.maturityDate}</div>
           </div>
+          <div className="form-group">
+            <label htmlFor="agentName">Select Agent:</label>
+            <select
+              id="agentName"
+              name="agentName"
+              value={selectedAgent}
+              onChange={(e) => setSelectedAgent(e.target.value)}
+            >
+              <option value="">Select an Agent</option>
+              {agentNames.map((agent, index) => (
+                <option key={index} value={agent.referencenumber}>
+                  {agent.firstname}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <div>
             <div className="form-group">
               <label htmlFor="documentfile">Upload Document</label>

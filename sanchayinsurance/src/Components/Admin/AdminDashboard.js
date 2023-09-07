@@ -146,6 +146,16 @@ const AdminDashboard = () => {
     setQueryFeedBack(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
+<<<<<<< HEAD
+=======
+ 
+    setHandleProfile(false);
+    setChangePassword(false);
+    setViewAdminData(false); 
+ 
+    setIsPlanModalOpen(false);
+ 
+>>>>>>> upstream/main
   };
   
 
@@ -170,6 +180,16 @@ const AdminDashboard = () => {
   setShowCustomers(false);
   setViewInsurancetable(false);
   setQueryFeedBack(false);
+<<<<<<< HEAD
+=======
+ 
+  setHandleProfile(false);
+  setChangePassword(false);
+  setViewAdminData(false); 
+ 
+  setIsPlanModalOpen(false);
+ 
+>>>>>>> upstream/main
  
   };
 
@@ -182,6 +202,16 @@ const AdminDashboard = () => {
     setViewInsurancetable(false);
     setQueryFeedBack(false);
     setViewSchemeTable(false);
+<<<<<<< HEAD
+=======
+ 
+    setChangePassword(false);
+    setHandleProfile(false);
+    setViewAdminData(false); 
+ 
+    setIsPlanModalOpen(false);
+ 
+>>>>>>> upstream/main
   };
   // const handleViewPlanModal = () => {
   //   setViewPlanAddModal(true);
@@ -210,6 +240,15 @@ const AdminDashboard = () => {
     setIsPlanModalOpen(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
+<<<<<<< HEAD
+=======
+ 
+    setHandleProfile(false);
+    setChangePassword(false);
+ 
+    setIsPlanModalOpen(false);
+ 
+>>>>>>> upstream/main
   };
 
 
@@ -232,6 +271,64 @@ const AdminDashboard = () => {
     setIsPlanModalOpen(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
+<<<<<<< HEAD
+=======
+ 
+    setHandleProfile(false);
+    setChangePassword(false);
+  };
+
+  //to view employeee
+  const handleViewEmployee = async () => {
+    try {
+      let response = await axios.get(`employee view api`);
+      setPlansData(response.data);
+      console.log(response.data);
+    } catch (error) {
+      alert(error.message);
+    }
+
+    setViewEmployeeData(true);
+    setViewPlans(false);
+    setShowViewAgent(false);
+    setShowAddAgent(false);
+    setShowHomePage(false);
+    setShowCustomers(false);
+    setViewInsurancetable(false);
+    setQueryFeedBack(false);
+    setIsPlanModalOpen(false);
+    setAddSchemeForm(false);
+    setViewSchemeTable(false);
+    setHandleProfile(false);
+    setChangePassword(false);
+ 
+    setIsPlanModalOpen(false);
+ 
+  };
+
+  const handleViewAdmin = async () => {
+    try {
+      let response = await axios.get(`employee view api`);
+      setPlansData(response.data);
+      console.log(response.data);
+    } catch (error) {
+      alert(error.message);
+    }
+    
+    setViewAdminData(true);
+    setViewPlans(false);
+    setShowViewAgent(false);
+    setShowAddAgent(false);
+    setShowHomePage(false);
+    setShowCustomers(false);
+    setViewInsurancetable(false);
+    setQueryFeedBack(false);
+    setIsPlanModalOpen(false);
+    setAddSchemeForm(false);
+    setViewSchemeTable(false);
+    setHandleProfile(false);
+    setChangePassword(false);
+>>>>>>> upstream/main
   };
 
 
@@ -255,6 +352,15 @@ const AdminDashboard = () => {
     setViewPlans(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
+<<<<<<< HEAD
+=======
+ 
+    setHandleProfile(false);
+    setChangePassword(false);
+ 
+    setIsPlanModalOpen(false);
+ 
+>>>>>>> upstream/main
 
   };
 
@@ -276,6 +382,15 @@ const AdminDashboard = () => {
     setViewPlans(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
+<<<<<<< HEAD
+=======
+ 
+    setHandleProfile(false);
+    setChangePassword(false);
+ 
+    setIsPlanModalOpen(false);
+ 
+>>>>>>> upstream/main
 
   };
 
@@ -292,6 +407,15 @@ const AdminDashboard = () => {
     setViewPlans(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
+<<<<<<< HEAD
+=======
+ 
+    setHandleProfile(false);
+    setChangePassword(false);
+ 
+    setIsPlanModalOpen(false);
+ 
+>>>>>>> upstream/main
 
   };
 
@@ -328,7 +452,17 @@ const AdminDashboard = () => {
     setQueryFeedBack(false);
     setViewPlans(false);
     setAddSchemeForm(false);
+<<<<<<< HEAD
   
+=======
+ 
+    setHandleProfile(false);
+    setChangePassword(false);
+  
+ 
+    
+ 
+>>>>>>> upstream/main
   };
 
   const closePlanModal = () => {
