@@ -6,6 +6,91 @@ import { getRole } from "../../services/authorization (1)";
 
 import { Button, Dropdown } from "react-bootstrap";
 import axios from "axios";
+import AgentProfile from "./AgentProfile";
+import MarketingAgent from "./MarketingAgent";
+
+
+
+const[agentProfileData,setHandleProfile]=useState({})
+const[showChangePassword,setChangePassword]=useState(false)
+const[showViewCustomer,setViewCustomer]=useState(false)
+const[showViewCommission,setViewCommission]=useState(false)
+const[viewCustomerData,setViewCustomerData]=useState({})
+const[viewComissionData,setViewComissionData]=useState({})
+const[viewMarketing,setViewMarketing]=useState(false)
+
+
+
+const handleMarketing = () => {
+  setViewMarketing(true);
+  setHandleProfile(false);
+  setChangePassword(false);
+  setViewCustomer(false);
+  setViewCommission(false);
+
+}
+
+
+const handleProfile = async () => {
+    
+  try {
+    let response = await axios.get(`api`);
+    setHandleProfile(response.data);
+    console.log(response.data);
+  } catch (error) {
+    alert(error.message);
+  }  
+  
+  setHandleProfile(true);
+  setChangePassword(false);
+  setViewCustomer(false);
+  setViewCommission(false);
+  setViewMarketing(false);
+  
+};
+
+
+const handleChangePassword=()=>{
+  setChangePassword(true);
+  setHandleProfile(false);
+  setViewCustomer(false);
+  setViewCommission(false);
+  setViewMarketing(false);
+
+};
+
+const handleViewCustomers=async() =>{
+  try {
+    let response = await axios.get(`api`);
+    setViewCustomerData(response.data);
+    console.log(response.data);
+  } catch (error) {
+    alert(error.message);
+  } 
+  setViewCustomer(true);
+  setHandleProfile(false);
+  setChangePassword(false);
+  setViewCommission(false);
+  setViewMarketing(false);
+
+}
+
+const handleViewCommission=async() =>{
+  try {
+    let response = await axios.get(`api`);
+    setViewComissionData(response.data);
+    console.log(response.data);
+  } catch (error) {
+    alert(error.message);
+  } 
+  setViewCommission(true);
+  setViewCustomer(false);
+  setHandleProfile(false);
+  setChangePassword(false);
+  setViewMarketing(false);
+
+}
+
 
 const AgentDashboard = () => {
   const navigation = useNavigate();
@@ -137,10 +222,10 @@ const AgentDashboard = () => {
                     Account
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}>
+                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }} onClick={handleProfile}>
                       Profile
                     </Dropdown.Item>
-                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}>
+                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }} onClick={handleChangePassword}>
                       Change Password
                     </Dropdown.Item>
                   </Dropdown.Menu>
@@ -159,7 +244,7 @@ const AgentDashboard = () => {
                     Insurance
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}>
+                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }} onClick={handleViewCustomers}>
                       View customers
                     </Dropdown.Item>
                     <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}>
@@ -183,7 +268,7 @@ const AgentDashboard = () => {
                     Account
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}>
+                    <Dropdown.Item href="#" style={{ whiteSpace: "normal" }} onClick={handleViewCommission}>
                       view commission
                     </Dropdown.Item>
                     <Dropdown.Item href="#" style={{ whiteSpace: "normal" }}>
@@ -210,6 +295,12 @@ const AgentDashboard = () => {
           </div>
         </div>
       </nav>
+
+      {agentProfileData && <AgentProfile handleProfile={agentProfileData }/> }
+      {showChangePassword && <ChangeAgentPassword/>}
+      {showViewCustomer && <AgentProfile handleViewCustomers={showViewCustomer }/> }
+      {showViewCommission && <ViewAgentCommission handleViewCustomers={showViewCommission }/> }
+      {viewMarketing && <MarketingAgent/>}
     </>
   );
 };

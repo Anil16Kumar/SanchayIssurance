@@ -123,6 +123,8 @@ const PolicyPayment = (paymentdata) => {
     if (valid) {
       // navigate.push("/receipt", {
       //   formData: formData
+      console.log(paymentdata,"in policy payment");
+      console.log(formData,"Policy payment form data")
       paymentdata.handleforpaymentReceipt(formData)
       console.log(formData);
       // });

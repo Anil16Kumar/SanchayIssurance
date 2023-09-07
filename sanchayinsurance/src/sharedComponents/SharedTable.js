@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import ViewPolicyPayment from "../Components/Payment/ViewPolicyPayment";
 
-const SharedTable = ({ data, columns,buttonstatus,handleSelectedScheme ,viewpremiumbutton,setPremiumButton}) => {
+const SharedTable = ({ data, columns,buttonstatus,handleSelectedScheme ,viewpremiumbutton,setPremiumButton,setPolicyFetch}) => {
 const[selectedPolicyData,setSelectedPolicyData]=useState({})
 const[viewPolicyPayment,setViewPolicyPayment]=useState(false)
 const[viewpolicies,setViewPolicies]=useState(true)
@@ -45,7 +45,7 @@ const handleViewPolicy=async (data)=>{
         </tbody>
       </Table>}
 
-      {viewPolicyPayment && <ViewPolicyPayment policyData={selectedPolicyData}/>}
+      {viewPolicyPayment && <ViewPolicyPayment policyData={selectedPolicyData} setPolicyFetch={setPolicyFetch}/>}
       
     </div>
   );

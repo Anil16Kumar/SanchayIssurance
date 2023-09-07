@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useState } from 'react';
 
-export const addPolicytoCustomer = async (accessid,schemename,formData,noOfYear,premiumt) => {  
+export const addPolicytoCustomer = async (accessid,schemename,formData,formDataWithFiles,noOfYear,premiumt) => {  
+  console.log(formData,"Add Policy formData");
+  console.log(formDataWithFiles,"documents in it");
   
   console.log(typeof noOfYear);
   const totalinstall=+premiumt * +noOfYear;

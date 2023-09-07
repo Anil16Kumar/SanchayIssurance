@@ -146,9 +146,6 @@ const AdminDashboard = () => {
     setQueryFeedBack(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
-    setHandleProfile(false);
-    setChangePassword(false);
-    setViewAdminData(false); 
   };
   
 
@@ -165,7 +162,7 @@ const AdminDashboard = () => {
 
  
 
-  setViewSchemeTable(true);
+  setViewSchemeTable(false);
   setAddSchemeForm(false);
   setShowAddAgent(false);
   setShowHomePage(false);
@@ -173,9 +170,6 @@ const AdminDashboard = () => {
   setShowCustomers(false);
   setViewInsurancetable(false);
   setQueryFeedBack(false);
-  setHandleProfile(false);
-  setChangePassword(false);
-  setViewAdminData(false); 
  
   };
 
@@ -188,9 +182,6 @@ const AdminDashboard = () => {
     setViewInsurancetable(false);
     setQueryFeedBack(false);
     setViewSchemeTable(false);
-    setChangePassword(false);
-    setHandleProfile(false);
-    setViewAdminData(false); 
   };
   // const handleViewPlanModal = () => {
   //   setViewPlanAddModal(true);
@@ -219,8 +210,6 @@ const AdminDashboard = () => {
     setIsPlanModalOpen(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
-    setHandleProfile(false);
-    setChangePassword(false);
   };
 
 
@@ -243,57 +232,6 @@ const AdminDashboard = () => {
     setIsPlanModalOpen(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
-    setHandleProfile(false);
-    setChangePassword(false);
-  };
-
-  //to view employeee
-  const handleViewEmployee = async () => {
-    try {
-      let response = await axios.get(`employee view api`);
-      setPlansData(response.data);
-      console.log(response.data);
-    } catch (error) {
-      alert(error.message);
-    }
-
-    setViewEmployeeData(true);
-    setViewPlans(false);
-    setShowViewAgent(false);
-    setShowAddAgent(false);
-    setShowHomePage(false);
-    setShowCustomers(false);
-    setViewInsurancetable(false);
-    setQueryFeedBack(false);
-    setIsPlanModalOpen(false);
-    setAddSchemeForm(false);
-    setViewSchemeTable(false);
-    setHandleProfile(false);
-    setChangePassword(false);
-  };
-
-  const handleViewAdmin = async () => {
-    try {
-      let response = await axios.get(`employee view api`);
-      setPlansData(response.data);
-      console.log(response.data);
-    } catch (error) {
-      alert(error.message);
-    }
-    
-    setViewAdminData(true);
-    setViewPlans(false);
-    setShowViewAgent(false);
-    setShowAddAgent(false);
-    setShowHomePage(false);
-    setShowCustomers(false);
-    setViewInsurancetable(false);
-    setQueryFeedBack(false);
-    setIsPlanModalOpen(false);
-    setAddSchemeForm(false);
-    setViewSchemeTable(false);
-    setHandleProfile(false);
-    setChangePassword(false);
   };
 
 
@@ -317,8 +255,6 @@ const AdminDashboard = () => {
     setViewPlans(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
-    setHandleProfile(false);
-    setChangePassword(false);
 
   };
 
@@ -340,8 +276,6 @@ const AdminDashboard = () => {
     setViewPlans(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
-    setHandleProfile(false);
-    setChangePassword(false);
 
   };
 
@@ -358,8 +292,6 @@ const AdminDashboard = () => {
     setViewPlans(false);
     setAddSchemeForm(false);
     setViewSchemeTable(false);
-    setHandleProfile(false);
-    setChangePassword(false);
 
   };
 
@@ -379,6 +311,7 @@ const AdminDashboard = () => {
     setIsModalOpen(true); // Open the modal
     setViewPlans(false);
     setAddSchemeForm(false);
+    setIsPlanModalOpen(false);
   };
 
   const closeModal = () => {
@@ -395,8 +328,6 @@ const AdminDashboard = () => {
     setQueryFeedBack(false);
     setViewPlans(false);
     setAddSchemeForm(false);
-    setHandleProfile(false);
-    setChangePassword(false);
   
   };
 
