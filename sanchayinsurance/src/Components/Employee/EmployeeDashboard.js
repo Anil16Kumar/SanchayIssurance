@@ -15,127 +15,143 @@ import ViewCustomerTable from './ViewCustomerTable/ViewCustomerTable';
 import ViewPolicyPaymentTable from './ViewPolicyPaymentTable/ViewPolicyPaymentTable';
 import ViewPolicyClaimTable from './ViewPolicyClaimTable/ViewPolicyClaimTable';
 
-const[employeeProfileData,setHandleProfile]=useState({})
-const[showChangePassword,setChangePassword]=useState(false)  
-const [agentData, setAgentData] = useState({});
-const [commissionData, setCommissionData] = useState({});
-const [customerData, setCustomerData] = useState({});
-const [policyPaymentData, setPolicyPaymentData] = useState({});
-const [policyClaimData, setPolicyClaimData] = useState({});
+// const[employeeProfileData,setHandleProfile]=useState({})
+// const[showChangePassword,setChangePassword]=useState(false)  
+// const [agentData, setAgentData] = useState({});
+// const [commissionData, setCommissionData] = useState({});
+// const [customerData, setCustomerData] = useState({});
+// const [policyPaymentData, setPolicyPaymentData] = useState({});
+// const [policyClaimData, setPolicyClaimData] = useState({});
 
-const OffAllModels=()=>{
-  setAgentData(false);
-  setHandleProfile(false);
-  setChangePassword(false);
-  setCommissionData(false);
-  setCustomerData(false);
-  setPolicyPaymentData(false);
-  setPolicyClaimData(false);
 
-};
 
-const handleViewAgent = async () => {
-  OffAllModels();
-  try {
-    let response = await axios.get(`api`);
-    setAgentData(response.data);
-    console.log(response.data);
-  } catch (error) {
-    alert(error.message);
-  }
-  setAgentData(true);
+
+
+
+// const handleViewAgent = async () => {
+//   OffAllModels();
+//   try {
+//     let response = await axios.get(`api`);
+//     setAgentData(response.data);
+//     console.log(response.data);
+//   } catch (error) {
+//     alert(error.message);
+//   }
+//   setAgentData(true);
    
-}
+// }
 
-const handleViewCustomer = async ()=>{
-  OffAllModels();
-  try {
-    let response = await axios.get(`api`);
-    setCustomerData(response.data);
-    console.log(response.data);
-  } catch (error) {
-    alert(error.message);
+// const handleViewCustomer = async ()=>{
+//   OffAllModels();
+//   try {
+//     let response = await axios.get(`api`);
+//     setCustomerData(response.data);
+//     console.log(response.data);
+//   } catch (error) {
+//     alert(error.message);
 
-    setCustomerData(true);
+//     setCustomerData(true);
      
   
-  }
+//   }
 
 
-}
+// }
 
-const handleViewCommission = async () => {
-  OffAllModels();
-  try {
-    let response = await axios.get(`api`);
-    setCommissionData(response.data);
-    console.log(response.data);
-  } catch (error) {
-    alert(error.message);
-  }
-  setCommissionData(true);
+// const handleViewCommission = async () => {
+//   OffAllModels();
+//   try {
+//     let response = await axios.get(`api`);
+//     setCommissionData(response.data);
+//     console.log(response.data);
+//   } catch (error) {
+//     alert(error.message);
+//   }
+//   setCommissionData(true);
    
  
-}
-const handleViewPolicyPayment = async () => {
-  OffAllModels();
-  try {
-    let response = await axios.get(`api`);
-    setPolicyPaymentData(response.data);
-    console.log(response.data);
-  } catch (error) {
-    alert(error.message);
-  }
+// }
+// const handleViewPolicyPayment = async () => {
+//   OffAllModels();
+//   try {
+//     let response = await axios.get(`api`);
+//     setPolicyPaymentData(response.data);
+//     console.log(response.data);
+//   } catch (error) {
+//     alert(error.message);
+//   }
 
-  setPolicyPaymentData(true);
+//   setPolicyPaymentData(true);
    
 
 
-}
+// }
 
 
-const handleViewPolicyClaim = async () => {
-  OffAllModels();
-  try {
-    let response = await axios.get(`api`);
-    setPolicyClaimData(response.data);
-    console.log(response.data);
-  } catch (error) {
-    alert(error.message);
-  }
+// const handleViewPolicyClaim = async () => {
+//   OffAllModels();
+//   try {
+//     let response = await axios.get(`api`);
+//     setPolicyClaimData(response.data);
+//     console.log(response.data);
+//   } catch (error) {
+//     alert(error.message);
+//   }
 
-  setPolicyClaimData(true);
+//   setPolicyClaimData(true);
  
 
 
-}
+// }
 
-const handleProfile = async () => {
-  OffAllModels();
-  try {
-    let response = await axios.get(`api`);
-    setHandleProfile(response.data);
-    console.log(response.data);
-  } catch (error) {
-    alert(error.message);
-  }  
+// const handleProfile = async () => {
+//   OffAllModels();
+//   try {
+//     let response = await axios.get(`api`);
+//     setHandleProfile(response.data);
+//     console.log(response.data);
+//   } catch (error) {
+//     alert(error.message);
+//   }  
   
-  setHandleProfile(true);
+//   setHandleProfile(true);
   
     
-};
+// };
 
 
-const handleChangePassword=()=>{
-  OffAllModels();
-  setChangePassword(true);
+// const handleChangePassword=()=>{
+//   OffAllModels();
+//   setChangePassword(true);
    
     
-};
+// };
 
 
 
 const EmployeeDashboard = () => {
+  const [showAddAgent, setShowAddAgent] =useState(false);
+
+  const OffAllModels=()=>{
+    // setAgentData(true);
+    setShowAddAgent(false);
+    // setHandleProfile(false);
+    // setChangePassword(false);
+    // setCommissionData(false);
+    // setCustomerData(false);
+    // setPolicyPaymentData(false);
+    // setPolicyClaimData(false);
+  
+  };
+  const handleAddAgent = ()=>{
+    OffAllModels();
+  setShowAddAgent(true);
+  
+  
+  }
+
+
+
   const navigation = useNavigate();
 
   const authenticateuser=async ()=>{
@@ -265,12 +281,12 @@ const EmployeeDashboard = () => {
                 Agent
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>Add Agent</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={handleViewAgent}> 
+                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={handleAddAgent}>Add Agent</Dropdown.Item>
+                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}  > 
                 View Agent</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={handleViewCommission}>
+                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}  >
                   View commission</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>View commission</Dropdown.Item> 
+               {/* <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>View commission</Dropdown.Item>  */}
                 </Dropdown.Menu>
               </Dropdown>
             </li>
@@ -282,12 +298,12 @@ const EmployeeDashboard = () => {
                 Insurance
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={handleViewCustomer}>
+                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}>
                    View customer</Dropdown.Item>
                 <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} >   insurance account</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={handleViewPolicyPayment}> 
+                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} >
                 View policy payment</Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={handleViewPolicyClaim}>   
+                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}  >   
                 View policy claim</Dropdown.Item> 
                 </Dropdown.Menu>
               </Dropdown>
@@ -300,10 +316,10 @@ const EmployeeDashboard = () => {
                 Account
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={handleProfile}>
+                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}  >
                   profile
                   </Dropdown.Item>
-                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}} onClick={handleChangePassword}>
+                <Dropdown.Item href="#" style={{whiteSpace: 'normal'}}  >
                   change password
                   </Dropdown.Item> 
                </Dropdown.Menu>
@@ -327,12 +343,15 @@ const EmployeeDashboard = () => {
       </div>
       </nav>
 
-      {employeeProfileData && <EmployeeProfile  handleProfile={employeeProfileData }/> }
+      {/* {employeeProfileData && <EmployeeProfile  handleProfile={employeeProfileData }/> }
       {showChangePassword && <ChangeEmployeePassword/>}
       {agentData && <ViewAgentTable  handleViewAgent={agentData}/>}
       {commissionData && <ViewCommissionTable handleViewCommission={commissionData}/>}
       {customerData && <ViewCustomerTable handleViewCustomer={customerData}/>}
-      {policyClaimData && <ViewPolicyClaimTable handleViewPolicyClaim={policyClaimData}/>}
+      {policyClaimData && <ViewPolicyClaimTable handleViewPolicyClaim={policyClaimData}/>} */}
+      {/* {showAddAgent && </>} */}
+
+      
 
   
 
